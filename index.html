@@ -538,6 +538,8 @@
       <button class="font-btn" onclick="adjustFontSize(0)">ก ปกติ</button>
       <button class="font-btn" onclick="adjustFontSize(2)">ก+ ขนาดใหญ่</button>
       <button class="font-btn" onclick="readAloudPage()">🔊 อ่านหน้าจอ</button>
+      <!-- [เพิ่มใหม่] ปุ่มหยุดอ่านออกเสียงทันที -->
+      <button class="font-btn" onclick="stopReadAloudPage()" style="background: rgba(239, 68, 68, 0.4); border-color: rgba(239, 68, 68, 0.6);">⏹️ หยุดอ่าน</button>
     </div>
   </header>
 
@@ -1464,6 +1466,13 @@
         window.speechSynthesis.speak(utterance);
       } else {
         alert("ขออภัย เบราว์เซอร์ของคุณไม่รองรับการอ่านเสียงอัตโนมัติ");
+      }
+    }
+
+    // [เพิ่มใหม่] ฟังก์ชันหยุดอ่านออกเสียงทันทีเมื่อกดปุ่ม
+    function stopReadAloudPage() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
       }
     }
 
