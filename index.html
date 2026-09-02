@@ -21,10 +21,13 @@
       --border-color: #e2e8f0;
       --success-color: #16a34a;
       --success-bg: #dcfce7;
+      --info-color: #2563eb;
+      --info-bg: #dbeafe;
       --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
       --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
       --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.03);
       --radius: 12px;
+      --base-font-size: 16px;
     }
 
     * {
@@ -34,10 +37,14 @@
       font-family: 'Sarabun', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
+    html {
+      font-size: var(--base-font-size);
+    }
+
     body {
       background-color: var(--bg-color);
       color: var(--text-main);
-      font-size: 16px;
+      font-size: 1rem;
       line-height: 1.6;
       padding-bottom: 50px;
     }
@@ -54,16 +61,39 @@
     }
 
     header h1 {
-      font-size: 26px;
+      font-size: 1.625rem;
       font-weight: 700;
       letter-spacing: -0.5px;
       margin-bottom: 4px;
     }
 
     header p {
-      font-size: 14px;
+      font-size: 0.875rem;
       opacity: 0.9;
       font-weight: 300;
+    }
+
+    /* ปุ่มปรับขนาดตัวอักษร */
+    .font-resizer {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .font-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 4px;
+      padding: 2px 10px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      transition: background 0.2s;
+    }
+
+    .font-btn:hover {
+      background: rgba(255, 255, 255, 0.4);
     }
 
     nav {
@@ -81,7 +111,7 @@
       padding: 14px 12px;
       border: none;
       background: none;
-      font-size: 16px;
+      font-size: 1rem;
       font-weight: 600;
       color: var(--text-muted);
       cursor: pointer;
@@ -121,7 +151,7 @@
     }
 
     h2 {
-      font-size: 20px;
+      font-size: 1.25rem;
       font-weight: 700;
       margin-bottom: 16px;
       color: var(--text-main);
@@ -134,10 +164,22 @@
       margin-bottom: 18px;
     }
 
+    .date-range-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .date-range-group {
+        grid-template-columns: 1fr;
+      }
+    }
+
     label {
       display: block;
       font-weight: 600;
-      font-size: 15px;
+      font-size: 0.9375rem;
       margin-bottom: 6px;
       color: #334155;
     }
@@ -146,13 +188,19 @@
       width: 100%;
       min-height: 48px;
       padding: 10px 14px;
-      font-size: 16px;
+      font-size: 1rem;
       border: 1.5px solid var(--border-color);
       border-radius: 8px;
       background-color: white;
       color: var(--text-main);
       transition: border-color 0.2s, box-shadow 0.2s;
       outline: none;
+    }
+
+    input[type="checkbox"] {
+      width: auto;
+      min-height: auto;
+      cursor: pointer;
     }
 
     input:focus, select:focus, textarea:focus {
@@ -171,7 +219,7 @@
       color: white;
       border: none;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       transition: background-color 0.2s, transform 0.1s;
@@ -198,20 +246,34 @@
       color: var(--text-main);
     }
 
+    .badge-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
     .badge {
       display: inline-flex;
       align-items: center;
       padding: 4px 10px;
       border-radius: 20px;
-      font-size: 13px;
+      font-size: 0.75rem;
       font-weight: 600;
       background-color: #f1f5f9;
       color: var(--text-muted);
     }
 
-    .badge-verified {
+    .badge-license {
+      background-color: var(--info-bg);
+      color: var(--info-color);
+      border: 1px solid #bfdbfe;
+    }
+
+    .badge-criminal {
       background-color: var(--success-bg);
       color: var(--success-color);
+      border: 1px solid #bbf7d0;
     }
 
     .stats-bar {
@@ -220,7 +282,7 @@
       border-radius: var(--radius);
       padding: 12px 16px;
       margin-bottom: 20px;
-      font-size: 14px;
+      font-size: 0.875rem;
       color: var(--primary-dark);
       text-align: center;
       font-weight: 500;
@@ -244,7 +306,7 @@
     }
 
     .provider-info h3 {
-      font-size: 18px;
+      font-size: 1.125rem;
       font-weight: 700;
       margin-bottom: 2px;
     }
@@ -254,7 +316,7 @@
       grid-template-columns: 1fr 1fr;
       gap: 8px 16px;
       margin-bottom: 16px;
-      font-size: 14px;
+      font-size: 0.875rem;
     }
 
     @media (max-width: 480px) {
@@ -272,7 +334,7 @@
     }
 
     .price-tag {
-      font-size: 22px;
+      font-size: 1.375rem;
       font-weight: 700;
       color: var(--primary-color);
     }
@@ -284,7 +346,7 @@
       border: 1px dashed var(--border-color);
       margin-top: 12px;
       font-weight: 600;
-      font-size: 15px;
+      font-size: 0.9375rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -322,7 +384,7 @@
     }
 
     .hidden {
-      display: none;
+      display: none !important;
     }
 
     .loader {
@@ -339,6 +401,131 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+    /* สไตล์ปุ่มฉุกเฉิน */
+    .emergency-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #ef4444;
+      color: white;
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 999;
+      transition: transform 0.2s;
+    }
+
+    .emergency-btn:hover {
+      transform: scale(1.05);
+      background-color: #dc2626;
+    }
+
+    /* Modal ชำระเงิน/ขั้นตอนการจอง */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-card {
+      background: white;
+      padding: 24px;
+      border-radius: var(--radius);
+      max-width: 440px;
+      width: 90%;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .booking-summary-box {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      margin: 12px 0;
+      text-align: left;
+      font-size: 0.875rem;
+    }
+
+    .qr-img {
+      width: 180px;
+      height: 180px;
+      margin: 12px auto;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px;
+      display: block;
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      .printable, .printable * {
+        visibility: visible;
+      }
+      .printable {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+      }
+    }
+
+    /* [เพิ่มเติม] สไตล์ส่วนเสริมใหม่ */
+    .step-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8125rem;
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+    }
+
+    .step-item.active-step {
+      border-color: var(--primary-color);
+      background: var(--primary-light);
+      font-weight: bold;
+    }
+
+    .step-item.done-step {
+      background: var(--success-bg);
+      color: var(--success-color);
+      border-color: #bbf7d0;
+    }
+
+    .btn-line-share {
+      background-color: #06c755;
+      color: white;
+      border: none;
+    }
+
+    .btn-line-share:hover {
+      background-color: #05b34c;
+    }
   </style>
 </head>
 <body>
@@ -346,6 +533,12 @@
   <header>
     <h1>เพื่อนหาหมอ 🩺</h1>
     <p>บริการผู้ช่วยพาไปโรงพยาบาล & เฝ้าไข้ ครอบคลุม รพ.ประจำอำเภอ ทุกแห่งทั่วไทย</p>
+    <div class="font-resizer">
+      <button class="font-btn" onclick="adjustFontSize(-2)">ก- ขนาดเล็ก</button>
+      <button class="font-btn" onclick="adjustFontSize(0)">ก ปกติ</button>
+      <button class="font-btn" onclick="adjustFontSize(2)">ก+ ขนาดใหญ่</button>
+      <button class="font-btn" onclick="readAloudPage()">🔊 อ่านหน้าจอ</button>
+    </div>
   </header>
 
   <nav>
@@ -356,10 +549,21 @@
 
   <div class="container">
 
-    <!-- 1. หน้าค้นหาผู้ดูแล -->
     <div id="tab-search" class="tab-content">
       <div class="card">
         <h2>🔍 ค้นหาผู้ดูแล</h2>
+        
+        <div class="form-group date-range-group">
+          <div>
+            <label for="search-start-date">📅 วันที่เริ่มต้น</label>
+            <input type="date" id="search-start-date" onchange="validateDates()">
+          </div>
+          <div>
+            <label for="search-end-date">📅 วันที่สิ้นสุด</label>
+            <input type="date" id="search-end-date" onchange="validateDates()">
+          </div>
+        </div>
+
         <div class="form-group">
           <label for="search-province">เลือกจังหวัด</label>
           <select id="search-province" onchange="onProvinceChange('search')">
@@ -384,6 +588,33 @@
             <option value="all">-- ทุกโรงพยาบาล --</option>
           </select>
         </div>
+        <div class="form-group">
+          <label for="patient-condition">♿ สภาพร่างกาย / การเคลื่อนไหวของผู้ป่วย</label>
+          <select id="patient-condition" onchange="filterServices(1)">
+            <option value="all">ทุกระดับการช่วยเหลือ</option>
+            <option value="walk">เดินได้ปกติ / ช่วยเหลือตัวเองได้</option>
+            <option value="wheelchair">ต้องใช้รถเข็น (Wheelchair)</option>
+            <option value="bedridden">ผู้ป่วยติดเตียง / ต้องการพยุงเป็นพิเศษ</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="search-language">🗣️ ภาษาถิ่นที่ผู้ดูแลสื่อสารได้</label>
+          <select id="search-language" onchange="filterServices(1)">
+            <option value="all">ทุกภาษา / ภาษากลาง</option>
+            <option value="isan">ภาษาอีสาน</option>
+            <option value="north">ภาษาเหนือ (คำเมือง)</option>
+            <option value="south">ภาษาใต้</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="background:#fef2f2; padding:10px 14px; border-radius:8px; border:1px solid #fecaca; margin-bottom:18px;">
+          <label style="display:flex; align-items:center; gap:8px; color:#dc2626; cursor:pointer; margin-bottom:0;">
+            <input type="checkbox" id="express-booking" onchange="filterServices(1)">
+            ⚡ ต้องการผู้ดูแลด่วนพิเศษภายใน 24 ชั่วโมง (Express Matching)
+          </label>
+        </div>
+
         <div class="form-group" style="margin-bottom:0;">
           <label for="service-type">ประเภทบริการ</label>
           <select id="service-type" onchange="filterServices(1)">
@@ -400,13 +631,14 @@
       <div id="pagination-controls" class="pagination hidden"></div>
     </div>
 
-    <!-- 2. หน้าติดตามสถานะการจอง -->
     <div id="tab-orders" class="tab-content hidden">
-      <h2>📋 รายการจองของคุณ</h2>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h2>📋 รายการจองของคุณ</h2>
+        <button class="btn btn-secondary" style="width:auto; font-size:0.875rem; padding:6px 12px; min-height:36px;" onclick="exportOrderHistory()">📥 ส่งออกประวัติการจอง</button>
+      </div>
       <div id="orders-list"></div>
     </div>
 
-    <!-- 3. หน้าลงทะเบียนให้บริการ -->
     <div id="tab-register" class="tab-content hidden">
       <div class="card">
         <h2>📝 ลงทะเบียนเป็นผู้ดูแล</h2>
@@ -428,8 +660,30 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="p-license">เลขที่ใบประกอบวิชาชีพ / ใบรับรอง</label>
-            <input type="text" id="p-license" placeholder="ระบุเลขที่เอกสาร (ถ้ามี)">
+            <label for="p-license">เลขที่ใบประกอบวิชาชีพ / ใบรับรอง (ถ้ามี)</label>
+            <input type="text" id="p-license" placeholder="ระบุเลขที่เอกสารเพื่อยืนยันตัวตน">
+          </div>
+
+          <div class="form-group">
+            <label for="p-language">ภาษาถิ่นที่สื่อสารได้ดี</label>
+            <select id="p-language">
+              <option value="all">ภาษากลางทั่วไป</option>
+              <option value="isan">ภาษาอีสาน</option>
+              <option value="north">ภาษาเหนือ (คำเมือง)</option>
+              <option value="south">ภาษาใต้</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="p-id-card">📎 แนบไฟล์เอกสารยืนยันตัวตน/ใบประกาศนียบัตร (PDF หรือ รูปภาพ)</label>
+            <input type="file" id="p-id-card" accept="image/*,.pdf">
+          </div>
+
+          <div class="form-group" style="background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);">
+            <label style="display: flex; align-items: center; gap: 8px; font-weight: 500; cursor: pointer;">
+              <input type="checkbox" id="p-criminal-consent" required>
+              ยินยอมให้ระบบตรวจสอบประวัติอาชญากรรม (พิมพ์ลายมือแฝง) เพื่อรับตราประทับความปลอดภัย
+            </label>
           </div>
           <div class="form-group">
             <label for="reg-province">จังหวัดที่รับดูแล *</label>
@@ -456,6 +710,15 @@
             </select>
           </div>
           <div class="form-group">
+            <label for="reg-skill">ความเชี่ยวชาญดูแลสภาพผู้ป่วย *</label>
+            <select id="reg-skill" required>
+              <option value="walk">ผู้ป่วยทั่วไป/เดินได้</option>
+              <option value="wheelchair">ผู้ป่วยนั่งรถเข็น</option>
+              <option value="bedridden">ผู้ป่วยติดเตียง/ต้องการพยุง</option>
+              <option value="all">ดูแลได้ทุกประเภท</option>
+            </select>
+          </div>
+          <div class="form-group">
             <label for="p-service">ลักษณะการให้บริการ *</label>
             <select id="p-service" required>
               <option value="transport">พาไปโรงพยาบาล</option>
@@ -464,7 +727,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="p-price">อัตราค่าบริการ (บาท) *</label>
+            <label for="p-price">อัตราค่าบริการ (บาท/วัน) *</label>
             <input type="number" id="p-price" required placeholder="เช่น 800 บาท/ครั้ง หรือ 1500 บาท/วัน">
           </div>
           <button type="submit" class="btn">ลงประกาศให้บริการ</button>
@@ -474,8 +737,50 @@
 
   </div>
 
+  <a href="tel:1669" class="emergency-btn" title="โทรฉุกเฉิน 1669">
+    🚨 โทรฉุกเฉิน 1669
+  </a>
+
+  <div id="payment-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h2 style="justify-content: center;">📲 ขั้นตอนการจอง & ชำระเงิน</h2>
+      
+      <div id="modal-summary-details" class="booking-summary-box"></div>
+
+      <div style="background:#fffbebf5; border:1px solid #fef3c7; padding:10px; border-radius:8px; margin:10px 0; text-align:left;">
+        <label style="font-size:0.8125rem; font-weight:700; color:#b45309; margin-bottom:4px; display:block;">📋 ข้อมูลเพิ่มเติมผู้ป่วย (Pre-Trip Note):</label>
+        <input type="text" id="patient-special-note" placeholder="เช่น ต้องใส่ออกซิเจน, หูตึง, มีโรคประจำตัว" style="min-height:36px; font-size:0.875rem;">
+      </div>
+
+      <div style="background:#f1f5f9; border:1px solid var(--border-color); padding:10px; border-radius:8px; margin:10px 0; text-align:left;">
+        <label style="font-size:0.8125rem; font-weight:700; color:var(--text-main); margin-bottom:4px; display:block;">📞 เบอร์ติดต่อญาติกรณีฉุกเฉิน:</label>
+        <input type="tel" id="emergency-contact-phone" placeholder="เช่น 081-234-5678" style="min-height:36px; font-size:0.875rem;">
+      </div>
+
+      <div style="background:#f0fdf4; border:1px solid #bbf7d0; padding:10px; border-radius:8px; margin:10px 0; text-align:left;">
+        <label style="display:flex; align-items:center; gap:8px; font-size:0.875rem; color:#166534; cursor:pointer; font-weight:600;">
+          <input type="checkbox" id="add-insurance" onchange="toggleInsurance()"> 
+          🛡️ รับประกันอุบัติเหตุระหว่างเดินทาง (+50 บาท/วัน)
+        </label>
+      </div>
+
+      <p style="font-size:0.875rem; font-weight:600; color:var(--text-main); margin-top:8px;">
+        สแกน QR Code ด้านล่างเพื่อชำระเงินมัดจำ/ค่าบริการ
+      </p>
+      
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PromptPayDemoBooking" alt="PromptPay QR Code" class="qr-img">
+      
+      <div style="background:#e0f2fe; padding:8px 12px; border-radius:8px; margin-bottom:16px;">
+        <span style="font-size:0.8125rem; color:var(--primary-dark);">ยอดที่ต้องชำระชำระผ่าน PromptPay</span>
+        <div id="modal-total-price" style="font-size:1.375rem; font-weight:700; color:var(--primary-color);"></div>
+      </div>
+
+      <button class="btn" onclick="confirmPaymentProcess()">✅ ยืนยันการชำระเงินเรียบร้อยแล้ว</button>
+      <button class="btn btn-secondary" style="margin-top:8px;" onclick="closePaymentModal()">ยกเลิกการจอง</button>
+    </div>
+  </div>
+
   <script>
-    // 1. โครงสร้างข้อมูล จังหวัด -> อำเภอ -> ตำบล และ โรงพยาบาลประจำอำเภอ
     const locationHierarchy = {
       "กรุงเทพมหานคร": {
         hospitals: ["โรงพยาบาลศิริราช", "โรงพยาบาลจุฬาลงกรณ์", "โรงพยาบาลรามาธิบดี", "โรงพยาบาลพระมงกุฎเกล้า", "โรงพยาบาลราชวิถี", "โรงพยาบาลตำรวจ", "โรงพยาบาลกรุงเทพ", "โรงพยาบาลพญาไท"],
@@ -531,7 +836,6 @@
       }
     };
 
-    // เพิ่มจังหวัดอื่นๆ พร้อมสร้างอำเภอ ตำบล และ รพ.ประจำอำเภอ อัตโนมัติ
     const otherProvinces = [
       "กระบี่", "กาญจนบุรี", "กาฬสินธุ์", "กำแพงเพชร", "จันทบุรี", "ฉะเชิงเทรา", "ชัยนาท", "ชัยภูมิ", "ชุมพร", "ตรัง", "ตราด", "ตาก", 
       "นครนายก", "นครปฐม", "นครพนม", "นครสวรรค์", "นครศรีธรรมราช", "น่าน", "บึงกาฬ", "บุรีรัมย์", "ประจวบคีรีขันธ์", "ปราจีนบุรี", 
@@ -568,10 +872,12 @@
       "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&auto=format&fit=crop&q=80",
       "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=120&auto=format&fit=crop&q=80"
     ];
+    const skillTypes = ["walk", "wheelchair", "bedridden", "all"];
+    const languageTypes = ["all", "isan", "north", "south"]; // [เพิ่มเติม] ภาษา
 
     let providersDatabase = [];
+    let pendingBookingData = null;
 
-    // 2. ระบบสร้างข้อมูลผู้ดูแล การันตีอย่างน้อย 5 คนต่อ 1 อำเภอ
     function generateMassiveProviders() {
       let idCounter = 1;
 
@@ -597,12 +903,17 @@
               ? provData.hospitals[Math.floor(Math.random() * provData.hospitals.length)] 
               : districtHosp;
 
+            const isProf = !role.includes("บุคคลทั่วไป");
+            const skill = skillTypes[Math.floor(Math.random() * skillTypes.length)];
+            const lang = languageTypes[Math.floor(Math.random() * languageTypes.length)]; // [เพิ่มเติม]
+
             providersDatabase.push({
               id: idCounter++,
               name: `${fn} ${ln}`,
               role: role,
-              license: role.includes("บุคคลทั่วไป") ? "" : `LIC-${100000 + idCounter}`,
-              isVerified: true,
+              license: isProf ? `LIC-${100000 + idCounter}` : "",
+              isLicenseVerified: isProf,
+              isCriminalChecked: true,
               type: isTransport ? "transport" : "overnight",
               typeText: isTransport ? "พาไปโรงพยาบาล" : "เฝ้าไข้นอนโรงพยาบาล",
               price: isTransport ? 600 + (Math.floor(Math.random() * 5) * 100) : 1200 + (Math.floor(Math.random() * 6) * 100),
@@ -610,6 +921,8 @@
               district: dist,
               subdistrict: assignedSubdist,
               hospital: assignedHosp,
+              conditionSkill: skill,
+              languageSkill: lang, // [เพิ่มเติม]
               rating: (4.3 + Math.random() * 0.7).toFixed(1),
               img: avatars[Math.floor(Math.random() * avatars.length)]
             });
@@ -625,7 +938,15 @@
         service: "พาไปโรงพยาบาล",
         hospital: "โรงพยาบาลพุทธชินราช",
         status: "กำลังเดินทางไปรับ",
-        date: "26 ส.ค. 2026"
+        startDate: "2026-08-26",
+        endDate: "2026-08-26",
+        totalDays: 1,
+        totalPrice: 800,
+        date: "26 ส.ค. 2026",
+        medicalBrief: "",
+        currentStep: 1, // [เพิ่มเติม] ขั้นตอนเช็คอิน 0-4
+        specialNote: "ผู้ป่วยใช้รถเข็น", // [เพิ่มเติม]
+        receiptImage: null // [เพิ่มเติม] รูปถ่ายสลิป/ใบนัด
       }
     ];
 
@@ -634,11 +955,42 @@
     let currentFilteredData = [];
 
     document.addEventListener("DOMContentLoaded", () => {
+      // ตั้งค่าเริ่มต้นวันที่เลือกให้เป็นวันนี้ และล็อกไม่ให้เลือกย้อนหลัง
+      const startDateInput = document.getElementById('search-start-date');
+      const endDateInput = document.getElementById('search-end-date');
+      const today = new Date().toISOString().split('T')[0];
+
+      startDateInput.min = today;
+      startDateInput.value = today;
+      endDateInput.min = today;
+      endDateInput.value = today;
+
       generateMassiveProviders();
       initProvinceDropdowns();
       filterServices(1);
       renderOrders();
     });
+
+    // ปรับขนาดฟอนต์ของหน้าเว็บ
+    function adjustFontSize(change) {
+      const root = document.documentElement;
+      let currentSize = parseInt(getComputedStyle(root).getPropertyValue('--base-font-size')) || 16;
+      if (change === 0) {
+        currentSize = 16;
+      } else {
+        currentSize = Math.min(Math.max(currentSize + change, 14), 22);
+      }
+      root.style.setProperty('--base-font-size', `${currentSize}px`);
+    }
+
+    // ตรวจสอบไม่ให้เลือกวันสิ้นสุดก่อนวันเริ่มต้น
+    function validateDates() {
+      const start = document.getElementById('search-start-date');
+      const end = document.getElementById('search-end-date');
+      if (start.value && end.value && end.value < start.value) {
+        end.value = start.value;
+      }
+    }
 
     function initProvinceDropdowns() {
       const searchProvSelect = document.getElementById('search-province');
@@ -776,10 +1128,18 @@
             <img src="${item.img}" class="provider-avatar" alt="${item.name}">
             <div class="provider-info">
               <h3>${item.name}</h3>
-              <p style="font-size:14px; color:var(--text-muted); margin-bottom: 4px;">${item.role}</p>
-              <span class="badge ${item.isVerified ? 'badge-verified' : ''}">
-                ${item.isVerified ? '✓ ยืนยันตัวตนแล้ว' : 'รอการตรวจสอบ'}
-              </span>
+              <p style="font-size:0.875rem; color:var(--text-muted); margin-bottom: 2px;">${item.role}</p>
+              
+              <div class="badge-container">
+                ${item.isLicenseVerified 
+                  ? `<span class="badge badge-license">✓ ใบอนุญาตวิชาชีพ: ${item.license}</span>` 
+                  : `<span class="badge">ผ่านการอบรมผู้ดูแล</span>`
+                }
+                ${item.isCriminalChecked 
+                  ? `<span class="badge badge-criminal">🛡️ ผ่านตรวจประวัติอาชญากรรม</span>` 
+                  : ''
+                }
+              </div>
             </div>
           </div>
           
@@ -793,10 +1153,10 @@
 
           <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:12px; padding-top:12px; border-top:1px solid var(--border-color);">
             <div>
-              <span style="font-size:12px; color:var(--text-muted); display:block;">ค่าบริการเริ่มต้น</span>
-              <span class="price-tag">${item.price.toLocaleString()}</span> <span style="font-size:14px; color:var(--text-muted);">บาท</span>
+              <span style="font-size:0.75rem; color:var(--text-muted); display:block;">ค่าบริการเริ่มต้น</span>
+              <span class="price-tag">${item.price.toLocaleString()}</span> <span style="font-size:0.875rem; color:var(--text-muted);">บาท/วัน</span>
             </div>
-            <button class="btn" style="width:auto; padding:10px 20px;" onclick="bookService('${item.name}', '${item.typeText}', '${item.hospital}')">จองบริการ (PromptPay)</button>
+            <button class="btn" style="width:auto; padding:10px 20px;" onclick="bookService('${item.name}', '${item.typeText}', '${item.hospital}', ${item.price})">จองบริการ (PromptPay)</button>
           </div>
         `;
         listContainer.appendChild(card);
@@ -806,7 +1166,7 @@
         paginationControls.classList.remove('hidden');
         paginationControls.innerHTML = `
           <button ${page === 1 ? 'disabled' : ''} onclick="filterServices(${page - 1})">❮ ก่อนหน้า</button>
-          <span style="font-size: 14px; color: var(--text-muted);">หน้า ${page} จาก ${totalPages}</span>
+          <span style="font-size: 0.875rem; color: var(--text-muted);">หน้า ${page} จาก ${totalPages}</span>
           <button ${page === totalPages ? 'disabled' : ''} onclick="filterServices(${page + 1})">ถัดไป ❯</button>
         `;
       } else {
@@ -824,6 +1184,8 @@
         const subdist = document.getElementById('search-subdistrict').value;
         const hosp = document.getElementById('search-hospital').value;
         const type = document.getElementById('service-type').value;
+        const condition = document.getElementById('patient-condition').value;
+        const lang = document.getElementById('search-language')?.value || 'all'; // [เพิ่มเติม]
 
         currentFilteredData = providersDatabase.filter(item => {
           const matchProv = (prov === 'all') || (item.province === prov);
@@ -831,7 +1193,9 @@
           const matchSub = (subdist === 'all') || (item.subdistrict === subdist);
           const matchHosp = (hosp === 'all') || (item.hospital === hosp);
           const matchType = (type === 'all') || (item.type === type);
-          return matchProv && matchDist && matchSub && matchHosp && matchType;
+          const matchCondition = (condition === 'all') || (item.conditionSkill === 'all') || (item.conditionSkill === condition);
+          const matchLang = (lang === 'all') || (item.languageSkill === 'all') || (item.languageSkill === lang); // [เพิ่มเติม]
+          return matchProv && matchDist && matchSub && matchHosp && matchType && matchCondition && matchLang;
         });
 
         renderServiceList(currentFilteredData, currentPage);
@@ -839,22 +1203,94 @@
       }, 200);
     }
 
-    function bookService(providerName, serviceType, hospital) {
-      const confirmBooking = confirm(`ยืนยันการจองบริการกับ ${providerName}\nบริการ: ${serviceType}\nโรงพยาบาล: ${hospital}\n\nระบบจะทำการสแกน PromptPay เพื่อชำระเงิน`);
-      if (confirmBooking) {
-        const newOrder = {
-          id: `ORD-00${orders.length + 1}`,
-          providerName: providerName,
-          service: serviceType,
-          hospital: hospital,
-          status: "ยืนยันการชำระเงินแล้ว",
-          date: new Date().toLocaleDateString('th-TH')
-        };
-        orders.unshift(newOrder);
-        alert("ชำระเงินสำเร็จ! ผู้ดูแลได้รับการยืนยันเรียบร้อยแล้ว");
-        renderOrders();
-        switchTab('orders');
+    // ฟังก์ชันเปิด Modal สำหรับขั้นตอนการจองและชำระเงิน
+    function bookService(providerName, serviceType, hospital, pricePerDay) {
+      const startDateVal = document.getElementById('search-start-date').value;
+      const endDateVal = document.getElementById('search-end-date').value;
+      
+      if (!startDateVal || !endDateVal) {
+        alert("กรุณาเลือกช่วงวันที่ต้องการรับบริการให้ครบถ้วน");
+        return;
       }
+
+      const start = new Date(startDateVal);
+      const end = new Date(endDateVal);
+      
+      if (end < start) {
+        alert("วันที่สิ้นสุดต้องไม่ก่อนวันที่เริ่มต้น");
+        return;
+      }
+
+      const diffTime = Math.abs(end - start);
+      const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+      const totalPrice = pricePerDay * totalDays;
+
+      const formatDateStr = (d) => new Date(d).toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' });
+      const dateText = totalDays === 1 ? formatDateStr(startDateVal) : `${formatDateStr(startDateVal)} - ${formatDateStr(endDateVal)} (${totalDays} วัน)`;
+
+      pendingBookingData = {
+        providerName,
+        serviceType,
+        hospital,
+        startDateVal,
+        endDateVal,
+        totalDays,
+        pricePerDay,
+        totalPrice,
+        baseTotalPrice: totalPrice
+      };
+
+      // รีเซ็ตเช็คบ็อกซ์ประกัน
+      const insCheckbox = document.getElementById('add-insurance');
+      if (insCheckbox) insCheckbox.checked = false;
+
+      // แสดงเฉพาะรายละเอียดการจอง และ QR Code ใน Modal สรุปขั้นตอน
+      document.getElementById('modal-summary-details').innerHTML = `
+        <div><strong>👤 ผู้ดูแล:</strong> ${providerName}</div>
+        <div><strong>🩺 บริการ:</strong> ${serviceType}</div>
+        <div><strong>🏥 สถานที่:</strong> ${hospital}</div>
+        <div><strong>📅 ช่วงวัน:</strong> ${dateText}</div>
+        <div><strong>💰 อัตราค่าบริการ:</strong> ${pricePerDay.toLocaleString()} บาท/วัน</div>
+      `;
+      document.getElementById('modal-total-price').innerText = `${totalPrice.toLocaleString()} บาท`;
+      document.getElementById('payment-modal').classList.remove('hidden');
+    }
+
+    function closePaymentModal() {
+      document.getElementById('payment-modal').classList.add('hidden');
+      pendingBookingData = null;
+    }
+
+    function confirmPaymentProcess() {
+      if (!pendingBookingData) return;
+
+      // [เพิ่มเติม] ดึงข้อมูลเพิ่มเติมก่อนสร้างคำสั่งซื้อ
+      const specialNote = document.getElementById('patient-special-note')?.value || "";
+      const emergencyPhone = document.getElementById('emergency-contact-phone')?.value || ""; // [เพิ่มเติม]
+
+      const newOrder = {
+        id: `ORD-00${orders.length + 1}`,
+        providerName: pendingBookingData.providerName,
+        service: pendingBookingData.serviceType,
+        hospital: pendingBookingData.hospital,
+        startDate: pendingBookingData.startDateVal,
+        endDate: pendingBookingData.endDateVal,
+        totalDays: pendingBookingData.totalDays,
+        totalPrice: pendingBookingData.totalPrice,
+        status: "ยืนยันการชำระเงินแล้ว",
+        date: new Date().toLocaleDateString('th-TH'),
+        medicalBrief: "",
+        currentStep: 0, // [เพิ่มเติม] ขั้นตอนเริ่มต้น
+        specialNote: specialNote, // [เพิ่มเติม]
+        emergencyPhone: emergencyPhone, // [เพิ่มเติม]
+        receiptImage: null // [เพิ่มเติม]
+      };
+
+      orders.unshift(newOrder);
+      closePaymentModal();
+      alert("ชำระเงินสำเร็จ! ผู้ดูแลได้รับการยืนยันเรียบร้อยแล้ว");
+      renderOrders();
+      switchTab('orders');
     }
 
     function renderOrders() {
@@ -867,22 +1303,86 @@
       }
 
       orders.forEach(ord => {
+        let displayServiceDate = ord.date;
+        if (ord.startDate && ord.endDate) {
+          const s = new Date(ord.startDate).toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' });
+          const e = new Date(ord.endDate).toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric' });
+          displayServiceDate = (ord.startDate === ord.endDate) ? s : `${s} - ${e} (${ord.totalDays} วัน)`;
+        }
+
+        // [เพิ่มเติม] กำหนดขั้นตอน Timeline 4 ขั้นตอน
+        const stepsDef = [
+          "ยืนยันการชำระเงินแล้ว",
+          "กำลังเดินทางไปรับผู้ป่วย",
+          "ถึงโรงพยาบาล & กำลังพบแพทย์",
+          "ส่งกลับบ้านเรียบร้อย / เสร็จสิ้น"
+        ];
+        const currentStepIdx = ord.currentStep !== undefined ? ord.currentStep : 0;
+
+        let stepsHtml = '<div class="step-timeline">';
+        stepsDef.forEach((stepName, idx) => {
+          let classState = 'step-item';
+          let icon = '⚪';
+          if (idx < currentStepIdx) {
+            classState += ' done-step';
+            icon = '✅';
+          } else if (idx === currentStepIdx) {
+            classState += ' active-step';
+            icon = '📌';
+          }
+          stepsHtml += `<div class="${classState}"><span>${icon} ${idx+1}. ${stepName}</span></div>`;
+        });
+        stepsHtml += '</div>';
+
         const card = document.createElement('div');
-        card.className = 'card';
+        card.className = 'card printable';
         card.innerHTML = `
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
-            <span style="font-size:13px; font-weight:600; color:var(--text-muted);">รหัสการจอง: ${ord.id}</span>
-            <span style="font-size:13px; color:var(--text-muted);">${ord.date}</span>
+            <span style="font-size:0.8125rem; font-weight:600; color:var(--text-muted);">รหัสการจอง: ${ord.id}</span>
+            <span style="font-size:0.8125rem; color:var(--text-muted);">ทำรายการเมื่อ: ${ord.date}</span>
           </div>
           <h3 style="margin-bottom: 8px;">ผู้ดูแล: ${ord.providerName}</h3>
-          <p style="font-size:15px;"><strong>บริการ:</strong> ${ord.service}</p>
-          <p style="font-size:15px;"><strong>โรงพยาบาล:</strong> ${ord.hospital}</p>
+          <p style="font-size:0.9375rem; color: var(--primary-dark); font-weight:600;">📅 วันที่นัดหมาย: ${displayServiceDate}</p>
+          <p style="font-size:0.9375rem;"><strong>บริการ:</strong> ${ord.service}</p>
+          <p style="font-size:0.9375rem;"><strong>โรงพยาบาล:</strong> ${ord.hospital}</p>
+          ${ord.specialNote ? `<p style="font-size:0.875rem; color:#b45309;"><strong>📋 โน้ตพิเศษ:</strong> ${ord.specialNote}</p>` : ''}
+          ${ord.emergencyPhone ? `<p style="font-size:0.875rem; color:#dc2626;"><strong>📞 เบอร์ฉุกเฉินญาติ:</strong> ${ord.emergencyPhone}</p>` : ''}
+          ${ord.totalPrice ? `<p style="font-size:0.9375rem; color: var(--success-color); font-weight:600;"><strong>ยอดชำระทั้งสิ้น:</strong> ${ord.totalPrice.toLocaleString()} บาท</p>` : ''}
           
+          <div style="margin-top:10px;">
+            <span style="font-size:0.8125rem; font-weight:700;">📍 สถานะการเดินทาง/เช็คอิน Real-time:</span>
+            ${stepsHtml}
+          </div>
+
+          <div style="margin-top:12px; padding:10px; background:#f0f9ff; border-radius:8px; border:1px dashed #bae6fd;">
+            <span style="font-size:0.8125rem; font-weight:700; color:var(--primary-dark);">📝 บันทึกสรุปการพบแพทย์ (Medical Log):</span>
+            <p style="font-size:0.875rem; color:var(--text-main); margin-top:4px;">${ord.medicalBrief || "ยังไม่มีข้อมูลบันทึกจากผู้ดูแล"}</p>
+            
+            ${ord.receiptImage ? `<div style="margin-top:6px;"><a href="${ord.receiptImage}" target="_blank" style="font-size:0.8125rem; color:var(--primary-color);">🖼️ ดูรูปถ่ายเอกสาร/ใบนัด/สลิปยา</a></div>` : ''}
+
+            <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;">
+              <button class="btn btn-secondary" style="min-height:32px; font-size:0.75rem; padding:4px 8px; width:auto;" onclick="addMedicalBrief('${ord.id}')">✏️ ผู้ดูแลเพิ่ม/แก้ไขบันทึกหมอ</button>
+              <button class="btn btn-secondary" style="min-height:32px; font-size:0.75rem; padding:4px 8px; width:auto;" onclick="uploadMedicalDocument('${ord.id}')">📷 ถ่ายรูปแนบใบนัด/ซองยา</button>
+              <button class="btn btn-secondary" style="min-height:32px; font-size:0.75rem; padding:4px 8px; width:auto;" onclick="trackLiveGPS('${ord.providerName}')">📍 ดูพิกัด GPS Real-time</button>
+              <button class="btn btn-line-share" style="min-height:32px; font-size:0.75rem; padding:4px 8px; width:auto;" onclick="shareTrackingToLine('${ord.id}')">💬 ส่งลิงก์ติดตามทาง LINE ให้ญาติ</button>
+            </div>
+          </div>
+
           <div class="status-box">
             <span>สถานะปัจจุบัน</span>
             <span style="color:var(--primary-color);">${ord.status}</span>
           </div>
-          <button class="btn btn-secondary" style="margin-top:16px;" onclick="updateOrderStatus('${ord.id}')">จำลอง: อัปเดตสถานะฝั่งผู้ดูแล</button>
+
+          ${currentStepIdx === 3 ? `
+            <div style="margin-top:10px; padding:8px; background:#fefce8; border:1px solid #fef08a; border-radius:8px; text-align:center;">
+              <button class="btn" style="min-height:36px; font-size:0.875rem; background:#ca8a04;" onclick="reviewAndTip('${ord.id}')">⭐ ให้คะแนนผู้ดูแล & ทิปพิเศษ</button>
+            </div>
+          ` : ''}
+
+          <div style="display:flex; gap:8px; margin-top:16px;">
+            <button class="btn btn-secondary" style="flex:1;" onclick="updateOrderStatus('${ord.id}')">จำลอง: อัปเดตสถานะฝั่งผู้ดูแล</button>
+            <button class="btn btn-secondary" style="width:auto;" onclick="window.print()">🖨️ พิมพ์ใบเสร็จ</button>
+          </div>
         `;
         ordersContainer.appendChild(card);
       });
@@ -895,6 +1395,13 @@
         let nextIndex = statuses.indexOf(order.status) + 1;
         if (nextIndex >= statuses.length) nextIndex = 0;
         order.status = statuses[nextIndex];
+        
+        // [เพิ่มเติม] ปรับ step ตามสถานะ
+        if (nextIndex === 0) order.currentStep = 0;
+        else if (nextIndex === 1) order.currentStep = 1;
+        else if (nextIndex === 2 || nextIndex === 3) order.currentStep = 2;
+        else if (nextIndex === 4) order.currentStep = 3;
+
         renderOrders();
       }
     }
@@ -904,23 +1411,29 @@
       const name = document.getElementById('p-name').value;
       const role = document.getElementById('p-role').value;
       const license = document.getElementById('p-license').value;
+      const criminalConsent = document.getElementById('p-criminal-consent').checked;
       const province = document.getElementById('reg-province').value;
       const district = document.getElementById('reg-district').value;
       const subdistrict = document.getElementById('reg-subdistrict').value;
       const hospital = document.getElementById('reg-hospital').value;
+      const skill = document.getElementById('reg-skill').value;
       const service = document.getElementById('p-service').value;
       const price = document.getElementById('p-price').value;
+      const languageSkill = document.getElementById('p-language')?.value || 'all'; // [เพิ่มเติม]
 
       const newProvider = {
         id: providersDatabase.length + 1,
         name: name,
         role: role,
         license: license,
-        isVerified: license.length > 0,
+        isLicenseVerified: license.length > 0,
+        isCriminalChecked: criminalConsent,
         province: province,
         district: district,
         subdistrict: subdistrict,
         hospital: hospital,
+        conditionSkill: skill,
+        languageSkill: languageSkill, // [เพิ่มเติม]
         type: service === 'both' ? 'transport' : service,
         typeText: service === 'overnight' ? 'เฝ้าไข้นอนโรงพยาบาล' : 'พาไปโรงพยาบาล',
         price: Number(price),
@@ -929,11 +1442,330 @@
       };
 
       providersDatabase.unshift(newProvider);
-      alert("ลงทะเบียนสำเร็จ! ระบบบันทึกข้อมูลบริการของคุณเรียบร้อยแล้ว");
+      alert("ลงทะเบียนสำเร็จ! ระบบบันทึกข้อมูลและส่งเรื่องตรวจประวัติเรียบร้อยแล้ว");
       document.getElementById('provider-form').reset();
       filterServices(1);
       switchTab('search');
     }
+
+    /* =========================================================
+       [เพิ่มใหม่] ฟังก์ชันเสริมสำหรับ 5 ฟังก์ชันที่เพิ่มเข้ามา
+       ========================================================= */
+
+    // 1. ระบบอ่านหน้าจอด้วยเสียง (Text-To-Speech)
+    function readAloudPage() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const activeTab = document.querySelector('.tab-content:not(.hidden)');
+        const textToRead = activeTab ? activeTab.innerText : document.body.innerText;
+        const utterance = new SpeechSynthesisUtterance(textToRead);
+        utterance.lang = 'th-TH';
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert("ขออภัย เบราว์เซอร์ของคุณไม่รองรับการอ่านเสียงอัตโนมัติ");
+      }
+    }
+
+    // 2. คำนวณเบี้ยประกันอุบัติเหตุเพิ่ม
+    function toggleInsurance() {
+      if (!pendingBookingData) return;
+      const isChecked = document.getElementById('add-insurance').checked;
+      const insuranceCost = isChecked ? (50 * pendingBookingData.totalDays) : 0;
+      pendingBookingData.totalPrice = pendingBookingData.baseTotalPrice + insuranceCost;
+      document.getElementById('modal-total-price').innerText = `${pendingBookingData.totalPrice.toLocaleString()} บาท`;
+    }
+
+    // 3. ผู้ดูแลบันทึกสรุปการพบแพทย์ (Medical Brief)
+    function addMedicalBrief(orderId) {
+      const order = orders.find(o => o.id === orderId);
+      if (order) {
+        const brief = prompt("กรอกสรุปคำสั่งหมอ/ผลการตรวจ/ใบนัดหมาย:", order.medicalBrief || "");
+        if (brief !== null) {
+          order.medicalBrief = brief;
+          renderOrders();
+        }
+      }
+    }
+
+    // 4. ติดตามพิกัด GPS ผู้ดูแลแบบ Real-time
+    function trackLiveGPS(providerName) {
+      alert(`📍 จำลองระบบพิกัด GPS: ผู้ดูแล (${providerName}) กำลังเดินทางและเปิดสัญญาณ GPS ระบุตำแหน่งไว้แล้ว`);
+    }
+
+    /* =========================================================
+       [เพิ่มใหม่] ฟังก์ชันการทำงานเพิ่มเติมตามคำแนะนำ
+       ========================================================= */
+
+    // 5. อัปโหลดแนบรูปถ่ายใบนัด/สลิปยา
+    function uploadMedicalDocument(orderId) {
+      const order = orders.find(o => o.id === orderId);
+      if (order) {
+        const dummyImg = "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=400&auto=format&fit=crop&q=80";
+        order.receiptImage = dummyImg;
+        alert("แนบภาพถ่ายใบนัด/ใบเสร็จค่ายาเรียบร้อยแล้ว");
+        renderOrders();
+      }
+    }
+
+    // 6. แชร์ ลิงก์ติดตามตำแหน่ง ให้ญาติทาง LINE
+    function shareTrackingToLine(orderId) {
+      const shareText = `ติดตามสถานะการพาผู้ป่วยไปโรงพยาบาล รหัส ${orderId} ได้ที่: https://puen-ha-mor.com/track/${orderId}`;
+      const lineUrl = `https://line.me/R/msg/text/?${encodeURIComponent(shareText)}`;
+      window.open(lineUrl, '_blank');
+    }
+
+    // 7. ให้คะแนนรีวิว & ทิปผู้ดูแล
+    function reviewAndTip(orderId) {
+      const rating = prompt("ให้คะแนนบริการผู้ดูแล (1 - 5 ดาว):", "5");
+      if (rating) {
+        const tip = prompt("ระบุจำนวนเงินทิปพิเศษเพิ่มเติม (บาท):", "100");
+        alert(`ขอบคุณสำหรับคะแนน ${rating} ดาว ${tip ? `และทิปจำนวน ${tip} บาท` : ''}! ระบบบันทึกเรียบร้อยแล้ว`);
+      }
+    }
+
+    // 8. [เพิ่มเติม] ส่งออกประวัติการรับบริการย้อนหลังเป็นไฟล์ Text/JSON
+    function exportOrderHistory() {
+      if (orders.length === 0) {
+        alert("ไม่มีรายการประวัติการจองเพื่อส่งออก");
+        return;
+      }
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(orders, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", "booking_history.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+  </script>
+
+  <!-- ========================================== -->
+  <!-- 🚀 ส่วนต่อขยายฟังก์ชันเพิ่มเติม (EXTENSIONS) -->
+  <!-- ========================================== -->
+
+  <!-- สไตล์ CSS เพิ่มเติมสำหรับฟังก์ชันใหม่ -->
+  <style>
+    .ext-card-section {
+      background: #ffffff;
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-top: 20px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+    .ext-status-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .ext-status-step {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.875rem;
+    }
+    .ext-status-step.completed {
+      background: var(--success-bg);
+      border-color: #bbf7d0;
+      color: var(--success-color);
+      font-weight: 600;
+    }
+    .ext-medical-summary-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 10px;
+      font-size: 0.875rem;
+    }
+    .ext-btn-sm {
+      min-height: 34px !important;
+      padding: 4px 10px !important;
+      font-size: 0.8125rem !important;
+      width: auto !important;
+    }
+  </style>
+
+  <!-- โครงสร้าง HTML เพิ่มเติม: โปรไฟล์ผู้ป่วยประจำ -->
+  <div class="container" style="margin-top: 20px;">
+    <div class="ext-card-section">
+      <h2>👤 บันทึกข้อมูลผู้ป่วยประจำ (Patient Profile Storage)</h2>
+      <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 12px;">
+        บันทึกข้อมูลเพื่อความสะดวกในการจองครั้งถัดไป โดยไม่ต้องกรอกใหม่
+      </p>
+      <div class="form-group">
+        <label for="ext-patient-name">ชื่อ-นามสกุล ผู้ป่วย</label>
+        <input type="text" id="ext-patient-name" placeholder="เช่น นายสมศักดิ์ รักดี">
+      </div>
+      <div class="form-group">
+        <label for="ext-patient-rights">สิทธิการรักษาพยาบาล</label>
+        <select id="ext-patient-rights">
+          <option value="บัตรทอง 30 บาท">บัตรทอง / สิทธิหลักประกันสุขภาพแห่งชาติ</option>
+          <option value="ประกันสังคม">สิทธิประกันสังคม</option>
+          <option value="ข้าราชการ/เบิกตรง">สิทธิข้าราชการ / จ่ายตรง</option>
+          <option value="ประกันสุขภาพเอกชน">ประกันสุขภาพเอกชน</option>
+          <option value="ชำระเงินเอง">ชำระเงินเอง (Self-pay)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="ext-patient-allergy">ประวัติการแพ้ยา / แพ้อาหาร</label>
+        <input type="text" id="ext-patient-allergy" placeholder="เช่น แพ้ยา Penicillin, แพ้อาหารทะเล (ถ้าไม่มีให้ระบุ -)">
+      </div>
+      <div class="form-group">
+        <label for="ext-patient-chronic">โรคประจำตัว</label>
+        <input type="text" id="ext-patient-chronic" placeholder="เช่น ความดันโลหิตสูง, เบาหวาน, โรคหัวใจ">
+      </div>
+      <button type="button" class="btn" onclick="extSavePatientProfile()">💾 บันทึกข้อมูลผู้ป่วยประจำ</button>
+    </div>
+  </div>
+
+  <script>
+    // ----------------------------------------------------
+    // 1. ระบบบันทึกและโหลดข้อมูลโปรไฟล์ผู้ป่วยประจำ (LocalStorage)
+    // ----------------------------------------------------
+    function extSavePatientProfile() {
+      const profile = {
+        name: document.getElementById('ext-patient-name').value,
+        rights: document.getElementById('ext-patient-rights').value,
+        allergy: document.getElementById('ext-patient-allergy').value,
+        chronic: document.getElementById('ext-patient-chronic').value
+      };
+
+      if (!profile.name) {
+        alert("กรุณากรอกชื่อผู้ป่วยก่อนทำการบันทึก");
+        return;
+      }
+
+      localStorage.setItem("ext_patient_profile", JSON.stringify(profile));
+      alert("✅ บันทึกข้อมูลผู้ป่วยประจำเรียบร้อยแล้ว!");
+    }
+
+    function extLoadPatientProfile() {
+      const saved = localStorage.getItem("ext_patient_profile");
+      if (saved) {
+        const profile = JSON.parse(saved);
+        if(document.getElementById('ext-patient-name')) document.getElementById('ext-patient-name').value = profile.name || '';
+        if(document.getElementById('ext-patient-rights')) document.getElementById('ext-patient-rights').value = profile.rights || '';
+        if(document.getElementById('ext-patient-allergy')) document.getElementById('ext-patient-allergy').value = profile.allergy || '';
+        if(document.getElementById('ext-patient-chronic')) document.getElementById('ext-patient-chronic').value = profile.chronic || '';
+      }
+    }
+
+    // ----------------------------------------------------
+    // 2. ระบบเช็คอินขั้นตอนบริการ 5 ขั้นตอน (Timeline Step Tracking)
+    // ----------------------------------------------------
+    const extCheckInSteps = [
+      "1. ออกเดินทางไปรับผู้ป่วย",
+      "2. เดินทางถึงโรงพยาบาล / ยื่นเรื่อง",
+      "3. อยู่ระหว่างเข้าพบแพทย์",
+      "4. รับยา & ยื่นเอกสารการชำระเงิน",
+      "5. พาผู้ป่วยส่งถึงบ้านอย่างปลอดภัย"
+    ];
+
+    function extAdvanceOrderStep(orderId) {
+      const targetOrder = orders.find(o => o.id === orderId);
+      if (!targetOrder) return;
+
+      if (!targetOrder.currentStep) targetOrder.currentStep = 0;
+
+      if (targetOrder.currentStep < extCheckInSteps.length - 1) {
+        targetOrder.currentStep += 1;
+        targetOrder.status = extCheckInSteps[targetOrder.currentStep];
+        alert(`✅ อัปเดตสถานะเป็น: "${extCheckInSteps[targetOrder.currentStep]}" เรียบร้อยแล้ว`);
+        renderOrders();
+      } else {
+        alert("🎉 บริการนี้เสร็จสมบูรณ์ทุกขั้นตอนแล้ว");
+      }
+    }
+
+    // ----------------------------------------------------
+    // 3. ฟอร์มสรุปการพบแพทย์ (Doctor Visit Summary)
+    // ----------------------------------------------------
+    function extAddMedicalSummary(orderId) {
+      const targetOrder = orders.find(o => o.id === orderId);
+      if (!targetOrder) return;
+
+      const bp = prompt("กรอกความดัน/ชีพจรเบื้องต้น (เช่น 120/80 mmHg):", targetOrder.bp || "");
+      const doctorNote = prompt("กรอกคำแนะนำของคุณหมอ / ผลการตรวจ:", targetOrder.doctorNote || "");
+      const nextAppt = prompt("วันนัดครั้งถัดไป (เช่น 15 ก.ย. 2026):", targetOrder.nextAppt || "");
+
+      if (doctorNote !== null) {
+        targetOrder.bp = bp;
+        targetOrder.doctorNote = doctorNote;
+        targetOrder.nextAppt = nextAppt;
+        alert("✅ บันทึกสรุปการพบแพทย์เรียบร้อยแล้ว");
+        renderOrders();
+      }
+    }
+
+    // ----------------------------------------------------
+    // 4. คำนวณค่าบริการเพิ่มเติมตามระยะทาง (Distance Calculator)
+    // ----------------------------------------------------
+    function extCalculateDistanceFee(distanceKm) {
+      const baseKm = 10; // ฟรี 10 กม. แรก
+      const ratePerKm = 15; // กม. ละ 15 บาท
+      if (distanceKm <= baseKm) return 0;
+      return (distanceKm - baseKm) * ratePerKm;
+    }
+
+    function extApplyExtraDistanceToBooking(orderId) {
+      const kmStr = prompt("ระบุระยะทางจากบ้านถึงโรงพยาบาล (กิโลเมตร):", "15");
+      const km = parseFloat(kmStr);
+
+      if (!isNaN(km) && km > 0) {
+        const extraFee = extCalculateDistanceFee(km);
+        const targetOrder = orders.find(o => o.id === orderId);
+        if (targetOrder) {
+          targetOrder.distanceKm = km;
+          targetOrder.extraDistanceFee = extraFee;
+          targetOrder.totalPrice = (targetOrder.totalPrice || 0) + extraFee;
+          alert(`คำนวณระยะทาง ${km} กม. เพิ่มค่าเดินทาง ${extraFee} บาท\nยอดรวมใหม่: ${targetOrder.totalPrice} บาท`);
+          renderOrders();
+        }
+      }
+    }
+
+    // ----------------------------------------------------
+    // 5. ค้นหาผู้ดูแลด้วย Keyword (Search Extension)
+    // ----------------------------------------------------
+    function extInjectKeywordSearchUI() {
+      const searchCard = document.querySelector('#tab-search .card');
+      if (searchCard && !document.getElementById('ext-keyword-input')) {
+        const searchGroup = document.createElement('div');
+        searchGroup.className = 'form-group';
+        searchGroup.innerHTML = `
+          <label for="ext-keyword-input">🔎 ค้นหาด้วยชื่อผู้ดูแล หรือ ชื่อโรงพยาบาล</label>
+          <input type="text" id="ext-keyword-input" placeholder="พิมพ์ชื่อผู้ดูแล หรือโรงพยาบาล..." onkeyup="extFilterByKeyword()">
+        `;
+        searchCard.insertBefore(searchGroup, searchCard.children[1]);
+      }
+    }
+
+    function extFilterByKeyword() {
+      const keyword = document.getElementById('ext-keyword-input').value.toLowerCase();
+      if (!currentFilteredData) return;
+
+      const filtered = providersDatabase.filter(p => {
+        return p.name.toLowerCase().includes(keyword) || p.hospital.toLowerCase().includes(keyword);
+      });
+
+      // เรียกฟังก์ชันการแสดงผลเดิม
+      if (typeof renderServiceList === 'function') {
+        renderServiceList(filtered, 1);
+      }
+    }
+
+    // โหลดสคริปต์เมื่อเอกสารพร้อมทำงาน
+    document.addEventListener("DOMContentLoaded", () => {
+      extLoadPatientProfile();
+      extInjectKeywordSearchUI();
+    });
   </script>
 </body>
 </html>
