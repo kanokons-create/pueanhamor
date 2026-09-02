@@ -527,6 +527,92 @@
       background-color: #05b34c;
     }
   </style>
+
+  <!-- [เพิ่มใหม่] CSS ปรับแต่งการแสดงผลทุกฟังก์ชันบนหน้าจอมือถือ -->
+  <style>
+    @media (max-width: 640px) {
+      /* 1. ปรับแต่ง Header และชุดปุ่มปรับขนาดอักษร/อ่านเสียง ให้แสดงผลครบ ไม่หลุดจอ */
+      header {
+        padding: 16px 10px;
+      }
+      header h1 {
+        font-size: 1.375rem;
+      }
+      .font-resizer {
+        flex-wrap: wrap;
+        gap: 6px;
+        justify-content: center;
+      }
+      .font-btn {
+        padding: 6px 10px;
+        font-size: 0.8125rem;
+      }
+
+      /* 2. ปรับ Nav Tabs ให้กดง่ายและไม่ล้น */
+      nav {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .nav-btn {
+        font-size: 0.875rem;
+        padding: 10px 8px;
+        white-space: nowrap;
+      }
+
+      /* 3. ปรับโครงสร้าง Card และ Provider Details ให้แสดงผล 1 คอลัมน์เต็มบนมือถือ */
+      .card {
+        padding: 16px;
+      }
+      .provider-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .provider-details {
+        grid-template-columns: 1fr !important;
+        gap: 6px;
+      }
+
+      /* 4. จัดการกลุ่มปุ่มเครื่องมือ (Action Buttons) ในบัตรการจอง ให้เรียงซ้อนกันและกดง่าย */
+      .card.printable div[style*="display:flex"] {
+        flex-direction: column !important;
+        gap: 8px !important;
+      }
+      .card.printable .btn,
+      .card.printable .btn-secondary,
+      .card.printable .btn-line-share {
+        width: 100% !important;
+        font-size: 0.875rem !important;
+        padding: 8px 12px !important;
+      }
+
+      /* 5. ปรับแต่ง Modal Pop-up การจองและชำระเงิน ให้พอดีกับหน้าจอมือถือขนาดเล็ก */
+      .modal-card {
+        padding: 16px;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .qr-img {
+        width: 140px;
+        height: 140px;
+      }
+
+      /* 6. ย้ายและปรับขนาดปุ่มโทรฉุกเฉิน 1669 ไม่ให้บังปุ่มสำคัญล่างสุด */
+      .emergency-btn {
+        bottom: 12px;
+        right: 12px;
+        padding: 8px 14px;
+        font-size: 0.8125rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      }
+
+      /* 7. ปรับเว้นระยะขอบล่างของ body เพื่อป้องกันปุ่ม 1669 ทับเนื้อหา */
+      body {
+        padding-bottom: 80px;
+      }
+    }
+  </style>
 </head>
 <body>
 
