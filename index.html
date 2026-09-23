@@ -3119,3 +3119,548 @@ a.emergency-btn{
   }
 }
 </style>
+
+
+
+<!-- ================================================================
+     V7 FUNCTION PACK — เพิ่ม 7 ฟังก์ชันตามองค์ประกอบที่ผู้ใช้ระบุ
+     IMPORTANT: ส่วนนี้ต่อท้ายโค้ดเดิมทั้งหมด และเก็บข้อมูลเสริมแยก
+     ใน LocalStorage เพื่อไม่แก้ไขตัวแปร/ฟังก์ชันเดิมของระบบ
+     ================================================================ -->
+<style id="v7-function-pack-style">
+  #v7-launcher{
+    position:fixed;right:16px;top:112px;z-index:2500;
+    border:0;border-radius:999px;padding:11px 15px;
+    background:#1e3a8a;color:#fff;font-family:'Sarabun',sans-serif;
+    font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(30,58,138,.28)
+  }
+  #v7-launcher:hover{background:#1d4ed8}
+  .v7-overlay{
+    position:fixed;inset:0;background:rgba(15,23,42,.72);z-index:5000;
+    display:none;align-items:center;justify-content:center;padding:12px
+  }
+  .v7-panel{
+    width:min(1180px,100%);height:min(92vh,900px);background:#f8fafc;
+    border-radius:18px;overflow:hidden;box-shadow:0 25px 70px rgba(0,0,0,.28);
+    font-family:'Sarabun',sans-serif;display:flex;flex-direction:column
+  }
+  .v7-top{
+    background:#172554;color:#fff;padding:14px 18px;display:flex;
+    align-items:center;justify-content:space-between;gap:10px
+  }
+  .v7-top h2{margin:0;color:#fff;font-size:1.15rem}
+  .v7-top-actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+  .v7-btn{
+    border:0;border-radius:8px;padding:8px 11px;cursor:pointer;
+    font-family:inherit;font-weight:700
+  }
+  .v7-primary{background:#2563eb;color:#fff}
+  .v7-success{background:#16a34a;color:#fff}
+  .v7-warning{background:#f59e0b;color:#fff}
+  .v7-danger{background:#dc2626;color:#fff}
+  .v7-gray{background:#e2e8f0;color:#334155}
+  .v7-layout{display:grid;grid-template-columns:225px 1fr;min-height:0;flex:1}
+  .v7-side{background:#fff;border-right:1px solid #e2e8f0;padding:10px;overflow:auto}
+  .v7-side button{
+    width:100%;border:0;background:#fff;text-align:left;padding:10px 11px;
+    border-radius:9px;margin-bottom:5px;cursor:pointer;font-family:inherit;
+    font-weight:700;color:#475569
+  }
+  .v7-side button:hover,.v7-side button.active{background:#dbeafe;color:#1d4ed8}
+  .v7-content{padding:18px;overflow:auto}
+  .v7-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .v7-card{
+    background:#fff;border:1px solid #e2e8f0;border-radius:12px;
+    padding:14px;margin-bottom:12px
+  }
+  .v7-stat .num{font-size:1.55rem;font-weight:800;color:#1d4ed8;margin-top:3px}
+  .v7-muted{color:#64748b;font-size:.88rem}
+  .v7-table-wrap{overflow:auto}
+  .v7-table{width:100%;border-collapse:collapse;min-width:760px}
+  .v7-table th,.v7-table td{
+    padding:8px;border-bottom:1px solid #e2e8f0;text-align:left;
+    vertical-align:top;font-size:.84rem
+  }
+  .v7-table th{background:#eff6ff;color:#334155}
+  .v7-input,.v7-select,.v7-textarea{
+    width:100%;padding:9px;border:1px solid #cbd5e1;border-radius:8px;
+    font-family:inherit;background:#fff
+  }
+  .v7-textarea{min-height:90px;resize:vertical}
+  .v7-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .v7-badge{display:inline-block;padding:3px 8px;border-radius:999px;font-size:.72rem;font-weight:700}
+  .v7-green{background:#dcfce7;color:#166534}
+  .v7-yellow{background:#fef3c7;color:#92400e}
+  .v7-red{background:#fee2e2;color:#991b1b}
+  .v7-blue{background:#dbeafe;color:#1d4ed8}
+  .v7-flow{display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:7px}
+  .v7-flow-step{
+    padding:10px 7px;border:1px solid #cbd5e1;border-radius:10px;
+    text-align:center;background:#fff;font-size:.8rem
+  }
+  .v7-flow-step.done{background:#dcfce7;border-color:#86efac;color:#166534}
+  .v7-flow-step.current{background:#dbeafe;border-color:#60a5fa;color:#1d4ed8;font-weight:800}
+  .v7-bars{display:grid;gap:9px}
+  .v7-bar-row{display:grid;grid-template-columns:110px 1fr 45px;gap:8px;align-items:center}
+  .v7-bar-bg{height:18px;background:#e2e8f0;border-radius:99px;overflow:hidden}
+  .v7-bar-fill{height:100%;background:#2563eb;border-radius:99px}
+  .v7-toast{
+    position:fixed;right:18px;top:18px;z-index:7000;display:none;
+    background:#0f172a;color:#fff;padding:11px 14px;border-radius:9px;
+    box-shadow:0 8px 25px rgba(0,0,0,.22);font-family:'Sarabun',sans-serif
+  }
+  @media(max-width:800px){
+    #v7-launcher{right:8px;top:105px;padding:9px 11px;font-size:.78rem}
+    .v7-panel{height:94vh;border-radius:12px}
+    .v7-layout{grid-template-columns:1fr}
+    .v7-side{display:flex;overflow-x:auto;border-right:0;border-bottom:1px solid #e2e8f0;gap:5px}
+    .v7-side button{width:auto;min-width:max-content;margin:0}
+    .v7-content{padding:11px}
+    .v7-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .v7-form-grid{grid-template-columns:1fr}
+    .v7-flow{grid-template-columns:1fr}
+    .v7-top{padding:11px}
+    .v7-top h2{font-size:1rem}
+  }
+  @media(max-width:420px){
+    .v7-grid{grid-template-columns:1fr}
+    .v7-top-actions .v7-btn{padding:7px 8px;font-size:.72rem}
+  }
+</style>
+
+<button id="v7-launcher" type="button" onclick="V7_openLogin()">🔐 ระบบจัดการ 7 ฟังก์ชัน</button>
+
+<div id="v7-toast" class="v7-toast"></div>
+
+<div id="v7-login" class="v7-overlay">
+  <div class="v7-card" style="width:min(420px,100%);margin:0">
+    <h2 style="margin-bottom:6px">🔐 เข้าสู่ระบบ</h2>
+    <p class="v7-muted" style="margin-bottom:15px">ระบบจัดการหลังบ้านตามองค์ประกอบ 7 ฟังก์ชัน</p>
+    <label>ชื่อผู้ใช้</label>
+    <input id="v7-user" class="v7-input" value="admin" autocomplete="username">
+    <label style="margin-top:10px">รหัสผ่าน</label>
+    <input id="v7-pass" class="v7-input" type="password" value="admin123" autocomplete="current-password">
+    <button class="v7-btn v7-primary" style="width:100%;margin-top:13px" onclick="V7_login()">เข้าสู่ระบบ</button>
+    <button class="v7-btn v7-gray" style="width:100%;margin-top:7px" onclick="V7_closeLogin()">ยกเลิก</button>
+    <div class="v7-card" style="margin:13px 0 0;background:#f8fafc">
+      <b>บัญชี Demo</b><br>
+      Admin: <code>admin / admin123</code><br>
+      Staff: <code>staff / staff123</code>
+    </div>
+  </div>
+</div>
+
+<div id="v7-app" class="v7-overlay">
+  <div class="v7-panel">
+    <div class="v7-top">
+      <h2>📊 ADMIN BACK-OFFICE — 7 ฟังก์ชัน</h2>
+      <div class="v7-top-actions">
+        <span id="v7-role-label"></span>
+        <button class="v7-btn v7-gray" onclick="V7_logout()">ออกจากระบบ</button>
+      </div>
+    </div>
+    <div class="v7-layout">
+      <aside class="v7-side">
+        <button class="active" onclick="V7_tab('dashboard',this)">📊 7 Dashboard/รายงาน</button>
+        <button onclick="V7_tab('users',this)">🔐 1 สิทธิ์ผู้ใช้</button>
+        <button onclick="V7_tab('data',this)">🗂️ 2 จัดการข้อมูล</button>
+        <button onclick="V7_tab('process',this)">🔄 3 กระบวนการหลัก</button>
+        <button onclick="V7_tab('calc',this)">🧮 4 คำนวณอัตโนมัติ</button>
+        <button onclick="V7_tab('status',this)">📍 5 ติดตามสถานะ</button>
+        <button onclick="V7_tab('notify',this)">🔔 6 การแจ้งเตือน</button>
+      </aside>
+      <main id="v7-content" class="v7-content"></main>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  const KEY='friendDoctor_v7_function_pack_v1';
+  const defaultState={
+    role:'admin',
+    masterData:[],
+    statusMap:{},
+    notifications:[
+      {id:1,title:'ระบบพร้อมใช้งาน',text:'ฟังก์ชันทั้ง 7 องค์ประกอบถูกเปิดใช้งานแล้ว',time:new Date().toLocaleString('th-TH'),read:false}
+    ],
+    users:[
+      {username:'admin',role:'admin',active:true},
+      {username:'staff',role:'staff',active:true}
+    ]
+  };
+  let currentRole='admin';
+  let currentTab='dashboard';
+
+  function load(){
+    try{
+      const raw=JSON.parse(localStorage.getItem(KEY)||'{}');
+      return {
+        ...defaultState,
+        ...raw,
+        masterData:Array.isArray(raw.masterData)?raw.masterData:[],
+        notifications:Array.isArray(raw.notifications)?raw.notifications:defaultState.notifications,
+        users:Array.isArray(raw.users)?raw.users:defaultState.users,
+        statusMap:raw.statusMap||{}
+      };
+    }catch(e){return JSON.parse(JSON.stringify(defaultState));}
+  }
+  function save(s){localStorage.setItem(KEY,JSON.stringify(s));}
+  function esc(v){
+    return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+  function oldOrders(){
+    try{return (typeof orders!=='undefined'&&Array.isArray(orders))?orders:[];}catch(e){return [];}
+  }
+  function oldProviders(){
+    try{return (typeof providersDatabase!=='undefined'&&Array.isArray(providersDatabase))?providersDatabase:[];}catch(e){return [];}
+  }
+  function toast(msg){
+    const el=document.getElementById('v7-toast');if(!el)return;
+    el.textContent=msg;el.style.display='block';clearTimeout(window._v7toast);
+    window._v7toast=setTimeout(()=>el.style.display='none',2200);
+  }
+  function addNotification(title,text){
+    const s=load();
+    s.notifications.unshift({id:Date.now(),title,text,time:new Date().toLocaleString('th-TH'),read:false});
+    s.notifications=s.notifications.slice(0,50);save(s);
+  }
+  function statusBadge(s){
+    if(/เสร็จ|อนุมัติ|ชำระเงินแล้ว|ผ่าน/.test(s))return `<span class="v7-badge v7-green">${esc(s)}</span>`;
+    if(/ยกเลิก|ไม่ผ่าน|ระงับ/.test(s))return `<span class="v7-badge v7-red">${esc(s)}</span>`;
+    if(/รอ|กำลัง|ตรวจ/.test(s))return `<span class="v7-badge v7-yellow">${esc(s)}</span>`;
+    return `<span class="v7-badge v7-blue">${esc(s)}</span>`;
+  }
+
+  // ============================================================
+  // 1) ผู้ใช้และสิทธิ์ — อย่างน้อย 2 บทบาท
+  // ============================================================
+  window.V7_openLogin=()=>document.getElementById('v7-login').style.display='flex';
+  window.V7_closeLogin=()=>document.getElementById('v7-login').style.display='none';
+  window.V7_login=()=>{
+    const u=document.getElementById('v7-user').value.trim();
+    const p=document.getElementById('v7-pass').value;
+    const users={admin:{pass:'admin123',role:'admin'},staff:{pass:'staff123',role:'staff'}};
+    if(!users[u]||users[u].pass!==p){alert('❌ ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');return;}
+    currentRole=users[u].role;
+    sessionStorage.setItem('v7_role',currentRole);
+    sessionStorage.setItem('v7_user',u);
+    V7_closeLogin();
+    document.getElementById('v7-app').style.display='flex';
+    document.getElementById('v7-role-label').textContent='👤 '+u+' ('+(currentRole==='admin'?'Admin':'Staff')+')';
+    V7_render();
+  };
+  window.V7_logout=()=>{
+    sessionStorage.removeItem('v7_role');sessionStorage.removeItem('v7_user');
+    document.getElementById('v7-app').style.display='none';
+  };
+
+  // ============================================================
+  // เมนู
+  // ============================================================
+  window.V7_tab=(tab,btn)=>{
+    currentTab=tab;
+    document.querySelectorAll('#v7-app .v7-side button').forEach(b=>b.classList.remove('active'));
+    if(btn)btn.classList.add('active');
+    V7_render();
+  };
+  window.V7_render=()=>{
+    const el=document.getElementById('v7-content');if(!el)return;
+    const s=load();
+    if(currentTab==='dashboard')return V7_dashboard(el,s);
+    if(currentTab==='users')return V7_users(el,s);
+    if(currentTab==='data')return V7_data(el,s);
+    if(currentTab==='process')return V7_process(el,s);
+    if(currentTab==='calc')return V7_calc(el,s);
+    if(currentTab==='status')return V7_status(el,s);
+    if(currentTab==='notify')return V7_notify(el,s);
+  };
+
+  // ============================================================
+  // 7) Dashboard และรายงาน
+  // ============================================================
+  function V7_dashboard(el,s){
+    const os=oldOrders(),ps=oldProviders(),md=s.masterData;
+    const allStatuses=os.map(o=>s.statusMap[o.id]||o.status||'ไม่ระบุ');
+    const done=allStatuses.filter(x=>/เสร็จ/.test(x)).length;
+    const waiting=allStatuses.filter(x=>/รอ/.test(x)).length;
+    const revenue=os.reduce((a,o)=>a+Number(o.totalPrice||0),0);
+    const max=Math.max(1, ...['รอชำระเงิน','รอยืนยัน','กำลังให้บริการ','เสร็จสิ้น','ยกเลิก'].map(st=>allStatuses.filter(x=>x===st).length));
+    const labels=['รอชำระเงิน','รอยืนยัน','กำลังให้บริการ','เสร็จสิ้น','ยกเลิก'];
+    el.innerHTML=`
+      <h2>📊 Dashboard และรายงาน</h2>
+      <p class="v7-muted">สรุปข้อมูลจากระบบเดิม + ข้อมูลเสริมที่เพิ่มในฟังก์ชันใหม่ โดยไม่แก้ข้อมูลเดิม</p>
+      <div class="v7-grid">
+        <div class="v7-card v7-stat"><div class="v7-muted">การจองทั้งหมด</div><div class="num">${os.length}</div></div>
+        <div class="v7-card v7-stat"><div class="v7-muted">รอดำเนินการ</div><div class="num">${waiting}</div></div>
+        <div class="v7-card v7-stat"><div class="v7-muted">ผู้ดูแล</div><div class="num">${ps.length}</div></div>
+        <div class="v7-card v7-stat"><div class="v7-muted">ยอดรวมการจอง</div><div class="num">${revenue.toLocaleString()} ฿</div></div>
+      </div>
+      <div class="v7-card">
+        <h3>📈 จำนวนงานตามสถานะ</h3>
+        <div class="v7-bars">
+          ${labels.map(st=>{
+            const n=allStatuses.filter(x=>x===st).length;
+            return `<div class="v7-bar-row"><span>${st}</span><div class="v7-bar-bg"><div class="v7-bar-fill" style="width:${Math.round(n/max*100)}%"></div></div><b>${n}</b></div>`;
+          }).join('')}
+        </div>
+      </div>
+      <div class="v7-card">
+        <h3>📌 สรุปฟังก์ชัน</h3>
+        <div class="v7-grid">
+          <div>🔐 สิทธิ์ผู้ใช้: <b>2 บทบาท</b></div>
+          <div>🗂️ ข้อมูลเสริม: <b>${md.length}</b> รายการ</div>
+          <div>📍 งานเสร็จสิ้น: <b>${done}</b> รายการ</div>
+          <div>🔔 แจ้งเตือน: <b>${s.notifications.length}</b> รายการ</div>
+        </div>
+      </div>
+      <div class="v7-card">
+        <button class="v7-btn v7-primary" onclick="V7_exportCSV()">📥 ส่งออกรายงาน CSV</button>
+      </div>`;
+  }
+
+  window.V7_exportCSV=()=>{
+    const s=load(),os=oldOrders();
+    const rows=[['รหัสจอง','ผู้ดูแล','โรงพยาบาล','วันที่','สถานะ','ยอดเงิน']];
+    os.forEach(o=>rows.push([o.id,o.providerName,o.hospital,o.date||o.startDate||'',s.statusMap[o.id]||o.status||'',o.totalPrice||0]));
+    const csv='\uFEFF'+rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+    a.download='friend-doctor-v7-report.csv';a.click();URL.revokeObjectURL(a.href);
+  };
+
+  // ============================================================
+  // 1) จัดการผู้ใช้/สิทธิ์
+  // ============================================================
+  function V7_users(el,s){
+    el.innerHTML=`
+      <h2>🔐 ผู้ใช้และสิทธิ์</h2>
+      <div class="v7-card">
+        <p>ระบบมีอย่างน้อย 2 บทบาทตามที่กำหนด</p>
+        <div class="v7-table-wrap"><table class="v7-table">
+          <thead><tr><th>ผู้ใช้</th><th>บทบาท</th><th>สิทธิ์หลัก</th><th>สถานะ</th></tr></thead>
+          <tbody>
+            <tr><td>admin</td><td>${statusBadge('Admin')}</td><td>ดู Dashboard, จัดการข้อมูล, เปลี่ยนสถานะ, แจ้งเตือน, รายงาน</td><td>ใช้งาน</td></tr>
+            <tr><td>staff</td><td>${statusBadge('Staff')}</td><td>ดูข้อมูล, อัปเดตกระบวนการ, ติดตามสถานะ, แจ้งเตือน</td><td>ใช้งาน</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="v7-card">
+        <h3>🛡️ กติกาสิทธิ์</h3>
+        <p class="v7-muted">Admin สามารถลบข้อมูลเสริมและส่งออกรายงานได้ ส่วน Staff เน้นงานปฏิบัติการและติดตามสถานะ</p>
+      </div>`;
+  }
+
+  // ============================================================
+  // 2) จัดการข้อมูล — CRUD ข้อมูลเสริมแยกจากข้อมูลเดิม
+  // ============================================================
+  function V7_data(el,s){
+    const canDelete=currentRole==='admin';
+    el.innerHTML=`
+      <h2>🗂️ จัดการข้อมูล</h2>
+      <div class="v7-card">
+        <h3>➕ เพิ่มข้อมูลหลัก/ข้อมูลเสริม</h3>
+        <div class="v7-form-grid">
+          <div><label>ประเภทข้อมูล</label><select id="v7-md-type" class="v7-select"><option>การจอง</option><option>ผู้ดูแล</option><option>ผู้ใช้บริการ</option><option>บริการ</option></select></div>
+          <div><label>ชื่อรายการ</label><input id="v7-md-name" class="v7-input" placeholder="เช่น ผู้ดูแล/รายการบริการ"></div>
+          <div><label>เบอร์โทร/รหัส</label><input id="v7-md-code" class="v7-input" placeholder="ข้อมูลอ้างอิง"></div>
+          <div><label>สถานะ</label><select id="v7-md-status" class="v7-select"><option>รอตรวจสอบ</option><option>อนุมัติแล้ว</option><option>ใช้งาน</option><option>ระงับ</option></select></div>
+        </div>
+        <button class="v7-btn v7-primary" style="margin-top:11px" onclick="V7_addData()">💾 เพิ่มข้อมูล</button>
+      </div>
+      <div class="v7-card">
+        <h3>📋 รายการข้อมูลที่เพิ่มในระบบใหม่</h3>
+        <div class="v7-table-wrap"><table class="v7-table">
+          <thead><tr><th>ประเภท</th><th>รายการ</th><th>รหัส/โทร</th><th>สถานะ</th><th>จัดการ</th></tr></thead>
+          <tbody>
+            ${s.masterData.length?s.masterData.map((x,i)=>`
+              <tr>
+                <td>${esc(x.type)}</td><td><b>${esc(x.name)}</b></td><td>${esc(x.code)}</td>
+                <td>${statusBadge(x.status)}</td>
+                <td>
+                  <button class="v7-btn v7-warning" onclick="V7_editData(${i})">แก้ไข</button>
+                  ${canDelete?`<button class="v7-btn v7-danger" onclick="V7_deleteData(${i})">ลบ</button>`:''}
+                </td>
+              </tr>`).join(''):`<tr><td colspan="5" style="text-align:center;padding:20px;color:#64748b">ยังไม่มีข้อมูลที่เพิ่ม</td></tr>`}
+          </tbody>
+        </table></div>
+      </div>`;
+  }
+
+  window.V7_addData=()=>{
+    const name=document.getElementById('v7-md-name').value.trim();
+    if(!name){alert('กรุณาระบุชื่อรายการ');return;}
+    const s=load();
+    s.masterData.push({
+      id:'MD-'+Date.now(),
+      type:document.getElementById('v7-md-type').value,
+      name,
+      code:document.getElementById('v7-md-code').value.trim(),
+      status:document.getElementById('v7-md-status').value,
+      createdAt:new Date().toISOString()
+    });
+    save(s);addNotification('เพิ่มข้อมูลใหม่','เพิ่ม '+name+' ในระบบจัดการข้อมูล');toast('✅ เพิ่มข้อมูลแล้ว');V7_render();
+  };
+  window.V7_editData=(i)=>{
+    const s=load(),x=s.masterData[i];if(!x)return;
+    const name=prompt('แก้ไขชื่อรายการ',x.name);if(name===null)return;
+    const status=prompt('แก้ไขสถานะ',x.status);if(status===null)return;
+    x.name=name.trim()||x.name;x.status=status.trim()||x.status;save(s);
+    addNotification('แก้ไขข้อมูล','แก้ไขรายการ '+x.name);toast('✏️ แก้ไขข้อมูลแล้ว');V7_render();
+  };
+  window.V7_deleteData=(i)=>{
+    if(currentRole!=='admin'){alert('เฉพาะ Admin เท่านั้น');return;}
+    const s=load(),x=s.masterData[i];if(!x)return;
+    if(!confirm('ยืนยันการลบข้อมูล '+x.name+' ?'))return;
+    s.masterData.splice(i,1);save(s);addNotification('ลบข้อมูล','ลบรายการ '+x.name);toast('🗑️ ลบข้อมูลแล้ว');V7_render();
+  };
+
+  // ============================================================
+  // 3) กระบวนการหลัก — ตั้งแต่รับคำขอจนจบงาน
+  // ============================================================
+  function V7_process(el,s){
+    const steps=['รับคำขอ','ตรวจสอบข้อมูล','ยืนยันการจอง','ให้บริการ','ปิดงาน'];
+    el.innerHTML=`
+      <h2>🔄 กระบวนการหลักของธุรกิจ</h2>
+      <div class="v7-card">
+        <p class="v7-muted">ลำดับการทำงานตั้งแต่เริ่มต้นจนจบ เพื่อให้เจ้าหน้าที่เห็นขั้นตอนเดียวกัน</p>
+        <div class="v7-flow">
+          ${steps.map((x,i)=>`<div class="v7-flow-step ${i===0?'current':''}"><b>${i+1}</b><br>${x}</div>`).join('')}
+        </div>
+      </div>
+      <div class="v7-card">
+        <h3>⚙️ เลือกรหัสจองเพื่อดูขั้นตอน</h3>
+        <select id="v7-process-order" class="v7-select" onchange="V7_renderProcessDetail()">
+          ${oldOrders().length?oldOrders().map(o=>`<option value="${esc(o.id)}">${esc(o.id)} — ${esc(o.providerName||'')}</option>`).join(''):'<option>ยังไม่มีข้อมูลการจอง</option>'}
+        </select>
+        <div id="v7-process-detail" style="margin-top:12px"></div>
+      </div>`;
+    V7_renderProcessDetail();
+  }
+
+  window.V7_renderProcessDetail=()=>{
+    const box=document.getElementById('v7-process-detail');if(!box)return;
+    const id=document.getElementById('v7-process-order')?.value;
+    const s=load(),o=oldOrders().find(x=>String(x.id)===String(id));
+    if(!o){box.innerHTML='<p class="v7-muted">ไม่มีรายการ</p>';return;}
+    const current=s.statusMap[o.id]||o.status||'รอชำระเงิน';
+    const steps=['รับคำขอ','ตรวจสอบข้อมูล','ยืนยันการจอง','ให้บริการ','ปิดงาน'];
+    let idx=/เสร็จ/.test(current)?4:/กำลัง/.test(current)?3:/รอยืนยัน/.test(current)?2:/รอ/.test(current)?0:1;
+    box.innerHTML=`<div class="v7-flow">${steps.map((x,i)=>`<div class="v7-flow-step ${i<idx?'done':i===idx?'current':''}">${i<idx?'✓ ':i===idx?'▶ ':''}${x}</div>`).join('')}</div>
+      <p style="margin-top:10px">สถานะปัจจุบัน: ${statusBadge(current)}</p>
+      <button class="v7-btn v7-primary" style="margin-top:9px" onclick="V7_advanceProcess('${esc(o.id)}')">➡️ ไปขั้นตอนถัดไป</button>`;
+  };
+  window.V7_advanceProcess=(id)=>{
+    const s=load(),o=oldOrders().find(x=>String(x.id)===String(id));if(!o)return;
+    const steps=['รอชำระเงิน','รอยืนยัน','กำลังให้บริการ','เสร็จสิ้น'];
+    let cur=s.statusMap[id]||o.status||steps[0],idx=steps.indexOf(cur);
+    if(idx<0)idx=0;
+    if(idx>=steps.length-1){toast('ℹ️ รายการนี้อยู่ขั้นตอนสุดท้ายแล้ว');return;}
+    s.statusMap[id]=steps[idx+1];save(s);
+    addNotification('สถานะงานเปลี่ยน',`รหัส ${id} เปลี่ยนเป็น ${steps[idx+1]}`);
+    toast('🔄 เปลี่ยนขั้นตอนแล้ว');V7_render();
+  };
+
+  // ============================================================
+  // 4) คำนวณอัตโนมัติ
+  // ============================================================
+  function V7_calc(el,s){
+    el.innerHTML=`
+      <h2>🧮 การคำนวณอัตโนมัติ</h2>
+      <div class="v7-card">
+        <div class="v7-form-grid">
+          <div><label>ค่าบริการพื้นฐาน (บาท)</label><input id="v7-base" class="v7-input" type="number" value="800" min="0" oninput="V7_recalc()"></div>
+          <div><label>จำนวนวัน</label><input id="v7-days" class="v7-input" type="number" value="1" min="1" oninput="V7_recalc()"></div>
+          <div><label>ระยะทาง (กม.)</label><input id="v7-km" class="v7-input" type="number" value="0" min="0" oninput="V7_recalc()"></div>
+          <div><label>ค่าทางไกล/กม. (บาท)</label><input id="v7-kmrate" class="v7-input" type="number" value="10" min="0" oninput="V7_recalc()"></div>
+          <div><label>ประกันอุบัติเหตุ/วัน</label><input id="v7-ins" class="v7-input" type="number" value="50" min="0" oninput="V7_recalc()"></div>
+          <div><label>ส่วนลด (บาท)</label><input id="v7-discount" class="v7-input" type="number" value="0" min="0" oninput="V7_recalc()"></div>
+        </div>
+        <div class="v7-card" style="background:#eff6ff;margin-top:14px">
+          <div class="v7-muted">สูตร: (ค่าบริการ × วัน) + (ระยะทาง × อัตรา/กม.) + (ประกัน × วัน) − ส่วนลด</div>
+          <div id="v7-total" style="font-size:1.8rem;font-weight:800;color:#1d4ed8;margin-top:5px">0 บาท</div>
+        </div>
+        <button class="v7-btn v7-primary" onclick="V7_saveCalculation()">💾 บันทึกผลคำนวณ</button>
+      </div>`;
+    V7_recalc();
+  }
+  window.V7_recalc=()=>{
+    const n=id=>Number(document.getElementById(id)?.value||0);
+    const total=Math.max(0,(n('v7-base')*n('v7-days'))+(n('v7-km')*n('v7-kmrate'))+(n('v7-ins')*n('v7-days'))-n('v7-discount'));
+    const el=document.getElementById('v7-total');if(el)el.textContent=total.toLocaleString()+' บาท';
+    return total;
+  };
+  window.V7_saveCalculation=()=>{
+    const total=V7_recalc(),s=load();
+    s.masterData.push({id:'CALC-'+Date.now(),type:'ผลคำนวณ',name:'คำนวณค่าบริการอัตโนมัติ',code:String(total)+' บาท',status:'บันทึกแล้ว',createdAt:new Date().toISOString()});
+    save(s);addNotification('บันทึกผลคำนวณ','ยอดคำนวณ '+total.toLocaleString()+' บาท');toast('🧮 บันทึกผลคำนวณแล้ว');
+  };
+
+  // ============================================================
+  // 5) ติดตามสถานะ
+  // ============================================================
+  function V7_status(el,s){
+    const os=oldOrders();
+    el.innerHTML=`
+      <h2>📍 ติดตามสถานะงาน</h2>
+      <div class="v7-card">
+        <div class="v7-table-wrap"><table class="v7-table">
+          <thead><tr><th>รหัสจอง</th><th>ผู้ดูแล</th><th>โรงพยาบาล</th><th>สถานะ</th><th>อัปเดต</th></tr></thead>
+          <tbody>${os.length?os.map(o=>{
+            const st=s.statusMap[o.id]||o.status||'รอชำระเงิน';
+            return `<tr><td><b>${esc(o.id)}</b></td><td>${esc(o.providerName)}</td><td>${esc(o.hospital)}</td><td>${statusBadge(st)}</td>
+              <td><select class="v7-select" onchange="V7_setStatus('${esc(o.id)}',this.value)">
+                ${['รอชำระเงิน','รอยืนยัน','กำลังให้บริการ','เสร็จสิ้น','ยกเลิก'].map(x=>`<option ${x===st?'selected':''}>${x}</option>`).join('')}
+              </select></td></tr>`;
+          }).join(''):`<tr><td colspan="5" style="text-align:center;padding:20px">ยังไม่มีการจอง</td></tr>`}</tbody>
+        </table></div>
+      </div>`;
+  }
+  window.V7_setStatus=(id,status)=>{
+    const s=load();s.statusMap[id]=status;save(s);
+    addNotification('อัปเดตสถานะ',`รหัส ${id}: ${status}`);
+    if(typeof renderOrders==='function')try{renderOrders();}catch(e){}
+    toast('📍 อัปเดตสถานะแล้ว');V7_render();
+  };
+
+  // ============================================================
+  // 6) ศูนย์แจ้งเตือน
+  // ============================================================
+  function V7_notify(el,s){
+    const unread=s.notifications.filter(n=>!n.read).length;
+    el.innerHTML=`
+      <h2>🔔 การแจ้งเตือน</h2>
+      <div class="v7-card">
+        <b>แจ้งเตือนที่ยังไม่อ่าน: ${unread}</b>
+        <button class="v7-btn v7-gray" style="margin-left:8px" onclick="V7_markAllRead()">✓ อ่านทั้งหมด</button>
+      </div>
+      <div class="v7-card">
+        ${s.notifications.length?s.notifications.map((n,i)=>`
+          <div style="padding:11px 0;border-bottom:1px solid #e2e8f0">
+            <b>${esc(n.title)}</b> ${n.read?'':'<span class="v7-badge v7-blue">ใหม่</span>'}
+            <div>${esc(n.text)}</div><small class="v7-muted">${esc(n.time)}</small>
+          </div>`).join(''):'<div class="v7-muted">ยังไม่มีการแจ้งเตือน</div>'}
+      </div>`;
+  }
+  window.V7_markAllRead=()=>{
+    const s=load();s.notifications.forEach(n=>n.read=true);save(s);V7_render();toast('🔔 อ่านแจ้งเตือนทั้งหมดแล้ว');
+  };
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    const role=sessionStorage.getItem('v7_role');
+    const user=sessionStorage.getItem('v7_user');
+    if(role&&user){
+      currentRole=role;
+      const app=document.getElementById('v7-app');
+      if(app){
+        app.style.display='flex';
+        document.getElementById('v7-role-label').textContent='👤 '+user+' ('+(role==='admin'?'Admin':'Staff')+')';
+        V7_render();
+      }
+    }
+  });
+})();
+</script>
+
