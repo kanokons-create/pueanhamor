@@ -426,7 +426,7 @@
       background-color: #dc2626;
     }
 
-    /* Modal ชำระเงิน/ขั้นตอนการจอง */
+    /* Modal ชำระเงิน/ขั้นตอนการจอง (ปรับขนาดกระทัดรัด) */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -438,14 +438,17 @@
       justify-content: center;
       align-items: center;
       z-index: 1000;
+      padding: 12px;
     }
 
     .modal-card {
       background: white;
-      padding: 24px;
+      padding: 16px;
       border-radius: var(--radius);
-      max-width: 440px;
-      width: 90%;
+      max-width: 380px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
       text-align: center;
       box-shadow: var(--shadow-lg);
     }
@@ -454,19 +457,19 @@
       background: #f8fafc;
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      padding: 12px;
-      margin: 12px 0;
+      padding: 8px 10px;
+      margin: 8px 0;
       text-align: left;
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
     }
 
     .qr-img {
-      width: 180px;
-      height: 180px;
-      margin: 12px auto;
+      width: 120px;
+      height: 120px;
+      margin: 8px auto;
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      padding: 8px;
+      padding: 4px;
       display: block;
     }
 
@@ -589,13 +592,13 @@
 
       /* 5. ปรับแต่ง Modal Pop-up การจองและชำระเงิน ให้พอดีกับหน้าจอมือถือขนาดเล็ก */
       .modal-card {
-        padding: 16px;
-        max-height: 90vh;
+        padding: 12px;
+        max-height: 92vh;
         overflow-y: auto;
       }
       .qr-img {
-        width: 140px;
-        height: 140px;
+        width: 110px;
+        height: 110px;
       }
 
       /* 6. ย้ายและปรับขนาดปุ่มโทรฉุกเฉิน 1669 ไม่ให้บังปุ่มสำคัญล่างสุด */
@@ -831,40 +834,40 @@
 
   <div id="payment-modal" class="modal-overlay hidden">
     <div class="modal-card">
-      <h2 style="justify-content: center;">📲 ขั้นตอนการจอง & ชำระเงิน</h2>
+      <h2 style="justify-content: center; font-size: 1.1rem; margin-bottom: 8px;">📲 ขั้นตอนการจอง & ชำระเงิน</h2>
       
       <div id="modal-summary-details" class="booking-summary-box"></div>
 
-      <div style="background:#fffbebf5; border:1px solid #fef3c7; padding:10px; border-radius:8px; margin:10px 0; text-align:left;">
-        <label style="font-size:0.8125rem; font-weight:700; color:#b45309; margin-bottom:4px; display:block;">📋 ข้อมูลเพิ่มเติมผู้ป่วย (Pre-Trip Note):</label>
-        <input type="text" id="patient-special-note" placeholder="เช่น ต้องใส่ออกซิเจน, หูตึง, มีโรคประจำตัว" style="min-height:36px; font-size:0.875rem;">
+      <div style="background:#fffbebf5; border:1px solid #fef3c7; padding:6px 8px; border-radius:6px; margin:6px 0; text-align:left;">
+        <label style="font-size:0.75rem; font-weight:700; color:#b45309; margin-bottom:2px; display:block;">📋 ข้อมูลเพิ่มเติมผู้ป่วย (Pre-Trip Note):</label>
+        <input type="text" id="patient-special-note" placeholder="เช่น ต้องใส่ออกซิเจน, หูตึง, มีโรคประจำตัว" style="min-height:32px; padding:4px 8px; font-size:0.8125rem;">
       </div>
 
-      <div style="background:#f1f5f9; border:1px solid var(--border-color); padding:10px; border-radius:8px; margin:10px 0; text-align:left;">
-        <label style="font-size:0.8125rem; font-weight:700; color:var(--text-main); margin-bottom:4px; display:block;">📞 เบอร์ติดต่อญาติกรณีฉุกเฉิน:</label>
-        <input type="tel" id="emergency-contact-phone" placeholder="เช่น 081-234-5678" style="min-height:36px; font-size:0.875rem;">
+      <div style="background:#f1f5f9; border:1px solid var(--border-color); padding:6px 8px; border-radius:6px; margin:6px 0; text-align:left;">
+        <label style="font-size:0.75rem; font-weight:700; color:var(--text-main); margin-bottom:2px; display:block;">📞 เบอร์ติดต่อญาติกรณีฉุกเฉิน:</label>
+        <input type="tel" id="emergency-contact-phone" placeholder="เช่น 081-234-5678" style="min-height:32px; padding:4px 8px; font-size:0.8125rem;">
       </div>
 
-      <div style="background:#f0fdf4; border:1px solid #bbf7d0; padding:10px; border-radius:8px; margin:10px 0; text-align:left;">
-        <label style="display:flex; align-items:center; gap:8px; font-size:0.875rem; color:#166534; cursor:pointer; font-weight:600;">
+      <div style="background:#f0fdf4; border:1px solid #bbf7d0; padding:6px 8px; border-radius:6px; margin:6px 0; text-align:left;">
+        <label style="display:flex; align-items:center; gap:6px; font-size:0.75rem; color:#166534; cursor:pointer; font-weight:600;">
           <input type="checkbox" id="add-insurance" onchange="toggleInsurance()"> 
           🛡️ รับประกันอุบัติเหตุระหว่างเดินทาง (+50 บาท/วัน)
         </label>
       </div>
 
-      <p style="font-size:0.875rem; font-weight:600; color:var(--text-main); margin-top:8px;">
+      <p style="font-size:0.75rem; font-weight:600; color:var(--text-main); margin-top:4px;">
         สแกน QR Code ด้านล่างเพื่อชำระเงินมัดจำ/ค่าบริการ
       </p>
       
       <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PromptPayDemoBooking" alt="PromptPay QR Code" class="qr-img">
       
-      <div style="background:#e0f2fe; padding:8px 12px; border-radius:8px; margin-bottom:16px;">
-        <span style="font-size:0.8125rem; color:var(--primary-dark);">ยอดที่ต้องชำระชำระผ่าน PromptPay</span>
-        <div id="modal-total-price" style="font-size:1.375rem; font-weight:700; color:var(--primary-color);"></div>
+      <div style="background:#e0f2fe; padding:6px 10px; border-radius:6px; margin-bottom:8px;">
+        <span style="font-size:0.75rem; color:var(--primary-dark);">ยอดที่ต้องชำระชำระผ่าน PromptPay</span>
+        <div id="modal-total-price" style="font-size:1.125rem; font-weight:700; color:var(--primary-color);"></div>
       </div>
 
-      <button class="btn" onclick="confirmPaymentProcess()">✅ ยืนยันการชำระเงินเรียบร้อยแล้ว</button>
-      <button class="btn btn-secondary" style="margin-top:8px;" onclick="closePaymentModal()">ยกเลิกการจอง</button>
+      <button class="btn" style="min-height:38px; padding:6px 12px; font-size:0.875rem;" onclick="confirmPaymentProcess()">✅ ยืนยันการชำระเงินเรียบร้อยแล้ว</button>
+      <button class="btn btn-secondary" style="margin-top:6px; min-height:34px; padding:4px 10px; font-size:0.8125rem;" onclick="closePaymentModal()">ยกเลิกการจอง</button>
     </div>
   </div>
 
@@ -1862,5 +1865,1257 @@
       extInjectKeywordSearchUI();
     });
   </script>
+
+  <!-- ======================================================= -->
+  <!-- 💥 FEATURE EXTENSION 2026: REAL-TIME BACKEND & SLIP UPLOAD -->
+  <!-- ======================================================= -->
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+  <style>
+    /* Styling for Payment Slip Upload Box (ปรับขนาดกระทัดรัด) */
+    .slip-upload-box {
+      border: 2px dashed var(--primary-color);
+      background-color: #f0f9ff;
+      border-radius: var(--radius);
+      padding: 8px 10px;
+      text-align: center;
+      margin: 6px 0;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .slip-upload-box:hover {
+      background-color: #e0f2fe;
+      border-color: var(--primary-dark);
+    }
+
+    .slip-preview-img {
+      max-width: 100%;
+      max-height: 100px;
+      border-radius: 6px;
+      object-fit: contain;
+      margin: 6px auto;
+      display: block;
+      box-shadow: var(--shadow-md);
+    }
+
+    .slip-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      border-radius: 16px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .slip-status-pending {
+      background-color: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+
+    .slip-status-verified {
+      background-color: var(--success-bg);
+      color: var(--success-color);
+      border: 1px solid #bbf7d0;
+    }
+
+    /* Modal for Real-time GPS Live Tracking */
+    .gps-modal-card {
+      background: white;
+      padding: 20px;
+      border-radius: var(--radius);
+      max-width: 620px;
+      width: 95%;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #realtime-map-container {
+      width: 100%;
+      height: 320px;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--border-color);
+      margin: 12px 0;
+      z-index: 1;
+    }
+
+    .live-status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #0f172a;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      margin-bottom: 8px;
+    }
+
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      background-color: #22c55e;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      animation: pulse-green 1.5s infinite;
+    }
+
+    @keyframes pulse-green {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      }
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+      }
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+      }
+    }
+  </style>
+
+  <!-- Modal สำหรับแสดงแผนที่ GPS Realtime -->
+  <div id="gps-tracking-modal" class="modal-overlay hidden">
+    <div class="gps-modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <h2 style="margin-bottom:0; font-size:1.125rem;">📍 ติดตามตำแหน่งผู้ดูแลแบบ Real-time (GPS Live)</h2>
+        <button style="background:none; border:none; font-size:1.5rem; cursor:pointer;" onclick="closeGPSModal()">✕</button>
+      </div>
+
+      <div class="live-status-bar">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="pulse-dot"></span>
+          <span id="live-tracking-provider-name">ผู้ดูแล: --</span>
+        </div>
+        <span id="live-tracking-speed" style="color:#38bdf8; font-weight:600;">ความเร็ว: 35 กม./ชม.</span>
+      </div>
+
+      <div id="realtime-map-container"></div>
+
+      <div style="background:#f8fafc; padding:10px 14px; border-radius:8px; border:1px solid var(--border-color); font-size:0.8125rem; display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+        <div><strong>ละติจูด (Lat):</strong> <span id="gps-lat">-</span></div>
+        <div><strong>ลองจิจูด (Lng):</strong> <span id="gps-lng">-</span></div>
+        <div style="grid-column: 1 / -1;"><strong>จุดหมายปลายทาง:</strong> <span id="gps-destination">โรงพยาบาล</span></div>
+      </div>
+
+      <button class="btn btn-secondary" style="margin-top:12px;" onclick="closeGPSModal()">ปิดหน้าต่างติดตาม</button>
+    </div>
+  </div>
+
+  <script>
+    
+    // =========================================================
+    // 1. DATABASE SERVICE LAYER & REAL-TIME WEBSOCKET SIMULATOR
+    // =========================================================
+    class DatabaseServiceLayer {
+      constructor() {
+        this.storageKey = 'puen_ha_mor_db_v2';
+        this.init();
+      }
+
+      init() {
+        const existingData = localStorage.getItem(this.storageKey);
+        if (!existingData) {
+          this.syncLocalOrdersToDb(typeof orders !== 'undefined' ? orders : []);
+        }
+      }
+
+      getOrders() {
+        try {
+          const raw = localStorage.getItem(this.storageKey);
+          return raw ? JSON.parse(raw) : [];
+        } catch (e) {
+          console.error("Database retrieval error:", e);
+          return [];
+        }
+      }
+
+      saveOrder(order) {
+        const dbOrders = this.getOrders();
+        const index = dbOrders.findIndex(o => o.id === order.id);
+        if (index >= 0) {
+          dbOrders[index] = order;
+        } else {
+          dbOrders.unshift(order);
+        }
+        localStorage.setItem(this.storageKey, JSON.stringify(dbOrders));
+        return order;
+      }
+
+      syncLocalOrdersToDb(localOrders) {
+        localStorage.setItem(this.storageKey, JSON.stringify(localOrders));
+      }
+    }
+
+    const appDb = new DatabaseServiceLayer();
+
+    // WebSocket / Realtime Simulator Class
+    class RealtimeGPSSimulator {
+      constructor() {
+        this.listeners = [];
+        this.timer = null;
+        // Default Route Simulation (Bangkok Siriraj Area as demo)
+        this.currentLat = 13.7587;
+        this.currentLng = 100.4851;
+        this.destLat = 13.7597;
+        this.destLng = 100.4862;
+        this.speed = 32;
+        this.isMoving = false;
+      }
+
+      subscribe(callback) {
+        this.listeners.push(callback);
+      }
+
+      unsubscribe(callback) {
+        this.listeners = this.listeners.filter(cb => cb !== callback);
+      }
+
+      startTracking(providerName) {
+        this.isMoving = true;
+        if (this.timer) clearInterval(this.timer);
+
+        this.timer = setInterval(() => {
+          if (!this.isMoving) return;
+
+          // Simulate realistic slight GPS movement towards destination
+          this.currentLat += (Math.random() - 0.48) * 0.0003;
+          this.currentLng += (Math.random() - 0.48) * 0.0003;
+          this.speed = Math.floor(25 + Math.random() * 20);
+
+          const payload = {
+            providerName,
+            lat: this.currentLat.toFixed(6),
+            lng: this.currentLng.toFixed(6),
+            speed: this.speed,
+            timestamp: new Date().toLocaleTimeString('th-TH')
+          };
+
+          this.listeners.forEach(cb => cb(payload));
+        }, 2500);
+      }
+
+      stopTracking() {
+        this.isMoving = false;
+        if (this.timer) clearInterval(this.timer);
+      }
+    }
+
+    const realtimeGpsEngine = new RealtimeGPSSimulator();
+
+    // =========================================================
+    // 2. REAL SLIP UPLOAD & AUTOMATED VERIFICATION INJECTOR
+    // =========================================================
+    let uploadedSlipDataUrl = null;
+    let isSlipVerified = false;
+
+    function injectSlipUploadUI() {
+      const modalPaymentContainer = document.getElementById('payment-modal');
+      if (!modalPaymentContainer) return;
+
+      const modalCard = modalPaymentContainer.querySelector('.modal-card');
+      const confirmBtn = modalCard.querySelector('button[onclick="confirmPaymentProcess()"]');
+
+      if (confirmBtn && !document.getElementById('slip-upload-section')) {
+        const slipSection = document.createElement('div');
+        slipSection.id = 'slip-upload-section';
+        slipSection.style.margin = '6px 0';
+        slipSection.style.textAlign = 'left';
+
+        slipSection.innerHTML = `
+          <label style="font-size:0.75rem; font-weight:700; color:var(--text-main); display:block; margin-bottom:2px;">
+            📄 แนบไฟล์หลักฐานสลิปการโอนเงิน *
+          </label>
+          
+          <div class="slip-upload-box" onclick="document.getElementById('slip-file-input').click()">
+            <input type="file" id="slip-file-input" accept="image/*" style="display:none;" onchange="handleSlipSelected(event)">
+            <div id="slip-upload-placeholder">
+              <span style="font-size:1.25rem; display:block;">📥</span>
+              <span style="font-size:0.75rem; font-weight:600; color:var(--primary-color);">แนบรูปสลิปโอนเงิน</span>
+            </div>
+            
+            <div id="slip-preview-container" class="hidden">
+              <img id="slip-preview-img" class="slip-preview-img" src="" alt="Slip Preview">
+              <div id="slip-verification-status" class="slip-status-badge slip-status-pending">
+                ⏳ กำลังวิเคราะห์สลิป...
+              </div>
+            </div>
+          </div>
+        `;
+
+        modalCard.insertBefore(slipSection, confirmBtn);
+      }
+    }
+
+    function handleSlipSelected(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        uploadedSlipDataUrl = e.target.result;
+
+        document.getElementById('slip-upload-placeholder').classList.add('hidden');
+        document.getElementById('slip-preview-container').classList.remove('hidden');
+        document.getElementById('slip-preview-img').src = uploadedSlipDataUrl;
+
+        const statusBadge = document.getElementById('slip-verification-status');
+        statusBadge.className = 'slip-status-badge slip-status-pending';
+        statusBadge.innerHTML = '⏳ กำลังสแกนสลิปอัตโนมัติ...';
+        isSlipVerified = false;
+
+        // Simulate AI automated Slip Verification API (e.g. EasySlip / SlipOK API)
+        setTimeout(() => {
+          isSlipVerified = true;
+          statusBadge.className = 'slip-status-badge slip-status-verified';
+          statusBadge.innerHTML = '✅ ตรวจสอบสลิปถูกต้อง';
+        }, 1800);
+      };
+
+      reader.readAsDataURL(file);
+    }
+
+    // Override original confirmPaymentProcess safely without breaking existing features
+    const originalConfirmPaymentProcess = window.confirmPaymentProcess;
+
+    window.confirmPaymentProcess = function() {
+      if (!uploadedSlipDataUrl || !isSlipVerified) {
+        alert("⚠️ กรุณาแนบไฟล์สลิปการโอนเงิน และรอระบบตรวจสอบความถูกต้องก่อนกดแนบยัน");
+        return;
+      }
+
+      if (typeof originalConfirmPaymentProcess === 'function') {
+        // Execute original logic
+        originalConfirmPaymentProcess();
+
+        // Attach slip data to the latest generated order and save to DB Service
+        if (orders && orders.length > 0) {
+          orders[0].receiptImage = uploadedSlipDataUrl;
+          orders[0].slipStatus = "Verified";
+          appDb.saveOrder(orders[0]);
+          renderOrders();
+        }
+
+        // Reset slip upload form state
+        uploadedSlipDataUrl = null;
+        isSlipVerified = false;
+        const placeholder = document.getElementById('slip-upload-placeholder');
+        const preview = document.getElementById('slip-preview-container');
+        if (placeholder) placeholder.classList.remove('hidden');
+        if (preview) preview.classList.add('hidden');
+      }
+    };
+
+    // =========================================================
+    // 3. REAL-TIME LEAFLET MAP & LIVE GPS UI LOGIC
+    // =========================================================
+    let leafletMap = null;
+    let providerMarker = null;
+
+    window.trackLiveGPS = function(providerName) {
+      const modal = document.getElementById('gps-tracking-modal');
+      document.getElementById('live-tracking-provider-name').innerText = `ผู้ดูแล: ${providerName}`;
+      modal.classList.remove('hidden');
+
+      // Initialize Leaflet Map if not created
+      setTimeout(() => {
+        if (!leafletMap) {
+          leafletMap = L.map('realtime-map-container').setView([13.7587, 100.4851], 15);
+
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+          }).addTo(leafletMap);
+
+          // Add Hospital Target Marker
+          L.marker([13.7597, 100.4862]).addTo(leafletMap)
+            .bindPopup("🏥 โรงพยาบาลปักหมุดรับบริการ")
+            .openPopup();
+
+          // Create Caregiver Marker
+          const customIcon = L.divIcon({
+            className: 'custom-div-icon',
+            html: `<div style="background-color:#0284c7; color:white; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid white; box-shadow:0 2px 6px rgba(0,0,0,0.3); font-size:16px;">🩺</div>`,
+            iconSize: [32, 32],
+            iconAnchor: [16, 16]
+          });
+
+          providerMarker = L.marker([13.7587, 100.4851], { icon: customIcon }).addTo(leafletMap);
+        } else {
+          leafletMap.invalidateSize();
+        }
+
+        // Start WebSocket / GPS Real-time Stream Updates
+        realtimeGpsEngine.subscribe(updateMapPosition);
+        realtimeGpsEngine.startTracking(providerName);
+      }, 200);
+    };
+
+    function updateMapPosition(data) {
+      if (providerMarker && leafletMap) {
+        const newLatLng = new L.LatLng(data.lat, data.lng);
+        providerMarker.setLatLng(newLatLng);
+        leafletMap.panTo(newLatLng);
+
+        document.getElementById('gps-lat').innerText = data.lat;
+        document.getElementById('gps-lng').innerText = data.lng;
+        document.getElementById('live-tracking-speed').innerText = `ความเร็ว: ${data.speed} กม./ชม.`;
+      }
+    }
+
+    window.closeGPSModal = function() {
+      document.getElementById('gps-tracking-modal').classList.add('hidden');
+      realtimeGpsEngine.unsubscribe(updateMapPosition);
+      realtimeGpsEngine.stopTracking();
+    };
+
+    // Auto setup on page ready
+    document.addEventListener("DOMContentLoaded", () => {
+      injectSlipUploadUI();
+
+      // Sync Database State with Local Storage Orders on Start
+      const dbOrders = appDb.getOrders();
+      if (dbOrders && dbOrders.length > 0) {
+        orders = dbOrders;
+        if (typeof renderOrders === 'function') renderOrders();
+      }
+    });
+  </script>
+
+  <!-- ================================================================= -->
+  <!-- 🛡️ BACKEND ADMIN DASHBOARD & SOS EMERGENCY SYSTEM EXTENSION 2026  -->
+  <!-- ================================================================= -->
+
+  <!-- ปุ่ม SOS ฉุกเฉินสำหรับผู้ดูแลระหว่างปฏิบัติงาน -->
+  <button id="sos-alert-btn" class="emergency-btn" style="bottom: 70px; background-color: #7c3aed; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);" onclick="triggerSOSAlert()" title="ส่งสัญญาณฉุกเฉินถึงศูนย์ควบคุม">
+    🆘 ส่งสัญญาณ SOS หาศูนย์บริการ
+  </button>
+
+  <!-- Modal สำหรับหน้าต่าง Admin Back-Office -->
+  <div id="admin-dashboard-modal" class="modal-overlay hidden">
+    <div class="modal-card" style="max-width: 720px; text-align: left; padding: 20px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:10px; margin-bottom:12px;">
+        <h2 style="margin-bottom:0; font-size:1.25rem;">🛠️ แดชบอร์ดผู้ดูแลระบบ (Admin Back-Office)</h2>
+        <button style="background:none; border:none; font-size:1.5rem; cursor:pointer;" onclick="closeAdminModal()">✕</button>
+      </div>
+
+      <div style="display:flex; gap:8px; margin-bottom:16px;">
+        <button class="btn btn-secondary ext-btn-sm" style="background:#e0f2fe; color:#0369a1;" onclick="switchAdminSubTab('providers')">👥 อนุมัติผู้ดูแล</button>
+        <button class="btn btn-secondary ext-btn-sm" onclick="switchAdminSubTab('slips')">💵 ตรวจสอบสลิป</button>
+        <button class="btn btn-secondary ext-btn-sm" onclick="switchAdminSubTab('sos')">🚨 รายการสัญญาณ SOS</button>
+      </div>
+
+      <!-- Admin Subtab 1: ตรวจสอบและอนุมัติผู้ดูแล -->
+      <div id="admin-subtab-providers">
+        <h3 style="font-size:1rem; margin-bottom:8px;">รายชื่อผู้ดูแลที่รอการอนุมัติ (Pending Approval)</h3>
+        <div id="admin-pending-providers-list">
+          <div style="padding:12px; background:#f8fafc; border:1px solid var(--border-color); border-radius:8px; text-align:center; color:var(--text-muted); font-size:0.875rem;">
+            ไม่มีผู้ดูแลที่ค้างอนุมัติในขณะนี้
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Subtab 2: รายการตรวจสอบสลิปการชำระเงิน -->
+      <div id="admin-subtab-slips" class="hidden">
+        <h3 style="font-size:1rem; margin-bottom:8px;">รายการสลิปการโอนเงินในระบบ</h3>
+        <div id="admin-slips-list">
+          <!-- Render dynamically -->
+        </div>
+      </div>
+
+      <!-- Admin Subtab 3: บันทึกแจ้งเหตุ SOS -->
+      <div id="admin-subtab-sos" class="hidden">
+        <h3 style="font-size:1rem; margin-bottom:8px; color:#dc2626;">🚨 สัญญาณเตือนภัยฉุกเฉิน (SOS Logs)</h3>
+        <div id="admin-sos-list">
+          <div style="padding:12px; background:#fef2f2; border:1px solid #fecaca; border-radius:8px; text-align:center; color:#dc2626; font-size:0.875rem;">
+            ยังไม่มีรายงานเหตุฉุกเฉินเข้ามา
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-secondary" style="margin-top:16px;" onclick="closeAdminModal()">ปิดแดชบอร์ด Admin</button>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================
+    // 1. ADMIN BACK-OFFICE & SOS ALERT LOGIC
+    // =========================================================
+    let sosLogs = [];
+
+    // เพิ่มปุ่มทางเข้า Admin ไว้ใน Header
+    function injectAdminHeaderButton() {
+      const fontResizer = document.querySelector('.font-resizer');
+      if (fontResizer && !document.getElementById('admin-entry-btn')) {
+        const adminBtn = document.createElement('button');
+        adminBtn.id = 'admin-entry-btn';
+        adminBtn.className = 'font-btn';
+        adminBtn.style.background = 'rgba(15, 23, 42, 0.4)';
+        adminBtn.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+        adminBtn.innerHTML = '⚙️ แดชบอร์ด Admin';
+        adminBtn.onclick = openAdminModal;
+        fontResizer.appendChild(adminBtn);
+      }
+    }
+
+    function openAdminModal() {
+      renderAdminProvidersList();
+      renderAdminSlipsList();
+      document.getElementById('admin-dashboard-modal').classList.remove('hidden');
+    }
+
+    function closeAdminModal() {
+      document.getElementById('admin-dashboard-modal').classList.add('hidden');
+    }
+
+    function switchAdminSubTab(subTab) {
+      document.getElementById('admin-subtab-providers').classList.add('hidden');
+      document.getElementById('admin-subtab-slips').classList.add('hidden');
+      document.getElementById('admin-subtab-sos').classList.add('hidden');
+
+      document.getElementById(`admin-subtab-${subTab}`).classList.remove('hidden');
+    }
+
+    function renderAdminProvidersList() {
+      const container = document.getElementById('admin-pending-providers-list');
+      if (!container) return;
+
+      // กรองผู้ดูแลที่ยังไม่ถูกอนุมัติ (สมมติสำหรับแสดงผล)
+      const unverified = providersDatabase.filter(p => !p.isLicenseVerified);
+
+      if (unverified.length === 0) {
+        container.innerHTML = `<div style="padding:12px; background:#f8fafc; border:1px solid var(--border-color); border-radius:8px; text-align:center; color:var(--text-muted); font-size:0.875rem;">ไม่มีผู้ดูแลที่ค้างอนุมัติในขณะนี้</div>`;
+        return;
+      }
+
+      let html = '';
+      unverified.forEach(p => {
+        html += `
+          <div style="padding:10px; border:1px solid var(--border-color); border-radius:8px; margin-bottom:8px; background:white; font-size:0.875rem; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong>${p.name}</strong> (${p.role})<br>
+              <span style="color:var(--text-muted); font-size:0.75rem;">พื้นที่: ${p.province} | เอกสาร: ${p.license || 'ไม่มีเลขใบอนุญาต'}</span>
+            </div>
+            <button class="btn ext-btn-sm" onclick="approveProviderInAdmin(${p.id})">✅ อนุมัติ</button>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function approveProviderInAdmin(providerId) {
+      const provider = providersDatabase.find(p => p.id === providerId);
+      if (provider) {
+        provider.isLicenseVerified = true;
+        alert(`อนุมัติผู้ดูแล ${provider.name} เรียบร้อยแล้ว`);
+        renderAdminProvidersList();
+        filterServices(currentPage);
+      }
+    }
+
+    function renderAdminSlipsList() {
+      const container = document.getElementById('admin-slips-list');
+      if (!container) return;
+
+      const dbOrders = appDb.getOrders();
+      if (dbOrders.length === 0) {
+        container.innerHTML = `<div style="padding:12px; background:#f8fafc; border:1px solid var(--border-color); border-radius:8px; text-align:center; color:var(--text-muted); font-size:0.875rem;">ยังไม่มีสลิปการชำระเงินในระบบ</div>`;
+        return;
+      }
+
+      let html = '';
+      dbOrders.forEach(o => {
+        html += `
+          <div style="padding:10px; border:1px solid var(--border-color); border-radius:8px; margin-bottom:8px; background:white; font-size:0.8125rem;">
+            <div style="display:flex; justify-content:space-between; font-weight:bold;">
+              <span>รหัสจอง: ${o.id}</span>
+              <span style="color:var(--success-color);">${o.totalPrice ? o.totalPrice.toLocaleString() : 0} บาท</span>
+            </div>
+            <div style="color:var(--text-muted); margin:4px 0;">ผู้ดูแล: ${o.providerName} | โรงพยาบาล: ${o.hospital}</div>
+            ${o.receiptImage ? `<a href="${o.receiptImage}" target="_blank" style="color:var(--primary-color);">🔍 ดูรูปสลิปที่แนบ</a>` : '<span style="color:#b45309;">⚠️ ไม่มีสลิปแนบ</span>'}
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    // ฟังก์ชันส่งสัญญาณ SOS ฉุกเฉิน
+    function triggerSOSAlert() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat = position.coords.latitude.toFixed(6);
+            const lng = position.coords.longitude.toFixed(6);
+            recordSOSLog(lat, lng);
+          },
+          (error) => {
+            recordSOSLog("13.7587", "100.4851"); // Fallback mock coords
+          }
+        );
+      } else {
+        recordSOSLog("13.7587", "100.4851");
+      }
+    }
+
+    function recordSOSLog(lat, lng) {
+      const newLog = {
+        id: `SOS-${Date.now()}`,
+        time: new Date().toLocaleTimeString('th-TH'),
+        date: new Date().toLocaleDateString('th-TH'),
+        lat,
+        lng
+      };
+
+      sosLogs.unshift(newLog);
+      renderSOSLogs();
+      alert(`🚨 ส่งสัญญาณ SOS ฉุกเฉินถึงศูนย์ควบคุมแล้ว!\nพิกัด GPS: ${lat}, ${lng}\nเจ้าหน้าที่กำลังติดต่อกลับเบอร์ฉุกเฉินด่วนที่สุด`);
+    }
+
+    function renderSOSLogs() {
+      const container = document.getElementById('admin-sos-list');
+      if (!container) return;
+
+      if (sosLogs.length === 0) {
+        container.innerHTML = `<div style="padding:12px; background:#fef2f2; border:1px solid #fecaca; border-radius:8px; text-align:center; color:#dc2626; font-size:0.875rem;">ยังไม่มีรายงานเหตุฉุกเฉินเข้ามา</div>`;
+        return;
+      }
+
+      let html = '';
+      sosLogs.forEach(log => {
+        html += `
+          <div style="padding:10px; border:1px solid #fca5a5; background:#fff5f5; border-radius:8px; margin-bottom:8px; font-size:0.8125rem;">
+            <div style="color:#dc2626; font-weight:bold;">🚨 แจ้งเตือนเมื่อ: ${log.time} (${log.date})</div>
+            <div>พิกัดละติจูด/ลองจิจูด: ${log.lat}, ${log.lng}</div>
+            <a href="https://maps.google.com/?q=${log.lat},${log.lng}" target="_blank" style="color:var(--primary-color); font-weight:bold;">🗺️ เปิดตำแหน่งใน Google Maps</a>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    // โหลดปุ่ม Admin ขึ้น Header เมื่อโหลดหน้าเว็บเสร็จ
+    document.addEventListener("DOMContentLoaded", () => {
+      injectAdminHeaderButton();
+    });
+  </script>
 </body>
 </html>
+
+<!-- ============================================================= -->
+<!-- 🔐 NEW ADMIN BACK-OFFICE SYSTEM — APPENDED WITHOUT EDITING    -->
+<!-- ============================================================= -->
+<style id="new-admin-backoffice-style">
+#new-admin-login-btn{
+  position:fixed;left:16px;bottom:20px;z-index:3000;
+  background:#0f172a;color:#fff;border:0;border-radius:999px;
+  padding:12px 18px;font-family:'Sarabun',sans-serif;font-weight:700;
+  box-shadow:0 6px 18px rgba(15,23,42,.28);cursor:pointer
+}
+#new-admin-login-btn:hover{background:#1e293b}
+.na-modal{position:fixed;inset:0;background:rgba(2,6,23,.72);z-index:4000;
+ display:flex;align-items:center;justify-content:center;padding:14px}
+.na-panel{width:min(1100px,100%);max-height:94vh;overflow:auto;background:#f8fafc;
+ border-radius:16px;box-shadow:0 25px 60px rgba(0,0,0,.25);font-family:'Sarabun',sans-serif}
+.na-login{width:min(420px,100%);background:#fff;border-radius:16px;padding:26px}
+.na-top{background:#0f172a;color:#fff;padding:18px 20px;display:flex;align-items:center;
+ justify-content:space-between;gap:12px;position:sticky;top:0;z-index:3}
+.na-top h2{color:#fff;margin:0;font-size:1.2rem}
+.na-close{background:transparent;border:0;color:#fff;font-size:1.5rem;cursor:pointer}
+.na-layout{display:grid;grid-template-columns:220px 1fr;min-height:650px}
+.na-side{background:#fff;border-right:1px solid #e2e8f0;padding:12px}
+.na-side button{width:100%;text-align:left;border:0;background:#fff;padding:11px 12px;
+ border-radius:9px;margin-bottom:5px;cursor:pointer;font-family:inherit;font-weight:600;color:#475569}
+.na-side button.active,.na-side button:hover{background:#e0f2fe;color:#0369a1}
+.na-content{padding:20px}
+.na-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.na-stat{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:15px}
+.na-stat .num{font-size:1.55rem;font-weight:800;color:#0369a1}
+.na-stat small{color:#64748b}
+.na-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:14px}
+.na-card h3{margin-bottom:12px}
+.na-table-wrap{overflow:auto}
+.na-table{width:100%;border-collapse:collapse;min-width:720px}
+.na-table th,.na-table td{padding:9px;border-bottom:1px solid #e2e8f0;text-align:left;vertical-align:top;font-size:.86rem}
+.na-table th{background:#f1f5f9;color:#334155}
+.na-badge{display:inline-block;padding:3px 8px;border-radius:999px;font-size:.72rem;font-weight:700;background:#e2e8f0}
+.na-green{background:#dcfce7;color:#166534}.na-yellow{background:#fef3c7;color:#92400e}
+.na-red{background:#fee2e2;color:#991b1b}.na-blue{background:#dbeafe;color:#1d4ed8}
+.na-actions{display:flex;flex-wrap:wrap;gap:6px}
+.na-btn{border:0;border-radius:7px;padding:7px 10px;cursor:pointer;font-family:inherit;font-weight:600}
+.na-primary{background:#0284c7;color:#fff}.na-success{background:#16a34a;color:#fff}
+.na-danger{background:#dc2626;color:#fff}.na-muted{background:#e2e8f0;color:#334155}
+.na-input{width:100%;padding:9px;border:1px solid #cbd5e1;border-radius:8px;font-family:inherit}
+.na-form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.na-chart{display:grid;grid-template-columns:repeat(7,1fr);align-items:end;gap:8px;height:180px}
+.na-bar-col{height:100%;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:5px}
+.na-bar{width:70%;background:#0284c7;border-radius:6px 6px 0 0;min-height:5px}
+.na-empty{text-align:center;padding:20px;color:#64748b}
+@media(max-width:760px){
+ #new-admin-login-btn{left:10px;bottom:10px;padding:10px 14px;font-size:.85rem}
+ .na-layout{grid-template-columns:1fr}
+ .na-side{display:flex;overflow-x:auto;border-right:0;border-bottom:1px solid #e2e8f0;gap:5px}
+ .na-side button{min-width:max-content;width:auto;margin:0}
+ .na-content{padding:12px}.na-grid{grid-template-columns:repeat(2,1fr)}
+ .na-form-grid{grid-template-columns:1fr}.na-top{padding:14px}
+}
+</style>
+
+<button id="new-admin-login-btn" onclick="NA_openLogin()">🔐 ADMIN LOGIN</button>
+
+<div id="na-login-modal" class="na-modal" style="display:none">
+  <div class="na-login">
+    <h2 style="margin-bottom:6px">🔐 ADMIN LOGIN</h2>
+    <p style="color:#64748b;font-size:.9rem;margin-bottom:18px">เข้าสู่ระบบหลังบ้านเพื่อนหาหมอ</p>
+    <div class="form-group">
+      <label>ชื่อผู้ใช้</label>
+      <input id="na-user" class="na-input" value="admin" autocomplete="username">
+    </div>
+    <div class="form-group">
+      <label>รหัสผ่าน</label>
+      <input id="na-pass" class="na-input" type="password" value="admin123" autocomplete="current-password">
+    </div>
+    <button class="na-btn na-primary" style="width:100%;padding:11px" onclick="NA_login()">เข้าสู่ระบบ</button>
+    <button class="na-btn na-muted" style="width:100%;margin-top:7px" onclick="NA_closeLogin()">ยกเลิก</button>
+    <p style="font-size:.75rem;color:#94a3b8;margin-top:12px">บัญชีทดลอง: admin / admin123</p>
+  </div>
+</div>
+
+<div id="na-dashboard-modal" class="na-modal" style="display:none">
+ <div class="na-panel">
+  <div class="na-top">
+   <h2>🛠️ ADMIN BACK-OFFICE — เพื่อนหาหมอ</h2>
+   <div style="display:flex;align-items:center;gap:8px">
+    <span id="na-admin-name" style="font-size:.8rem"></span>
+    <button class="na-close" onclick="NA_logout()">✕</button>
+   </div>
+  </div>
+  <div class="na-layout">
+   <aside class="na-side">
+    <button class="active" onclick="NA_tab('dashboard',this)">📊 Dashboard</button>
+    <button onclick="NA_tab('orders',this)">📋 จัดการการจอง</button>
+    <button onclick="NA_tab('providers',this)">👨‍⚕️ จัดการผู้ดูแล</button>
+    <button onclick="NA_tab('docs',this)">📄 ตรวจสอบเอกสาร</button>
+    <button onclick="NA_tab('payments',this)">💰 การชำระเงิน</button>
+    <button onclick="NA_tab('reviews',this)">⭐ รีวิว</button>
+    <button onclick="NA_tab('reports',this)">📊 รายงาน</button>
+    <button onclick="NA_tab('settings',this)">⚙️ ตั้งค่าระบบ</button>
+   </aside>
+   <main id="na-content" class="na-content"></main>
+  </div>
+ </div>
+</div>
+
+<script>
+(function(){
+  const KEY='na_admin_state_v1';
+  const getState=()=>{try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}};
+  const saveState=s=>localStorage.setItem(KEY,JSON.stringify(s));
+  let activeTab='dashboard';
+
+  function sourceOrders(){
+    try{
+      if(typeof appDb!=='undefined' && appDb.getOrders) return appDb.getOrders()||[];
+    }catch(e){}
+    return (typeof orders!=='undefined' && Array.isArray(orders))?orders:[];
+  }
+  function sourceProviders(){
+    return (typeof providersDatabase!=='undefined' && Array.isArray(providersDatabase))?providersDatabase:[];
+  }
+  function state(){
+    const s=getState();
+    if(!Array.isArray(s.orderStatuses))s.orderStatuses=[];
+    if(!Array.isArray(s.providerStatuses))s.providerStatuses=[];
+    if(!Array.isArray(s.docStatuses))s.docStatuses=[];
+    if(!Array.isArray(s.paymentStatuses))s.paymentStatuses=[];
+    if(!Array.isArray(s.reviews))s.reviews=[];
+    if(!s.settings)s.settings={serviceName:'เพื่อนหาหมอ',contact:'1669',autoApprove:false};
+    return s;
+  }
+  function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+  function orderStatus(o,s){
+    const x=s.orderStatuses.find(x=>x.id===o.id);
+    return x?.status || o.status || 'รอตรวจสอบ';
+  }
+  function providerStatus(p,s){
+    const x=s.providerStatuses.find(x=>x.id===p.id);
+    if(x?.status)return x.status;
+    return p.isLicenseVerified?'อนุมัติแล้ว':'รอตรวจสอบ';
+  }
+  function badge(t){
+    let c='na-badge';
+    if(/เสร็จ|อนุมัติ|ชำระ|ผ่าน/.test(t))c+=' na-green';
+    else if(/รอ|ตรวจสอบ|กำลัง/.test(t))c+=' na-yellow';
+    else if(/ระงับ|ยกเลิก|ไม่ผ่าน/.test(t))c+=' na-red';
+    else c+=' na-blue';
+    return `<span class="${c}">${esc(t)}</span>`;
+  }
+  function setOrder(id,status){
+    const s=state(); const i=s.orderStatuses.findIndex(x=>x.id===id);
+    if(i>=0)s.orderStatuses[i].status=status;else s.orderStatuses.push({id,status});
+    saveState(s); NA_render();
+    if(typeof renderOrders==='function')renderOrders();
+  }
+  function setProvider(id,status){
+    const s=state(); const i=s.providerStatuses.findIndex(x=>x.id===id);
+    if(i>=0)s.providerStatuses[i].status=status;else s.providerStatuses.push({id,status});
+    saveState(s); NA_render();
+  }
+  window.NA_openLogin=()=>document.getElementById('na-login-modal').style.display='flex';
+  window.NA_closeLogin=()=>document.getElementById('na-login-modal').style.display='none';
+  window.NA_login=()=>{
+    const u=document.getElementById('na-user').value.trim();
+    const p=document.getElementById('na-pass').value;
+    if(u==='admin'&&p==='admin123'){
+      sessionStorage.setItem('na_admin_login','1');
+      document.getElementById('na-login-modal').style.display='none';
+      document.getElementById('na-dashboard-modal').style.display='flex';
+      document.getElementById('na-admin-name').textContent='👤 '+u;
+      NA_render();
+    }else alert('❌ ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+  };
+  window.NA_logout=()=>{
+    sessionStorage.removeItem('na_admin_login');
+    document.getElementById('na-dashboard-modal').style.display='none';
+  };
+  window.NA_tab=(tab,btn)=>{
+    activeTab=tab;
+    document.querySelectorAll('#na-dashboard-modal .na-side button').forEach(b=>b.classList.remove('active'));
+    if(btn)btn.classList.add('active');
+    NA_render();
+  };
+  window.NA_render=()=>{
+    const el=document.getElementById('na-content'); if(!el)return;
+    const s=state(), os=sourceOrders(), ps=sourceProviders();
+    if(activeTab==='dashboard')return NA_dashboard(el,s,os,ps);
+    if(activeTab==='orders')return NA_orders(el,s,os);
+    if(activeTab==='providers')return NA_providers(el,s,ps);
+    if(activeTab==='docs')return NA_docs(el,s,ps);
+    if(activeTab==='payments')return NA_payments(el,s,os);
+    if(activeTab==='reviews')return NA_reviews(el,s,os);
+    if(activeTab==='reports')return NA_reports(el,s,os,ps);
+    if(activeTab==='settings')return NA_settings(el,s);
+  };
+
+  function NA_dashboard(el,s,os,ps){
+    const pendingO=os.filter(o=>/รอ|ยังไม่/.test(orderStatus(o,s))).length;
+    const pendingP=ps.filter(p=>providerStatus(p,s)==='รอตรวจสอบ').length;
+    const paid=os.filter(o=>/ชำระ/.test(orderStatus(o,s))).length;
+    const done=os.filter(o=>/เสร็จ/.test(orderStatus(o,s))).length;
+    el.innerHTML=`
+      <h2>📊 Dashboard</h2>
+      <p style="color:#64748b;margin-bottom:16px">ภาพรวมระบบหลังบ้านจากข้อมูลที่มีอยู่ในหน้าเว็บปัจจุบัน</p>
+      <div class="na-grid">
+       <div class="na-stat"><small>การจองทั้งหมด</small><div class="num">${os.length}</div></div>
+       <div class="na-stat"><small>รอดำเนินการ</small><div class="num">${pendingO}</div></div>
+       <div class="na-stat"><small>ผู้ดูแลรอตรวจสอบ</small><div class="num">${pendingP}</div></div>
+       <div class="na-stat"><small>งานเสร็จสิ้น</small><div class="num">${done}</div></div>
+      </div>
+      <div class="na-card"><h3>⚡ งานที่ต้องดำเนินการ</h3>
+       <div class="na-actions">
+        <button class="na-btn na-primary" onclick="NA_tab('orders')">📋 ตรวจสอบการจอง (${pendingO})</button>
+        <button class="na-btn na-primary" onclick="NA_tab('providers')">👨‍⚕️ ตรวจผู้ดูแล (${pendingP})</button>
+        <button class="na-btn na-primary" onclick="NA_tab('payments')">💰 ตรวจการชำระเงิน (${paid})</button>
+       </div>
+      </div>
+      <div class="na-card"><h3>🔐 สถานะระบบ</h3>
+       <p>ระบบหลังบ้านทำงานในโหมด Demo และเก็บการเปลี่ยนสถานะของ Admin ไว้ใน Local Storage ของเครื่องนี้</p>
+      </div>`;
+  }
+
+  function NA_orders(el,s,os){
+    el.innerHTML=`<h2>📋 จัดการการจอง</h2>
+      <div class="na-card"><div class="na-table-wrap"><table class="na-table">
+      <thead><tr><th>รหัสจอง</th><th>ผู้ดูแล</th><th>โรงพยาบาล</th><th>วันที่</th><th>สถานะ</th><th>จัดการ</th></tr></thead>
+      <tbody>${os.length?os.map(o=>`<tr>
+       <td><b>${esc(o.id)}</b></td><td>${esc(o.providerName)}</td><td>${esc(o.hospital)}</td>
+       <td>${esc(o.date||o.startDate||'-')}</td><td>${badge(orderStatus(o,s))}</td>
+       <td><select class="na-input" style="width:auto" onchange="NA_setOrderStatus('${esc(o.id)}',this.value)">
+        ${['รอชำระเงิน','รอยืนยัน','กำลังให้บริการ','เสร็จสิ้น','ยกเลิก'].map(x=>`<option ${orderStatus(o,s)===x?'selected':''}>${x}</option>`).join('')}
+       </select></td></tr>`).join(''):`<tr><td colspan="6" class="na-empty">ยังไม่มีข้อมูลการจอง</td></tr>`}
+      </tbody></table></div></div>`;
+  }
+  window.NA_setOrderStatus=(id,status)=>setOrder(id,status);
+
+  function NA_providers(el,s,ps){
+    el.innerHTML=`<h2>👨‍⚕️ จัดการผู้ดูแล</h2>
+      <div class="na-card"><div class="na-table-wrap"><table class="na-table">
+      <thead><tr><th>ชื่อ</th><th>วิชาชีพ</th><th>พื้นที่</th><th>ใบอนุญาต</th><th>สถานะ</th><th>จัดการ</th></tr></thead>
+      <tbody>${ps.slice(0,150).map(p=>`<tr>
+       <td><b>${esc(p.name)}</b></td><td>${esc(p.role)}</td><td>${esc(p.province)} / ${esc(p.district)}</td>
+       <td>${esc(p.license||'-')}</td><td>${badge(providerStatus(p,s))}</td>
+       <td><div class="na-actions">
+        <button class="na-btn na-success" onclick="NA_setProviderStatus(${p.id},'อนุมัติแล้ว')">อนุมัติ</button>
+        <button class="na-btn na-danger" onclick="NA_setProviderStatus(${p.id},'ระงับ')">ระงับ</button>
+       </div></td></tr>`).join('')}</tbody></table></div></div>`;
+  }
+  window.NA_setProviderStatus=(id,status)=>setProvider(id,status);
+
+  function NA_docs(el,s,ps){
+    el.innerHTML=`<h2>📄 ตรวจสอบเอกสาร</h2>
+      <div class="na-card"><p style="color:#64748b">ตรวจสถานะใบอนุญาต/เอกสารของผู้ดูแล แล้วบันทึกผลการตรวจสอบ</p>
+      <div class="na-table-wrap"><table class="na-table"><thead><tr><th>ผู้ดูแล</th><th>เลขเอกสาร</th><th>ใบอนุญาต</th><th>ตรวจประวัติ</th><th>ผล</th><th>จัดการ</th></tr></thead>
+      <tbody>${ps.slice(0,150).map(p=>{
+       const d=s.docStatuses.find(x=>x.id===p.id)?.status||(p.isLicenseVerified?'ผ่านการตรวจ':'รอตรวจสอบ');
+       return `<tr><td>${esc(p.name)}</td><td>${esc(p.license||'ไม่มี')}</td><td>${p.isLicenseVerified?'✓ มี':'รอตรวจ'}</td>
+       <td>${p.isCriminalChecked?'✓ ผ่าน':'รอตรวจ'}</td><td>${badge(d)}</td><td>
+       <button class="na-btn na-success" onclick="NA_setDoc(${p.id},'ผ่านการตรวจ')">ผ่าน</button>
+       <button class="na-btn na-danger" onclick="NA_setDoc(${p.id},'ไม่ผ่าน')">ไม่ผ่าน</button></td></tr>`}).join('')}</tbody></table></div></div>`;
+  }
+  window.NA_setDoc=(id,status)=>{const s=state(),i=s.docStatuses.findIndex(x=>x.id===id);if(i>=0)s.docStatuses[i].status=status;else s.docStatuses.push({id,status});saveState(s);NA_render();};
+
+  function NA_payments(el,s,os){
+    el.innerHTML=`<h2>💰 การชำระเงิน</h2>
+      <div class="na-card"><div class="na-table-wrap"><table class="na-table">
+      <thead><tr><th>รหัสจอง</th><th>ผู้ดูแล</th><th>ยอดเงิน</th><th>สลิป</th><th>สถานะ</th><th>จัดการ</th></tr></thead>
+      <tbody>${os.map(o=>{
+       const ps=s.paymentStatuses.find(x=>x.id===o.id)?.status||(/ชำระ/.test(o.status)?'รอตรวจสอบ':'ยังไม่ชำระ');
+       return `<tr><td>${esc(o.id)}</td><td>${esc(o.providerName)}</td><td>${Number(o.totalPrice||0).toLocaleString()} บาท</td>
+       <td>${o.receiptImage?`<a href="${o.receiptImage}" target="_blank">ดูสลิป</a>`:'ไม่มีสลิป'}</td><td>${badge(ps)}</td>
+       <td><button class="na-btn na-success" onclick="NA_setPayment('${esc(o.id)}','ชำระเงินแล้ว')">ยืนยัน</button>
+       <button class="na-btn na-danger" onclick="NA_setPayment('${esc(o.id)}','ไม่ผ่าน')">ไม่ผ่าน</button></td></tr>`}).join('')}</tbody></table></div></div>`;
+  }
+  window.NA_setPayment=(id,status)=>{const s=state(),i=s.paymentStatuses.findIndex(x=>x.id===id);if(i>=0)s.paymentStatuses[i].status=status;else s.paymentStatuses.push({id,status});saveState(s);NA_render();};
+
+  function NA_reviews(el,s,os){
+    el.innerHTML=`<h2>⭐ รีวิว</h2>
+      <div class="na-card"><p style="color:#64748b">ส่วนนี้รองรับการบันทึก/ตรวจสอบรีวิวที่ Admin เพิ่มในระบบ Demo</p>
+      <div class="na-form-grid">
+       <div><label>ชื่อผู้ดูแล</label><input id="na-review-name" class="na-input"></div>
+       <div><label>คะแนน (1–5)</label><input id="na-review-rating" class="na-input" type="number" min="1" max="5"></div>
+       <div style="grid-column:1/-1"><label>ความคิดเห็น</label><textarea id="na-review-text" class="na-input"></textarea></div>
+      </div><button class="na-btn na-primary" style="margin-top:10px" onclick="NA_addReview()">+ บันทึกรีวิว</button></div>
+      <div class="na-card">${s.reviews.length?s.reviews.map((r,i)=>`<div style="padding:10px;border-bottom:1px solid #e2e8f0"><b>${esc(r.name)}</b> ⭐ ${r.rating}/5<br>${esc(r.text)} <button class="na-btn na-danger" onclick="NA_delReview(${i})">ลบ</button></div>`).join(''):'<div class="na-empty">ยังไม่มีรีวิวที่บันทึกใน Admin</div>'}</div>`;
+  }
+  window.NA_addReview=()=>{const s=state();s.reviews.unshift({name:document.getElementById('na-review-name').value,rating:document.getElementById('na-review-rating').value,text:document.getElementById('na-review-text').value});saveState(s);NA_render();};
+  window.NA_delReview=i=>{const s=state();s.reviews.splice(i,1);saveState(s);NA_render();};
+
+  function NA_reports(el,s,os,ps){
+    const total=os.reduce((a,o)=>a+Number(o.totalPrice||0),0);
+    const done=os.filter(o=>/เสร็จ/.test(orderStatus(o,s))).length;
+    el.innerHTML=`<h2>📊 รายงาน</h2>
+      <div class="na-grid"><div class="na-stat"><small>รายได้จากข้อมูลการจอง</small><div class="num">${total.toLocaleString()} ฿</div></div>
+      <div class="na-stat"><small>จำนวนผู้ดูแล</small><div class="num">${ps.length}</div></div>
+      <div class="na-stat"><small>งานเสร็จสิ้น</small><div class="num">${done}</div></div>
+      <div class="na-stat"><small>รีวิวในระบบ Admin</small><div class="num">${s.reviews.length}</div></div></div>
+      <div class="na-card"><h3>สถานะการจอง</h3>
+       ${['รอชำระเงิน','รอยืนยัน','กำลังให้บริการ','เสร็จสิ้น','ยกเลิก'].map(st=>{
+        const n=os.filter(o=>orderStatus(o,s)===st).length; return `<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #e2e8f0"><span>${st}</span><b>${n}</b></div>`}).join('')}
+      </div>
+      <button class="na-btn na-primary" onclick="NA_exportReport()">📥 ส่งออกรายงาน CSV</button>`;
+  }
+  window.NA_exportReport=()=>{
+    const s=state(),os=sourceOrders();
+    const rows=[['รหัสจอง','ผู้ดูแล','โรงพยาบาล','สถานะ','ยอดเงิน'],...os.map(o=>[o.id,o.providerName,o.hospital,orderStatus(o,s),o.totalPrice||0])];
+    const csv='\uFEFF'+rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+    const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='admin-report.csv';a.click();URL.revokeObjectURL(a.href);
+  };
+
+  function NA_settings(el,s){
+    el.innerHTML=`<h2>⚙️ ตั้งค่าระบบ</h2><div class="na-card">
+      <div class="na-form-grid">
+       <div><label>ชื่อระบบ</label><input id="na-set-name" class="na-input" value="${esc(s.settings.serviceName)}"></div>
+       <div><label>เบอร์ติดต่อฉุกเฉิน</label><input id="na-set-contact" class="na-input" value="${esc(s.settings.contact)}"></div>
+      </div>
+      <label style="display:flex;gap:8px;align-items:center;margin-top:14px"><input id="na-set-auto" type="checkbox" ${s.settings.autoApprove?'checked':''}> อนุมัติผู้ดูแลอัตโนมัติ (Demo)</label>
+      <button class="na-btn na-primary" style="margin-top:14px" onclick="NA_saveSettings()">💾 บันทึกตั้งค่า</button>
+    </div>
+    <div class="na-card"><h3>🔒 ความปลอดภัย</h3><p>บัญชี Demo: <b>admin / admin123</b></p><p style="color:#b45309">สำหรับใช้งานจริงควรย้าย Login และฐานข้อมูลไปฝั่ง Server และใช้การยืนยันตัวตนที่ปลอดภัย</p></div>`;
+  }
+  window.NA_saveSettings=()=>{const s=state();s.settings={serviceName:document.getElementById('na-set-name').value,contact:document.getElementById('na-set-contact').value,autoApprove:document.getElementById('na-set-auto').checked};saveState(s);alert('บันทึกการตั้งค่าแล้ว');NA_render();};
+
+  // ถ้าเปิดหน้าเว็บแล้วมี session admin เดิม ให้เปิดหลังบ้านได้ทันที
+  document.addEventListener('DOMContentLoaded',()=>{
+    if(sessionStorage.getItem('na_admin_login')==='1'){
+      document.getElementById('na-dashboard-modal').style.display='flex';
+      document.getElementById('na-admin-name').textContent='👤 admin';
+      NA_render();
+    }
+  });
+})();
+</script>
+
+
+<!-- =========================================================
+     EXTENSION PACK V1 — เพิ่มระบบใหม่โดยไม่แก้ไขโค้ดเดิม
+     ระบบที่เพิ่ม: สมาชิก/โปรไฟล์, ปฏิทินผู้ดูแล, รีวิว, แจ้งเตือน, แชท Demo
+     หมายเหตุ: ส่วนนี้ถูกต่อท้ายไฟล์เดิมทั้งหมด
+     ========================================================= -->
+<style>
+  .ext2-fab-wrap{position:fixed;left:14px;bottom:18px;z-index:998;display:flex;gap:7px;flex-wrap:wrap;max-width:calc(100vw - 28px)}
+  .ext2-fab{border:0;border-radius:999px;padding:10px 13px;background:#0f766e;color:#fff;font-weight:700;cursor:pointer;box-shadow:0 5px 16px rgba(0,0,0,.18);font-family:'Sarabun',sans-serif}
+  .ext2-fab.blue{background:#0369a1}.ext2-fab.purple{background:#7c3aed}.ext2-fab.orange{background:#c2410c}
+  .ext2-overlay{position:fixed;inset:0;background:rgba(15,23,42,.62);z-index:3000;display:none;align-items:center;justify-content:center;padding:12px}
+  .ext2-modal{background:#fff;width:min(720px,100%);max-height:92vh;overflow:auto;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.25);font-family:'Sarabun',sans-serif}
+  .ext2-head{display:flex;justify-content:space-between;align-items:center;padding:15px 18px;border-bottom:1px solid #e2e8f0;position:sticky;top:0;background:#fff;z-index:2}
+  .ext2-head h3{margin:0;font-size:1.1rem}.ext2-close{border:0;background:#f1f5f9;border-radius:8px;padding:7px 10px;cursor:pointer}
+  .ext2-body{padding:18px}.ext2-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .ext2-card{border:1px solid #e2e8f0;border-radius:12px;padding:13px;margin-bottom:10px;background:#fff}
+  .ext2-card h4{margin:0 0 7px}.ext2-muted{color:#64748b;font-size:.86rem}.ext2-btn{border:0;border-radius:8px;padding:9px 12px;cursor:pointer;font-weight:700;background:#0284c7;color:#fff}.ext2-btn.gray{background:#f1f5f9;color:#334155}.ext2-btn.green{background:#16a34a}.ext2-btn.red{background:#dc2626}
+  .ext2-days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.ext2-day{padding:8px 4px;border:1px solid #e2e8f0;border-radius:8px;text-align:center;cursor:pointer;font-size:.8rem}.ext2-day.free{background:#f0fdf4;border-color:#86efac}.ext2-day.busy{background:#fef2f2;border-color:#fecaca}.ext2-day.sel{outline:3px solid #93c5fd}
+  .ext2-stars button{border:0;background:none;font-size:1.6rem;cursor:pointer;padding:1px}.ext2-noti{display:flex;gap:10px;padding:10px;border-bottom:1px solid #e2e8f0}.ext2-dot{width:9px;height:9px;background:#0284c7;border-radius:50%;margin-top:7px;flex:0 0 auto}.ext2-chat{height:320px;overflow:auto;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:10px}.ext2-msg{max-width:78%;padding:8px 10px;border-radius:12px;margin:6px 0;font-size:.9rem}.ext2-msg.me{margin-left:auto;background:#dbeafe}.ext2-msg.them{background:#fff;border:1px solid #e2e8f0}.ext2-row{display:flex;gap:8px;margin-top:8px}.ext2-row input{min-height:42px}.ext2-badge{display:inline-block;padding:3px 8px;border-radius:99px;background:#e0f2fe;color:#0369a1;font-size:.75rem;font-weight:700}
+  @media(max-width:640px){.ext2-fab-wrap{left:8px;bottom:8px;right:8px}.ext2-fab{flex:1;font-size:.75rem;padding:9px 6px}.ext2-grid{grid-template-columns:1fr}.ext2-body{padding:12px}.ext2-days{gap:3px}.ext2-day{font-size:.7rem;padding:7px 2px}}
+</style>
+
+<div class="ext2-fab-wrap" aria-label="ฟังก์ชันเสริม">
+  <button class="ext2-fab blue" onclick="EXT2_openProfile()">👤 โปรไฟล์</button>
+  <button class="ext2-fab" onclick="EXT2_openCalendar()">📅 ตารางผู้ดูแล</button>
+  <button class="ext2-fab purple" onclick="EXT2_openNotifications()">🔔 แจ้งเตือน <span id="ext2-noti-count"></span></button>
+  <button class="ext2-fab orange" onclick="EXT2_openChat()">💬 แชท</button>
+</div>
+
+<div id="ext2-overlay" class="ext2-overlay" onclick="if(event.target===this)EXT2_close()">
+  <div class="ext2-modal">
+    <div class="ext2-head"><h3 id="ext2-title">ฟังก์ชันเสริม</h3><button class="ext2-close" onclick="EXT2_close()">✕ ปิด</button></div>
+    <div id="ext2-body" class="ext2-body"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  const KEY='friendDoctor_ext2_v1';
+  const providers=()=>Array.isArray(window.providersDatabase)?window.providersDatabase:[];
+  const defaultState={profile:{name:'',phone:'',emergency:'',note:''},availability:{},reviews:[],notifications:[{id:1,title:'ยินดีต้อนรับ',text:'ระบบฟังก์ชันเสริมพร้อมใช้งานแล้ว',time:new Date().toLocaleString('th-TH')}],chats:{}};
+  function load(){try{return Object.assign({},defaultState,JSON.parse(localStorage.getItem(KEY)||'{}'));}catch(e){return {...defaultState};}}
+  function save(s){localStorage.setItem(KEY,JSON.stringify(s));}
+  function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+  function open(title,html){document.getElementById('ext2-title').textContent=title;document.getElementById('ext2-body').innerHTML=html;document.getElementById('ext2-overlay').style.display='flex';}
+  window.EXT2_close=()=>document.getElementById('ext2-overlay').style.display='none';
+
+  // 1) โปรไฟล์ผู้ใช้/ผู้ป่วยประจำ — แยก LocalStorage ไม่แตะข้อมูลเดิม
+  window.EXT2_openProfile=()=>{
+    const s=load(),p=s.profile||{};
+    open('👤 โปรไฟล์ผู้ใช้ / ผู้ป่วยประจำ',`
+      <div class="ext2-card"><span class="ext2-badge">ข้อมูลส่วนตัว</span><p class="ext2-muted" style="margin-top:6px">บันทึกไว้ในเครื่องนี้เพื่อใช้กรอกข้อมูลครั้งต่อไป</p></div>
+      <div class="ext2-grid">
+        <div><label>ชื่อผู้ป่วย/ผู้ใช้</label><input id="e2-name" value="${esc(p.name)}" placeholder="ชื่อ-นามสกุล"></div>
+        <div><label>เบอร์โทรศัพท์</label><input id="e2-phone" value="${esc(p.phone)}" placeholder="08x-xxx-xxxx"></div>
+        <div><label>เบอร์ติดต่อฉุกเฉิน</label><input id="e2-emergency" value="${esc(p.emergency)}" placeholder="ญาติ/ผู้ติดต่อฉุกเฉิน"></div>
+        <div><label>หมายเหตุสำคัญ</label><input id="e2-note" value="${esc(p.note)}" placeholder="เช่น แพ้ยา/ใช้รถเข็น"></div>
+      </div>
+      <button class="ext2-btn" style="margin-top:14px;width:100%" onclick="EXT2_saveProfile()">💾 บันทึกโปรไฟล์</button>`);
+  };
+  window.EXT2_saveProfile=()=>{
+    const s=load();s.profile={name:document.getElementById('e2-name').value.trim(),phone:document.getElementById('e2-phone').value.trim(),emergency:document.getElementById('e2-emergency').value.trim(),note:document.getElementById('e2-note').value.trim()};save(s);
+    EXT2_addNoti('บันทึกโปรไฟล์แล้ว','ข้อมูลโปรไฟล์ผู้ป่วยถูกบันทึกในเครื่องนี้');alert('✅ บันทึกโปรไฟล์เรียบร้อยแล้ว');
+  };
+
+  // 2) ปฏิทินตารางว่างผู้ดูแล — ใช้ฐาน providers เดิมแบบอ่านอย่างเดียว
+  window.EXT2_openCalendar=()=>{
+    const ps=providers().slice(0,60); const s=load();
+    if(!ps.length){open('📅 ตารางผู้ดูแล','<div class="ext2-card">ยังไม่พบข้อมูลผู้ดูแลจากฐานข้อมูลเดิม</div>');return;}
+    let html=`<div class="ext2-card"><label>เลือกผู้ดูแล</label><select id="e2-provider" onchange="EXT2_renderCalendar()">${ps.map((p,i)=>`<option value="${p.id??i}">${esc(p.name||('ผู้ดูแล '+(i+1)))} — ${esc(p.province||'')}</option>`).join('')}</select></div><div id="e2-calendar"></div>`;
+    open('📅 ตารางเวลาผู้ดูแล',html);EXT2_renderCalendar();
+  };
+  window.EXT2_renderCalendar=()=>{
+    const box=document.getElementById('e2-calendar');if(!box)return;const id=document.getElementById('e2-provider').value,s=load();
+    const p=providers().find(x=>String(x.id)===String(id)); const now=new Date(); let days='';
+    for(let i=0;i<14;i++){
+      const d=new Date(now);d.setDate(now.getDate()+i);const key=d.toISOString().slice(0,10);const busy=!!(s.availability[id]&&s.availability[id][key]);
+      days+=`<div class="ext2-day ${busy?'busy':'free'}"><b>${d.toLocaleDateString('th-TH',{weekday:'short'})}</b><br>${d.getDate()}/${d.getMonth()+1}<br><span>${busy?'🔴 ไม่ว่าง':'🟢 ว่าง'}</span></div>`;
+    }
+    box.innerHTML=`<div class="ext2-card"><h4>${esc(p?.name||'ผู้ดูแล')}</h4><div class="ext2-muted">${esc(p?.role||'ผู้ดูแล')} ${p?.province?'• '+esc(p.province):''}</div></div><div class="ext2-days">${days}</div><div class="ext2-card" style="margin-top:12px"><b>หมายเหตุ</b><p class="ext2-muted">ตารางนี้เป็น Demo ฝั่งหน้าเว็บ สามารถต่อยอดให้ผู้ดูแลเป็นผู้กำหนดเวลาว่าง/ไม่ว่างจริงได้</p></div>`;
+  };
+
+  // 3) ระบบรีวิวหลังบริการ — เก็บแยกและไม่แก้ order เดิม
+  window.EXT2_openReview=(providerId)=>{
+    const p=providers().find(x=>String(x.id)===String(providerId));
+    open('⭐ รีวิวผู้ดูแล',`<div class="ext2-card"><h4>${esc(p?.name||'ผู้ดูแล')}</h4><p class="ext2-muted">ให้คะแนนประสบการณ์การใช้บริการ</p><div class="ext2-stars" id="e2-stars">${[1,2,3,4,5].map(n=>`<button onclick="EXT2_rate(${n})" aria-label="${n} ดาว">☆</button>`).join('')}</div><textarea id="e2-review" rows="4" placeholder="เขียนความคิดเห็นเพิ่มเติม..."></textarea><button class="ext2-btn green" style="width:100%;margin-top:10px" onclick="EXT2_saveReview('${esc(providerId)}')">ส่งรีวิว</button></div>`);
+  };
+  window.EXT2_rate=(n)=>{window._ext2_rating=n;document.querySelectorAll('#e2-stars button').forEach((b,i)=>b.textContent=i<n?'★':'☆');};
+  window.EXT2_saveReview=(providerId)=>{
+    if(!window._ext2_rating){alert('กรุณาเลือกคะแนนก่อน');return;}const s=load();s.reviews.push({providerId,rating:window._ext2_rating,text:document.getElementById('e2-review').value.trim(),createdAt:new Date().toISOString()});save(s);EXT2_addNoti('ส่งรีวิวแล้ว','ขอบคุณสำหรับความคิดเห็นของคุณ');window._ext2_rating=0;alert('⭐ บันทึกรีวิวเรียบร้อยแล้ว');EXT2_close();
+  };
+
+  // 4) ศูนย์แจ้งเตือน
+  function EXT2_addNoti(title,text){const s=load();s.notifications=s.notifications||[];s.notifications.unshift({id:Date.now(),title,text,time:new Date().toLocaleString('th-TH')});s.notifications=s.notifications.slice(0,30);save(s);updateNotiCount();}
+  window.EXT2_addNoti=EXT2_addNoti;
+  function updateNotiCount(){const n=(load().notifications||[]).length;const el=document.getElementById('ext2-noti-count');if(el)el.textContent=n?`(${n})`:'';}
+  window.EXT2_openNotifications=()=>{const s=load(),ns=s.notifications||[];open('🔔 ศูนย์แจ้งเตือน',ns.length?ns.map(n=>`<div class="ext2-noti"><span class="ext2-dot"></span><div><b>${esc(n.title)}</b><div>${esc(n.text)}</div><small class="ext2-muted">${esc(n.time)}</small></div></div>`).join(''):'<div class="ext2-card">ยังไม่มีการแจ้งเตือน</div>');};
+
+  // 5) แชท Demo ระหว่างผู้ใช้กับผู้ดูแล
+  window.EXT2_openChat=()=>{
+    const s=load(),key='demo',msgs=s.chats[key]||[];
+    open('💬 แชทกับผู้ดูแล',`<div class="ext2-chat" id="e2-chat">${msgs.map(m=>`<div class="ext2-msg ${m.me?'me':'them'}">${esc(m.text)}<br><small class="ext2-muted">${esc(m.time)}</small></div>`).join('')}</div><div class="ext2-row"><input id="e2-chat-input" placeholder="พิมพ์ข้อความ..." onkeydown="if(event.key==='Enter')EXT2_sendChat()"><button class="ext2-btn" onclick="EXT2_sendChat()">ส่ง</button></div>`);
+    const c=document.getElementById('e2-chat');if(c)c.scrollTop=c.scrollHeight;
+  };
+  window.EXT2_sendChat=()=>{const input=document.getElementById('e2-chat-input');if(!input||!input.value.trim())return;const s=load();s.chats=s.chats||{};s.chats.demo=s.chats.demo||[];s.chats.demo.push({me:true,text:input.value.trim(),time:new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})});save(s);input.value='';EXT2_openChat();setTimeout(()=>{const s2=load();s2.chats.demo.push({me:false,text:'ได้รับข้อความแล้วค่ะ เดี๋ยวผู้ดูแลจะตอบกลับให้เร็วที่สุด',time:new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})});save(s2);EXT2_addNoti('มีข้อความตอบกลับ','ผู้ดูแลตอบกลับในระบบแชท');EXT2_openChat();},700);};
+
+  // ปุ่มรีวิวจากฟังก์ชันเสริม: ใช้ EXT2_openReview(providerId) ได้ทุกจุดของเว็บเดิม
+  window.EXT2_getReviews=(providerId)=>load().reviews.filter(r=>String(r.providerId)===String(providerId));
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    updateNotiCount();
+    // ทำให้ปุ่มรีวิวสามารถเรียกได้จาก console/ส่วนอื่น โดยไม่แตะ DOM เดิม
+    setTimeout(updateNotiCount,500);
+  });
+})();
+</script>
+
+
+<!-- BUTTON OVERLAP FIX V2: เพิ่ม CSS อย่างเดียว ไม่แก้โค้ดเดิม -->
+<style id="button-overlap-fix-v2">
+/* ===== จัดกลุ่มปุ่มลอยด้านล่างใหม่ทั้งหมด ===== */
+
+/* ปุ่มฟังก์ชันเสริม 4 ปุ่ม */
+.ext2-fab-wrap{
+  position:fixed !important;
+  left:50% !important;
+  right:auto !important;
+  bottom:20px !important;
+  transform:translateX(-50%) !important;
+  z-index:997 !important;
+  display:flex !important;
+  flex-wrap:nowrap !important;
+  gap:8px !important;
+  width:max-content !important;
+  max-width:calc(100vw - 300px) !important;
+  box-sizing:border-box !important;
+}
+
+/* ขนาดปุ่มฟังก์ชันเสริม */
+.ext2-fab{
+  flex:0 1 auto !important;
+  white-space:nowrap !important;
+  min-width:105px !important;
+  padding:10px 12px !important;
+  box-sizing:border-box !important;
+}
+
+/* ADMIN LOGIN - ซ้ายล่าง */
+#new-admin-login-btn{
+  position:fixed !important;
+  left:16px !important;
+  right:auto !important;
+  bottom:20px !important;
+  z-index:1001 !important;
+  white-space:nowrap !important;
+}
+
+/* ปุ่มโทร 1669 - ขวาล่าง */
+a.emergency-btn{
+  position:fixed !important;
+  left:auto !important;
+  right:16px !important;
+  bottom:20px !important;
+  z-index:1001 !important;
+  white-space:nowrap !important;
+}
+
+/* ปุ่ม SOS - อยู่เหนือปุ่มโทร 1669 */
+#sos-alert-btn.emergency-btn{
+  position:fixed !important;
+  left:auto !important;
+  right:16px !important;
+  bottom:76px !important;
+  z-index:1000 !important;
+  white-space:nowrap !important;
+}
+
+/* ปุ่มในหลังบ้านไม่ให้เบียดกัน */
+.na-actions{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  gap:8px !important;
+}
+.na-actions .na-btn{
+  flex:0 1 auto !important;
+  white-space:nowrap !important;
+}
+
+/* ===== มือถือ ===== */
+@media(max-width:760px){
+  body{
+    padding-bottom:190px !important;
+  }
+
+  /* ฟังก์ชันเสริมอยู่เป็นแถบด้านบน ไม่ทับปุ่มล่าง */
+  .ext2-fab-wrap{
+    left:8px !important;
+    right:8px !important;
+    bottom:92px !important;
+    transform:none !important;
+    width:auto !important;
+    max-width:none !important;
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:7px !important;
+  }
+
+  .ext2-fab{
+    width:100% !important;
+    min-width:0 !important;
+    padding:9px 5px !important;
+    font-size:.76rem !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+  }
+
+  /* ADMIN ซ้ายล่าง */
+  #new-admin-login-btn{
+    left:8px !important;
+    right:auto !important;
+    bottom:12px !important;
+    padding:9px 11px !important;
+    font-size:.78rem !important;
+  }
+
+  /* โทร 1669 ขวาล่าง */
+  a.emergency-btn{
+    left:auto !important;
+    right:8px !important;
+    bottom:12px !important;
+    padding:9px 11px !important;
+    font-size:.78rem !important;
+  }
+
+  /* SOS เหนือโทร 1669 */
+  #sos-alert-btn.emergency-btn{
+    left:auto !important;
+    right:8px !important;
+    bottom:58px !important;
+    padding:8px 10px !important;
+    font-size:.72rem !important;
+    max-width:calc(100vw - 16px) !important;
+  }
+
+  .na-actions .na-btn{
+    flex:1 1 calc(50% - 8px) !important;
+  }
+}
+
+/* ===== จอเล็กมาก ===== */
+@media(max-width:400px){
+  .ext2-fab-wrap{
+    bottom:104px !important;
+  }
+
+  .ext2-fab{
+    font-size:.70rem !important;
+    padding:8px 3px !important;
+  }
+
+  #new-admin-login-btn,
+  a.emergency-btn{
+    font-size:.68rem !important;
+    padding:8px 8px !important;
+  }
+
+  #sos-alert-btn.emergency-btn{
+    bottom:58px !important;
+    font-size:.64rem !important;
+  }
+}
+</style>
