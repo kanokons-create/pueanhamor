@@ -2540,5 +2540,1104 @@
 })();
 </script>
 
+
+<!-- =========================================================
+     ADD-ON ONLY: CAREMATE NATIONWIDE 77-PROVINCE SERVICE EXPANSION
+     IMPORTANT: This block is appended only. Original code above
+     is not deleted, replaced, or edited.
+     ========================================================= -->
+<style>
+    .cm-nationwide-panel {
+        margin-top: 1rem;
+        border: 1px solid #cbd5e1;
+        border-radius: 1rem;
+        background: #ffffff;
+        overflow: hidden;
+    }
+    .cm-nationwide-header {
+        padding: 1rem;
+        background: linear-gradient(135deg,#0f766e,#075985);
+        color: #fff;
+    }
+    .cm-nationwide-stats {
+        display:grid;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:.75rem;
+        padding:1rem;
+        background:#f8fafc;
+    }
+    @media(min-width:768px){
+        .cm-nationwide-stats{grid-template-columns:repeat(4,minmax(0,1fr));}
+    }
+    .cm-nationwide-stat {
+        padding:.8rem;
+        border:1px solid #e2e8f0;
+        border-radius:.85rem;
+        background:#fff;
+    }
+    .cm-nationwide-stat .label{font-size:.65rem;color:#64748b;}
+    .cm-nationwide-stat .value{font-size:1.15rem;font-weight:800;color:#0f172a;margin-top:.15rem;}
+    .cm-coverage-grid {
+        display:grid;
+        grid-template-columns:repeat(1,minmax(0,1fr));
+        gap:.75rem;
+        padding:1rem;
+        max-height:680px;
+        overflow-y:auto;
+    }
+    @media(min-width:768px){
+        .cm-coverage-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+    }
+    @media(min-width:1280px){
+        .cm-coverage-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+    }
+    .cm-province-card{
+        border:1px solid #e2e8f0;
+        border-radius:1rem;
+        padding:.9rem;
+        background:#fff;
+        box-shadow:0 1px 3px rgba(15,23,42,.05);
+    }
+    .cm-province-card:hover{border-color:#5eead4;box-shadow:0 5px 18px rgba(15,118,110,.08);}
+    .cm-province-title{display:flex;justify-content:space-between;align-items:center;gap:.5rem;}
+    .cm-province-name{font-weight:800;font-size:.78rem;color:#0f172a;}
+    .cm-capacity{
+        font-size:.58rem;font-weight:800;padding:.2rem .45rem;border-radius:.5rem;
+        background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;
+        white-space:nowrap;
+    }
+    .cm-hospital-list{margin-top:.65rem;display:grid;gap:.35rem;}
+    .cm-hospital-item{
+        font-size:.65rem;color:#475569;background:#f8fafc;border:1px solid #e2e8f0;
+        border-radius:.55rem;padding:.45rem .55rem;line-height:1.5;
+    }
+    .cm-provider-count{
+        display:flex;align-items:center;gap:.35rem;margin-top:.65rem;
+        font-size:.65rem;color:#0f766e;font-weight:800;
+    }
+    .cm-demo-note{
+        margin:0 1rem 1rem;padding:.75rem .85rem;border-radius:.75rem;
+        background:#fffbeb;border:1px solid #fde68a;color:#92400e;
+        font-size:.65rem;line-height:1.6;
+    }
+</style>
+
+<script>
+(function () {
+    "use strict";
+
+    /*
+     * 77 จังหวัด + โรงพยาบาลหลัก/ขนาดใหญ่ที่กำหนดเป็นจุดบริการในระบบ
+     * targetCompanions = จำนวนผู้ให้บริการขั้นต่ำ/เป้าหมายของจังหวัด
+     *
+     * หมายเหตุ:
+     * - รายชื่อผู้ให้บริการที่สร้างเพิ่มเป็น "ข้อมูลตัวอย่างสำหรับระบบ Demo"
+     *   ไม่ใช่บุคคลจริง
+     * - รายชื่อโรงพยาบาลใช้เป็นจุดบริการหลักของระบบ ไม่ใช่ทะเบียนโรงพยาบาลทุกแห่งของประเทศ
+     */
+    const CM_NATIONWIDE_DATA = [
+    {
+        "province": "กรุงเทพมหานคร",
+        "targetCompanions": 40,
+        "hospitals": [
+            "โรงพยาบาลศิริราช",
+            "โรงพยาบาลจุฬาลงกรณ์ สภากาชาดไทย",
+            "โรงพยาบาลรามาธิบดี",
+            "โรงพยาบาลราชวิถี",
+            "โรงพยาบาลพระมงกุฎเกล้า",
+            "โรงพยาบาลวชิรพยาบาล",
+            "โรงพยาบาลบำรุงราษฎร์"
+        ]
+    },
+    {
+        "province": "กระบี่",
+        "targetCompanions": 7,
+        "hospitals": [
+            "โรงพยาบาลกระบี่",
+            "โรงพยาบาลอ่าวลึก"
+        ]
+    },
+    {
+        "province": "กาญจนบุรี",
+        "targetCompanions": 8,
+        "hospitals": [
+            "โรงพยาบาลพหลพลพยุหเสนา",
+            "โรงพยาบาลมะการักษ์"
+        ]
+    },
+    {
+        "province": "กาฬสินธุ์",
+        "targetCompanions": 7,
+        "hospitals": [
+            "โรงพยาบาลกาฬสินธุ์",
+            "โรงพยาบาลสมเด็จ"
+        ]
+    },
+    {
+        "province": "กำแพงเพชร",
+        "targetCompanions": 7,
+        "hospitals": [
+            "โรงพยาบาลกำแพงเพชร",
+            "โรงพยาบาลคลองขลุง"
+        ]
+    },
+    {
+        "province": "ขอนแก่น",
+        "targetCompanions": 16,
+        "hospitals": [
+            "โรงพยาบาลขอนแก่น",
+            "โรงพยาบาลศรีนครินทร์ มหาวิทยาลัยขอนแก่น",
+            "โรงพยาบาลสมเด็จพระยุพราชกระนวน"
+        ]
+    },
+    {
+        "province": "จันทบุรี",
+        "targetCompanions": 7,
+        "hospitals": [
+            "โรงพยาบาลพระปกเกล้า",
+            "โรงพยาบาลสิริเวช จันทบุรี"
+        ]
+    },
+    {
+        "province": "ฉะเชิงเทรา",
+        "targetCompanions": 8,
+        "hospitals": [
+            "โรงพยาบาลพุทธโสธร",
+            "โรงพยาบาลจุฬารัตน์ 11 อินเตอร์"
+        ]
+    },
+    {
+        "province": "ชลบุรี",
+        "targetCompanions": 18,
+        "hospitals": [
+            "โรงพยาบาลชลบุรี",
+            "โรงพยาบาลสมเด็จพระบรมราชเทวี ณ ศรีราชา",
+            "โรงพยาบาลพัทยาเมโมเรียล",
+            "โรงพยาบาลกรุงเทพพัทยา"
+        ]
+    },
+    {
+        "province": "ชัยนาท",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลชัยนาทนเรนทร"
+        ]
+    },
+    {
+        "province": "ชัยภูมิ",
+        "targetCompanions": 7,
+        "hospitals": [
+            "โรงพยาบาลชัยภูมิ"
+        ]
+    },
+    {
+        "province": "ชุมพร",
+        "targetCompanions": 7,
+        "hospitals": [
+            "โรงพยาบาลชุมพรเขตรอุดมศักดิ์",
+            "โรงพยาบาลหลังสวน"
+        ]
+    },
+    {
+        "province": "ตรัง",
+        "targetCompanions": 7,
+        "hospitals": [
+            "โรงพยาบาลตรัง",
+            "โรงพยาบาลวัฒนแพทย์ ตรัง"
+        ]
+    },
+    {
+        "province": "ตราด",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลตราด"
+        ]
+    },
+    {
+        "province": "ตาก",
+        "targetCompanions": 7,
+        "hospitals": [
+            "โรงพยาบาลสมเด็จพระเจ้าตากสินมหาราช",
+            "โรงพยาบาลแม่สอด"
+        ]
+    },
+    {
+        "province": "นครนายก",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลนครนายก"
+        ]
+    },
+    {
+        "province": "นครปฐม",
+        "targetCompanions": 10,
+        "hospitals": [
+            "โรงพยาบาลนครปฐม",
+            "โรงพยาบาลสามพราน"
+        ]
+    },
+    {
+        "province": "นครพนม",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลนครพนม"
+        ]
+    },
+    {
+        "province": "นครราชสีมา",
+        "targetCompanions": 20,
+        "hospitals": [
+            "โรงพยาบาลมหาราชนครราชสีมา",
+            "โรงพยาบาลเทพรัตน์นครราชสีมา",
+            "โรงพยาบาลค่ายสุรนารี",
+            "โรงพยาบาลกรุงเทพราชสีมา"
+        ]
+    },
+    {
+        "province": "นครศรีธรรมราช",
+        "targetCompanions": 12,
+        "hospitals": [
+            "โรงพยาบาลมหาราชนครศรีธรรมราช",
+            "โรงพยาบาลทุ่งสง",
+            "โรงพยาบาลนครินทร์"
+        ]
+    },
+    {
+        "province": "นครสวรรค์",
+        "targetCompanions": 10,
+        "hospitals": [
+            "โรงพยาบาลสวรรค์ประชารักษ์",
+            "โรงพยาบาลปากน้ำโพ"
+        ]
+    },
+    {
+        "province": "นนทบุรี",
+        "targetCompanions": 16,
+        "hospitals": [
+            "โรงพยาบาลพระนั่งเกล้า",
+            "สถาบันโรคทรวงอก",
+            "โรงพยาบาลเกษมราษฎร์ รัตนาธิเบศร์"
+        ]
+    },
+    {
+        "province": "นราธิวาส",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลนราธิวาสราชนครินทร์",
+            "โรงพยาบาลสุไหงโก-ลก"
+        ]
+    },
+    {
+        "province": "น่าน",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลน่าน"
+        ]
+    },
+    {
+        "province": "บึงกาฬ",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลบึงกาฬ"
+        ]
+    },
+    {
+        "province": "บุรีรัมย์",
+        "targetCompanions": 10,
+        "hospitals": [
+            "โรงพยาบาลบุรีรัมย์",
+            "โรงพยาบาลนางรอง"
+        ]
+    },
+    {
+        "province": "ปทุมธานี",
+        "targetCompanions": 14,
+        "hospitals": [
+            "โรงพยาบาลธรรมศาสตร์เฉลิมพระเกียรติ",
+            "โรงพยาบาลปทุมธานี",
+            "โรงพยาบาลกรุงเทพปทุมธานี"
+        ]
+    },
+    {
+        "province": "ประจวบคีรีขันธ์",
+        "targetCompanions": 7,
+        "hospitals": [
+            "โรงพยาบาลประจวบคีรีขันธ์",
+            "โรงพยาบาลหัวหิน"
+        ]
+    },
+    {
+        "province": "ปราจีนบุรี",
+        "targetCompanions": 7,
+        "hospitals": [
+            "โรงพยาบาลเจ้าพระยาอภัยภูเบศร",
+            "โรงพยาบาลกบินทร์บุรี"
+        ]
+    },
+    {
+        "province": "ปัตตานี",
+        "targetCompanions": 7,
+        "hospitals": [
+            "โรงพยาบาลปัตตานี",
+            "โรงพยาบาลยะหริ่ง"
+        ]
+    },
+    {
+        "province": "พะเยา",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลพะเยา",
+            "โรงพยาบาลเชียงคำ"
+        ]
+    },
+    {
+        "province": "พังงา",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลพังงา",
+            "โรงพยาบาลตะกั่วป่า"
+        ]
+    },
+    {
+        "province": "พัทลุง",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลพัทลุง"
+        ]
+    },
+    {
+        "province": "พิจิตร",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลพิจิตร",
+            "โรงพยาบาลบางมูลนาก"
+        ]
+    },
+    {
+        "province": "พิษณุโลก",
+        "targetCompanions": 10,
+        "hospitals": [
+            "โรงพยาบาลพุทธชินราช พิษณุโลก",
+            "โรงพยาบาลมหาวิทยาลัยนเรศวร",
+            "โรงพยาบาลกรุงเทพพิษณุโลก"
+        ]
+    },
+    {
+        "province": "ภูเก็ต",
+        "targetCompanions": 12,
+        "hospitals": [
+            "โรงพยาบาลวชิระภูเก็ต",
+            "โรงพยาบาลป่าตอง",
+            "โรงพยาบาลกรุงเทพภูเก็ต",
+            "โรงพยาบาลสิริโรจน์"
+        ]
+    },
+    {
+        "province": "มหาสารคาม",
+        "targetCompanions": 7,
+        "hospitals": [
+            "โรงพยาบาลมหาสารคาม"
+        ]
+    },
+    {
+        "province": "มุกดาหาร",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลมุกดาหาร"
+        ]
+    },
+    {
+        "province": "ยะลา",
+        "targetCompanions": 7,
+        "hospitals": [
+            "โรงพยาบาลยะลา",
+            "โรงพยาบาลเบตง"
+        ]
+    },
+    {
+        "province": "ยโสธร",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลยโสธร"
+        ]
+    },
+    {
+        "province": "ร้อยเอ็ด",
+        "targetCompanions": 8,
+        "hospitals": [
+            "โรงพยาบาลร้อยเอ็ด"
+        ]
+    },
+    {
+        "province": "ระนอง",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลระนอง"
+        ]
+    },
+    {
+        "province": "ระยอง",
+        "targetCompanions": 12,
+        "hospitals": [
+            "โรงพยาบาลระยอง",
+            "โรงพยาบาลกรุงเทพระยอง",
+            "โรงพยาบาลพญาไท ระยอง"
+        ]
+    },
+    {
+        "province": "ราชบุรี",
+        "targetCompanions": 9,
+        "hospitals": [
+            "โรงพยาบาลราชบุรี",
+            "โรงพยาบาลบ้านโป่ง"
+        ]
+    },
+    {
+        "province": "ลพบุรี",
+        "targetCompanions": 8,
+        "hospitals": [
+            "โรงพยาบาลพระนารายณ์มหาราช",
+            "โรงพยาบาลบ้านหมี่"
+        ]
+    },
+    {
+        "province": "ลำปาง",
+        "targetCompanions": 8,
+        "hospitals": [
+            "โรงพยาบาลลำปาง",
+            "โรงพยาบาลเขลางค์นคร-ราม"
+        ]
+    },
+    {
+        "province": "ลำพูน",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลลำพูน"
+        ]
+    },
+    {
+        "province": "ศรีสะเกษ",
+        "targetCompanions": 8,
+        "hospitals": [
+            "โรงพยาบาลศรีสะเกษ"
+        ]
+    },
+    {
+        "province": "สกลนคร",
+        "targetCompanions": 8,
+        "hospitals": [
+            "โรงพยาบาลสกลนคร"
+        ]
+    },
+    {
+        "province": "สงขลา",
+        "targetCompanions": 16,
+        "hospitals": [
+            "โรงพยาบาลสงขลานครินทร์",
+            "โรงพยาบาลหาดใหญ่",
+            "โรงพยาบาลสงขลา",
+            "โรงพยาบาลกรุงเทพหาดใหญ่"
+        ]
+    },
+    {
+        "province": "สตูล",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลสตูล"
+        ]
+    },
+    {
+        "province": "สมุทรปราการ",
+        "targetCompanions": 16,
+        "hospitals": [
+            "โรงพยาบาลสมุทรปราการ",
+            "โรงพยาบาลบางพลี",
+            "โรงพยาบาลรามาธิบดีจักรีนฤบดินทร์",
+            "โรงพยาบาลเมืองสมุทรปู่เจ้าฯ"
+        ]
+    },
+    {
+        "province": "สมุทรสงคราม",
+        "targetCompanions": 5,
+        "hospitals": [
+            "โรงพยาบาลสมเด็จพระพุทธเลิศหล้า"
+        ]
+    },
+    {
+        "province": "สมุทรสาคร",
+        "targetCompanions": 10,
+        "hospitals": [
+            "โรงพยาบาลสมุทรสาคร",
+            "โรงพยาบาลมหาชัย"
+        ]
+    },
+    {
+        "province": "สระแก้ว",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลสมเด็จพระยุพราชสระแก้ว",
+            "โรงพยาบาลอรัญประเทศ"
+        ]
+    },
+    {
+        "province": "สระบุรี",
+        "targetCompanions": 9,
+        "hospitals": [
+            "โรงพยาบาลสระบุรี",
+            "โรงพยาบาลแก่งคอย"
+        ]
+    },
+    {
+        "province": "สิงห์บุรี",
+        "targetCompanions": 5,
+        "hospitals": [
+            "โรงพยาบาลสิงห์บุรี"
+        ]
+    },
+    {
+        "province": "สุพรรณบุรี",
+        "targetCompanions": 9,
+        "hospitals": [
+            "โรงพยาบาลเจ้าพระยายมราช",
+            "โรงพยาบาลสมเด็จพระสังฆราชองค์ที่ 17"
+        ]
+    },
+    {
+        "province": "สุราษฎร์ธานี",
+        "targetCompanions": 12,
+        "hospitals": [
+            "โรงพยาบาลสุราษฎร์ธานี",
+            "โรงพยาบาลเกาะสมุย",
+            "โรงพยาบาลกรุงเทพสุราษฎร์"
+        ]
+    },
+    {
+        "province": "สุรินทร์",
+        "targetCompanions": 9,
+        "hospitals": [
+            "โรงพยาบาลสุรินทร์",
+            "โรงพยาบาลปราสาท"
+        ]
+    },
+    {
+        "province": "สุโขทัย",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลสุโขทัย",
+            "โรงพยาบาลศรีสังวรสุโขทัย"
+        ]
+    },
+    {
+        "province": "หนองคาย",
+        "targetCompanions": 7,
+        "hospitals": [
+            "โรงพยาบาลหนองคาย",
+            "โรงพยาบาลสมเด็จพระยุพราชท่าบ่อ"
+        ]
+    },
+    {
+        "province": "หนองบัวลำภู",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลหนองบัวลำภู"
+        ]
+    },
+    {
+        "province": "อ่างทอง",
+        "targetCompanions": 5,
+        "hospitals": [
+            "โรงพยาบาลอ่างทอง"
+        ]
+    },
+    {
+        "province": "อำนาจเจริญ",
+        "targetCompanions": 5,
+        "hospitals": [
+            "โรงพยาบาลอำนาจเจริญ"
+        ]
+    },
+    {
+        "province": "อุดรธานี",
+        "targetCompanions": 14,
+        "hospitals": [
+            "โรงพยาบาลอุดรธานี",
+            "โรงพยาบาลกรุงเทพอุดร",
+            "โรงพยาบาลเอกอุดร"
+        ]
+    },
+    {
+        "province": "อุตรดิตถ์",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลอุตรดิตถ์"
+        ]
+    },
+    {
+        "province": "อุทัยธานี",
+        "targetCompanions": 5,
+        "hospitals": [
+            "โรงพยาบาลอุทัยธานี"
+        ]
+    },
+    {
+        "province": "อุบลราชธานี",
+        "targetCompanions": 14,
+        "hospitals": [
+            "โรงพยาบาลสรรพสิทธิประสงค์",
+            "โรงพยาบาลวารินชำราบ",
+            "โรงพยาบาลพริ้นซ์ อุบลราชธานี"
+        ]
+    },
+    {
+        "province": "พระนครศรีอยุธยา",
+        "targetCompanions": 10,
+        "hospitals": [
+            "โรงพยาบาลพระนครศรีอยุธยา",
+            "โรงพยาบาลราชธานี",
+            "โรงพยาบาลการุญเวช อยุธยา"
+        ]
+    },
+    {
+        "province": "เชียงราย",
+        "targetCompanions": 10,
+        "hospitals": [
+            "โรงพยาบาลเชียงรายประชานุเคราะห์",
+            "โรงพยาบาลเกษมราษฎร์ ศรีบุรินทร์"
+        ]
+    },
+    {
+        "province": "แพร่",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลแพร่"
+        ]
+    },
+    {
+        "province": "เพชรบุรี",
+        "targetCompanions": 7,
+        "hospitals": [
+            "โรงพยาบาลพระจอมเกล้า",
+            "โรงพยาบาลกรุงเทพเพชรบุรี"
+        ]
+    },
+    {
+        "province": "เพชรบูรณ์",
+        "targetCompanions": 7,
+        "hospitals": [
+            "โรงพยาบาลเพชรบูรณ์",
+            "โรงพยาบาลหล่มสัก"
+        ]
+    },
+    {
+        "province": "แม่ฮ่องสอน",
+        "targetCompanions": 5,
+        "hospitals": [
+            "โรงพยาบาลศรีสังวาลย์",
+            "โรงพยาบาลแม่สะเรียง"
+        ]
+    },
+    {
+        "province": "เลย",
+        "targetCompanions": 6,
+        "hospitals": [
+            "โรงพยาบาลเลย",
+            "โรงพยาบาลวังสะพุง"
+        ]
+    },
+    {
+        "province": "เชียงใหม่",
+        "targetCompanions": 18,
+        "hospitals": [
+            "โรงพยาบาลมหาราชนครเชียงใหม่ (สวนดอก)",
+            "โรงพยาบาลนครพิงค์",
+            "โรงพยาบาลกรุงเทพเชียงใหม่",
+            "โรงพยาบาลเชียงใหม่ ราม"
+        ]
+    }
+];
+
+    const CM_ROLE_POOL = [
+        "พยาบาลวิชาชีพ (RN)",
+        "ผู้ช่วยพยาบาล (NA)",
+        "นักกายภาพบำบัด (PT)",
+        "ผู้ดูแลผู้สูงอายุ (Caregiver)"
+    ];
+
+    const CM_AVATARS = [
+        "https://images.unsplash.com/photo-1594824813572-9800171df542?w=150&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=150&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&auto=format&fit=crop&q=80"
+    ];
+
+    function cmEscape(value) {
+        return String(value ?? "")
+            .replace(/&/g,"&amp;")
+            .replace(/</g,"&lt;")
+            .replace(/>/g,"&gt;")
+            .replace(/"/g,"&quot;")
+            .replace(/'/g,"&#039;");
+    }
+
+    function cmFindProvince(name) {
+        return provinceHospitalsData.find(p => p.province === name);
+    }
+
+    function cmMergeNationwideHospitals() {
+        CM_NATIONWIDE_DATA.forEach(item => {
+            const existing = cmFindProvince(item.province);
+
+            if (existing) {
+                item.hospitals.forEach(h => {
+                    if (!existing.hospitals.includes(h)) existing.hospitals.push(h);
+                });
+                existing.isMajor = true;
+                existing.cmNationwide = true;
+            } else {
+                provinceHospitalsData.push({
+                    province: item.province,
+                    isMajor: true,
+                    hospitals: [...item.hospitals],
+                    cmNationwide: true
+                });
+            }
+        });
+
+        /*
+         * เรียงตามลำดับข้อมูล 77 จังหวัดที่กำหนดในส่วนเพิ่ม
+         * โดยไม่ลบข้อมูลเดิม
+         */
+        provinceHospitalsData.sort((a,b) => {
+            const ai = CM_NATIONWIDE_DATA.findIndex(x => x.province === a.province);
+            const bi = CM_NATIONWIDE_DATA.findIndex(x => x.province === b.province);
+            return ai - bi;
+        });
+    }
+
+    function cmTierForIndex(index) {
+        if (index < 2) return { tier:"Platinum", bonusPct:15, rating:"5.0", onTimeRate:"99" };
+        if (index < 4) return { tier:"Gold", bonusPct:10, rating:"4.8", onTimeRate:"97" };
+        if (index < 6) return { tier:"Silver", bonusPct:5, rating:"4.6", onTimeRate:"94" };
+        return { tier:"Bronze", bonusPct:0, rating:"4.4", onTimeRate:"92" };
+    }
+
+    function cmCreateProvidersForProvince(item) {
+        const existingCount = companions.filter(c => c.province === item.province).length;
+        const need = Math.max(0, item.targetCompanions - existingCount);
+
+        for (let i = 0; i < need; i++) {
+            const globalIndex = existingCount + i;
+            const role = CM_ROLE_POOL[globalIndex % CM_ROLE_POOL.length];
+            const hospital = item.hospitals[globalIndex % item.hospitals.length];
+            const tier = cmTierForIndex(globalIndex);
+
+            const skillMap = [
+                "ดูแลทั่วไป",
+                "Alzheimer",
+                "Parkinson",
+                "Stroke"
+            ];
+
+            const badges = ["CPR"];
+            if (globalIndex % 2 === 0) badges.push("ALZHEIMER");
+            if (globalIndex % 3 === 0) badges.push("PARKINSON");
+            if (role.includes("PT") || globalIndex % 4 === 0) badges.push("STROKE");
+
+            companions.push({
+                id: compIdCounter++,
+                name: `CareMate ${item.province} ${String(globalIndex + 1).padStart(2,"0")}`,
+                province: item.province,
+                role: role,
+                license: `CM-${String(item.province).replace(/\s+/g,"").slice(0,4)}-${String(globalIndex + 1).padStart(3,"0")}`,
+                criminalCheck: true,
+                exp: 2 + (globalIndex % 9),
+                phone: "08X-XXX-XXXX",
+                rating: tier.rating,
+                onTimeRate: tier.onTimeRate,
+                tier: tier.tier,
+                bonusPct: tier.bonusPct,
+                priorityCaseDispatch: tier.tier === "Platinum" || tier.tier === "Gold",
+                badges: [...new Set(badges)],
+                status: globalIndex % 5 === 0 ? "ON_DUTY" : "AVAILABLE",
+                avatar: CM_AVATARS[globalIndex % CM_AVATARS.length],
+                skill: skillMap[globalIndex % skillMap.length],
+                languages: globalIndex % 5 === 0 ? "ไทย, อังกฤษ" : "ไทย",
+                serviceHospital: hospital,
+                nationwideDemoProvider: true
+            });
+        }
+    }
+
+    function cmGenerateProviders() {
+        CM_NATIONWIDE_DATA.forEach(cmCreateProvidersForProvince);
+
+        /*
+         * ผู้ดูแลเดิมในไฟล์เก่าถูกสร้างโดยยังไม่มี serviceHospital
+         * จึงเติมโรงพยาบาลประจำให้เฉพาะ property ที่ขาด โดยไม่เปลี่ยนค่าเดิมอื่น
+         */
+        companions.forEach(c => {
+            if (!c.serviceHospital) {
+                const item = CM_NATIONWIDE_DATA.find(x => x.province === c.province);
+                if (item && item.hospitals.length) {
+                    const sameProvinceIndex = companions
+                        .filter(x => x.province === c.province)
+                        .indexOf(c);
+                    c.serviceHospital = item.hospitals[
+                        Math.max(0, sameProvinceIndex) % item.hospitals.length
+                    ];
+                }
+            }
+        });
+    }
+
+    function cmRefreshDropdowns() {
+        const ids = [
+            "catalog-province-filter",
+            "admin-province-filter",
+            "wiz-province",
+            "comp-input-province"
+        ];
+
+        ids.forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+
+            const current = el.value;
+            const isCatalog = id === "catalog-province-filter";
+            const isAdmin = id === "admin-province-filter";
+
+            const firstOption = isCatalog
+                ? '<option value="ALL">ทุกจังหวัด (77 จังหวัด)</option>'
+                : isAdmin
+                    ? '<option value="ALL">แสดงทุกจังหวัด</option>'
+                    : '<option value="">เลือกจังหวัด</option>';
+
+            el.innerHTML = firstOption + CM_NATIONWIDE_DATA
+                .map(x => `<option value="${cmEscape(x.province)}">${cmEscape(x.province)}</option>`)
+                .join("");
+
+            if ([...el.options].some(o => o.value === current)) {
+                el.value = current;
+            }
+        });
+
+        if (typeof onBookingProvinceChange === "function") {
+            onBookingProvinceChange();
+        }
+    }
+
+    function cmRefreshExistingViews() {
+        if (typeof renderUserCompanionsCatalog === "function") renderUserCompanionsCatalog();
+        if (typeof renderAdminCompanionsTable === "function") renderAdminCompanionsTable();
+        if (typeof renderAdminHospitals === "function") renderAdminHospitals();
+        if (typeof renderAdminTieringElearningSection === "function") renderAdminTieringElearningSection();
+        if (typeof renderAdminBookingsTable === "function") renderAdminBookingsTable();
+        if (typeof renderUserBookingsHistory === "function") renderUserBookingsHistory();
+
+        const dash = document.getElementById("dash-total-companions");
+        if (dash) dash.textContent = `${companions.length} คน`;
+    }
+
+    function cmRenderNationwidePanel() {
+        const hospitalSection = document.getElementById("admin-content-hospitals");
+        if (!hospitalSection) return;
+
+        let panel = document.getElementById("cmNationwideCoveragePanel");
+
+        if (!panel) {
+            panel = document.createElement("div");
+            panel.id = "cmNationwideCoveragePanel";
+            hospitalSection.appendChild(panel);
+        }
+
+        const totalHospitals = CM_NATIONWIDE_DATA.reduce((sum,x) => sum + x.hospitals.length, 0);
+        const totalProviders = CM_NATIONWIDE_DATA.reduce((sum,x) => {
+            return sum + companions.filter(c => c.province === x.province).length;
+        },0);
+
+        const minProvider = Math.min(...CM_NATIONWIDE_DATA.map(x =>
+            companions.filter(c => c.province === x.province).length
+        ));
+        const maxProvider = Math.max(...CM_NATIONWIDE_DATA.map(x =>
+            companions.filter(c => c.province === x.province).length
+        ));
+
+        panel.className = "cm-nationwide-panel";
+        panel.innerHTML = `
+            <div class="cm-nationwide-header">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center">
+                        <i class="fa-solid fa-map-location-dot text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-sm">CareMate Nationwide Service</div>
+                        <div class="text-[10px] text-teal-100 mt-0.5">
+                            ศูนย์บริการครอบคลุม 77 จังหวัด • จัดผู้ให้บริการตามขนาดพื้นที่/ความต้องการ
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cm-nationwide-stats">
+                <div class="cm-nationwide-stat">
+                    <div class="label">จังหวัดที่เปิดบริการ</div>
+                    <div class="value">${CM_NATIONWIDE_DATA.length} จังหวัด</div>
+                </div>
+                <div class="cm-nationwide-stat">
+                    <div class="label">โรงพยาบาลจุดบริการ</div>
+                    <div class="value">${totalHospitals} แห่ง</div>
+                </div>
+                <div class="cm-nationwide-stat">
+                    <div class="label">ผู้ให้บริการทั้งหมดใน Demo</div>
+                    <div class="value">${totalProviders} คน</div>
+                </div>
+                <div class="cm-nationwide-stat">
+                    <div class="label">จำนวนต่อจังหวัด</div>
+                    <div class="value">${minProvider}-${maxProvider} คน</div>
+                </div>
+            </div>
+
+            <div class="px-4 pt-4">
+                <div class="flex flex-col sm:flex-row gap-2">
+                    <input id="cmNationwideSearch" type="text"
+                        placeholder="ค้นหาจังหวัดหรือโรงพยาบาล..."
+                        class="flex-1 p-2.5 border rounded-xl text-xs bg-white focus:ring-2 focus:ring-teal-500 outline-none">
+                    <select id="cmNationwideCapacityFilter"
+                        class="p-2.5 border rounded-xl text-xs bg-white">
+                        <option value="ALL">ทุกระดับจำนวนผู้ให้บริการ</option>
+                        <option value="HIGH">มากกว่า 10 คน</option>
+                        <option value="MEDIUM">7-10 คน</option>
+                        <option value="MIN">5-6 คน</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="cm-coverage-grid" id="cmNationwideCoverageGrid"></div>
+
+            <div class="cm-demo-note">
+                <i class="fa-solid fa-circle-info me-1"></i>
+                ข้อมูลผู้ให้บริการที่ระบบสร้างเพิ่มเป็นข้อมูลตัวอย่างสำหรับทดสอบระบบเท่านั้น
+                ส่วนรายชื่อโรงพยาบาลเป็นจุดบริการหลัก/ขนาดใหญ่ที่กำหนดไว้ใน Demo
+                ก่อนใช้งานจริงควรตรวจสอบรายชื่อโรงพยาบาลและข้อมูลบุคลากรกับหน่วยงานที่เกี่ยวข้อง
+            </div>
+        `;
+
+        const renderCards = () => {
+            const grid = document.getElementById("cmNationwideCoverageGrid");
+            const q = (document.getElementById("cmNationwideSearch")?.value || "").trim().toLowerCase();
+            const cap = document.getElementById("cmNationwideCapacityFilter")?.value || "ALL";
+
+            const filtered = CM_NATIONWIDE_DATA.filter(item => {
+                const count = companions.filter(c => c.province === item.province).length;
+                const matchText =
+                    !q ||
+                    item.province.toLowerCase().includes(q) ||
+                    item.hospitals.some(h => h.toLowerCase().includes(q));
+
+                const matchCap =
+                    cap === "ALL" ||
+                    (cap === "HIGH" && count > 10) ||
+                    (cap === "MEDIUM" && count >= 7 && count <= 10) ||
+                    (cap === "MIN" && count >= 5 && count <= 6);
+
+                return matchText && matchCap;
+            });
+
+            grid.innerHTML = filtered.map(item => {
+                const count = companions.filter(c => c.province === item.province).length;
+                const level = count > 10 ? "กำลังคนสูง" : count >= 7 ? "กำลังคนกลาง" : "ขั้นต่ำ 5+ คน";
+
+                return `
+                    <div class="cm-province-card">
+                        <div class="cm-province-title">
+                            <div class="cm-province-name">
+                                <i class="fa-solid fa-location-dot text-teal-600 me-1"></i>
+                                ${cmEscape(item.province)}
+                            </div>
+                            <span class="cm-capacity">${count} ผู้ให้บริการ</span>
+                        </div>
+
+                        <div class="text-[9px] text-slate-400 mt-1">${level}</div>
+
+                        <div class="cm-hospital-list">
+                            ${item.hospitals.map((h,i) => `
+                                <div class="cm-hospital-item">
+                                    <i class="fa-solid fa-hospital text-teal-600 me-1"></i>
+                                    ${i+1}. ${cmEscape(h)}
+                                </div>
+                            `).join("")}
+                        </div>
+
+                        <div class="cm-provider-count">
+                            <i class="fa-solid fa-user-nurse"></i>
+                            ทีมผู้ให้บริการประจำจังหวัด ${count} คน
+                        </div>
+                    </div>
+                `;
+            }).join("");
+
+            if (!filtered.length) {
+                grid.innerHTML = `
+                    <div class="col-span-full p-8 text-center text-xs text-slate-400">
+                        ไม่พบจังหวัดหรือโรงพยาบาลที่ค้นหา
+                    </div>
+                `;
+            }
+        };
+
+        document.getElementById("cmNationwideSearch").addEventListener("input", renderCards);
+        document.getElementById("cmNationwideCapacityFilter").addEventListener("change", renderCards);
+        renderCards();
+    }
+
+    function cmAddCoverageBadgeToHospitalHeader() {
+        const section = document.getElementById("admin-content-hospitals");
+        if (!section) return;
+
+        const heading = section.querySelector("h3");
+        if (!heading || heading.dataset.cmCoverageAdded === "1") return;
+
+        heading.dataset.cmCoverageAdded = "1";
+        heading.insertAdjacentHTML("beforeend",
+            ` <span class="ml-2 bg-emerald-100 text-emerald-700 text-[9px] px-2 py-0.5 rounded-full border border-emerald-200">77 จังหวัดเปิดบริการ</span>`
+        );
+    }
+
+    function cmRunNationwideExpansion() {
+        if (window.__CM_NATIONWIDE_EXPANDED__) return;
+        window.__CM_NATIONWIDE_EXPANDED__ = true;
+
+        if (typeof provinceHospitalsData === "undefined" || typeof companions === "undefined") {
+            console.error("CareMate Nationwide Add-on: ไม่พบตัวแปรข้อมูลเดิม");
+            return;
+        }
+
+        cmMergeNationwideHospitals();
+        cmGenerateProviders();
+        cmRefreshDropdowns();
+        cmRefreshExistingViews();
+        cmAddCoverageBadgeToHospitalHeader();
+        cmRenderNationwidePanel();
+
+        console.info(
+            "CareMate Nationwide Add-on:",
+            CM_NATIONWIDE_DATA.length,
+            "จังหวัด,",
+            companions.length,
+            "ผู้ให้บริการ"
+        );
+    }
+
+    /*
+     * รอให้ window.onload เดิมของไฟล์ทำงานเสร็จก่อน
+     * แล้วค่อยเพิ่มข้อมูลใหม่ เพื่อไม่แก้ไขขั้นตอนเดิม
+     */
+    window.addEventListener("load", function () {
+        setTimeout(cmRunNationwideExpansion, 0);
+    });
+
+})();
+</script>
+
 </body>
 </html>
