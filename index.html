@@ -4301,5 +4301,1088 @@
 })();
 </script>
 
+
+
+<!-- ============================================================
+     CAREMATE ADD-ON: PROVIDER / COMPANION PORTAL
+     เพิ่มอย่างเดียว: ไม่แก้ไข/ลบโค้ดเดิม
+     Provider PIN: 12345
+     ============================================================ -->
+<style id="cm-provider-portal-style">
+    #cm-provider-portal {
+        position: fixed;
+        inset: 0;
+        z-index: 100000;
+        background: #f1f5f9;
+        color: #0f172a;
+        font-family: 'Prompt', sans-serif;
+    }
+
+    #cm-provider-portal.hidden {
+        display: none !important;
+    }
+
+    .cm-provider-shell {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .cm-provider-header {
+        min-height: 68px;
+        background: #0f172a;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 12px 22px;
+        box-shadow: 0 4px 16px rgba(15,23,42,.16);
+        flex-shrink: 0;
+    }
+
+    .cm-provider-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+    }
+
+    .cm-provider-logo {
+        width: 42px;
+        height: 42px;
+        border-radius: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg,#14b8a6,#0ea5e9);
+        box-shadow: 0 8px 20px rgba(20,184,166,.22);
+        flex-shrink: 0;
+    }
+
+    .cm-provider-title {
+        font-size: 16px;
+        font-weight: 800;
+        line-height: 1.25;
+    }
+
+    .cm-provider-subtitle {
+        font-size: 10px;
+        color: #94a3b8;
+        margin-top: 2px;
+    }
+
+    .cm-provider-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+
+    .cm-provider-status {
+        font-size: 10px;
+        padding: 5px 9px;
+        border-radius: 999px;
+        background: rgba(20,184,166,.12);
+        color: #5eead4;
+        border: 1px solid rgba(45,212,191,.25);
+        font-weight: 800;
+    }
+
+    .cm-provider-close {
+        border: 1px solid #334155;
+        background: #1e293b;
+        color: #cbd5e1;
+        border-radius: 10px;
+        padding: 8px 11px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .cm-provider-close:hover {
+        background: #334155;
+        color: white;
+    }
+
+    .cm-provider-main {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        padding: 22px;
+    }
+
+    .cm-provider-container {
+        max-width: 1180px;
+        margin: 0 auto;
+    }
+
+    .cm-provider-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.65fr) minmax(300px, .85fr);
+        gap: 18px;
+    }
+
+    .cm-provider-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        box-shadow: 0 4px 16px rgba(15,23,42,.05);
+    }
+
+    .cm-provider-card-header {
+        padding: 17px 19px;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .cm-provider-card-body {
+        padding: 19px;
+    }
+
+    .cm-provider-label {
+        display: block;
+        font-size: 11px;
+        font-weight: 700;
+        color: #334155;
+        margin-bottom: 6px;
+    }
+
+    .cm-provider-input,
+    .cm-provider-select,
+    .cm-provider-textarea {
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        padding: 10px 12px;
+        outline: none;
+        background: white;
+        color: #0f172a;
+        font-family: 'Prompt', sans-serif;
+        font-size: 11px;
+    }
+
+    .cm-provider-input:focus,
+    .cm-provider-select:focus,
+    .cm-provider-textarea:focus {
+        border-color: #14b8a6;
+        box-shadow: 0 0 0 3px rgba(20,184,166,.12);
+    }
+
+    .cm-provider-textarea {
+        resize: vertical;
+        min-height: 110px;
+        line-height: 1.65;
+    }
+
+    .cm-provider-button {
+        border: 0;
+        border-radius: 12px;
+        padding: 10px 14px;
+        font-family: 'Prompt', sans-serif;
+        font-size: 11px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: .15s ease;
+    }
+
+    .cm-provider-button:hover {
+        transform: translateY(-1px);
+    }
+
+    .cm-provider-button-primary {
+        color: white;
+        background: #0d9488;
+        box-shadow: 0 5px 12px rgba(13,148,136,.18);
+    }
+
+    .cm-provider-button-primary:hover {
+        background: #0f766e;
+    }
+
+    .cm-provider-button-secondary {
+        color: #334155;
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+    }
+
+    .cm-provider-step-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0,1fr));
+        gap: 10px;
+    }
+
+    .cm-provider-step {
+        border: 1px solid #e2e8f0;
+        background: #f8fafc;
+        border-radius: 14px;
+        padding: 12px;
+        text-align: left;
+        cursor: pointer;
+        font-family: 'Prompt', sans-serif;
+        font-size: 10px;
+        font-weight: 800;
+        color: #334155;
+    }
+
+    .cm-provider-step:hover {
+        border-color: #5eead4;
+        background: #f0fdfa;
+    }
+
+    .cm-provider-step i {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 7px;
+        color: #0d9488;
+    }
+
+    .cm-provider-vitals {
+        display: grid;
+        grid-template-columns: repeat(3,minmax(0,1fr));
+        gap: 10px;
+    }
+
+    .cm-provider-note-history {
+        max-height: 290px;
+        overflow-y: auto;
+        display: grid;
+        gap: 9px;
+    }
+
+    .cm-provider-note-item {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 13px;
+        padding: 11px;
+    }
+
+    .cm-provider-note-time {
+        color: #64748b;
+        font-size: 9px;
+        margin-bottom: 4px;
+    }
+
+    .cm-provider-note-text {
+        color: #334155;
+        font-size: 10px;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+
+    .cm-provider-stat-grid {
+        display: grid;
+        grid-template-columns: repeat(3,minmax(0,1fr));
+        gap: 10px;
+        margin-bottom: 18px;
+    }
+
+    .cm-provider-stat {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 13px;
+    }
+
+    .cm-provider-stat-label {
+        color: #64748b;
+        font-size: 9px;
+        font-weight: 600;
+    }
+
+    .cm-provider-stat-value {
+        margin-top: 4px;
+        color: #0f172a;
+        font-size: 17px;
+        font-weight: 800;
+    }
+
+    .cm-provider-auth-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(15,23,42,.76);
+        backdrop-filter: blur(8px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+    }
+
+    .cm-provider-auth-card {
+        width: min(420px,100%);
+        background: white;
+        border-radius: 25px;
+        padding: 26px;
+        box-shadow: 0 25px 70px rgba(15,23,42,.30);
+    }
+
+    .cm-provider-auth-icon {
+        width: 54px;
+        height: 54px;
+        border-radius: 17px;
+        background: #f0fdfa;
+        color: #0d9488;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 12px;
+        font-size: 22px;
+        border: 1px solid #ccfbf1;
+    }
+
+    .cm-provider-error {
+        display: none;
+        background: #fff1f2;
+        color: #be123c;
+        border: 1px solid #fecdd3;
+        border-radius: 12px;
+        padding: 9px 11px;
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    .cm-provider-error.show {
+        display: block;
+    }
+
+    .cm-provider-success {
+        display: none;
+        background: #ecfdf5;
+        color: #047857;
+        border: 1px solid #a7f3d0;
+        border-radius: 12px;
+        padding: 9px 11px;
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    .cm-provider-success.show {
+        display: block;
+    }
+
+    @media (max-width: 900px) {
+        .cm-provider-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .cm-provider-step-grid {
+            grid-template-columns: repeat(2,minmax(0,1fr));
+        }
+    }
+
+    @media (max-width: 640px) {
+        .cm-provider-header {
+            padding: 10px 13px;
+        }
+
+        .cm-provider-main {
+            padding: 12px;
+        }
+
+        .cm-provider-vitals,
+        .cm-provider-stat-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .cm-provider-status {
+            display: none;
+        }
+    }
+</style>
+
+<div id="cm-provider-portal" class="hidden" aria-hidden="true">
+    <div class="cm-provider-shell">
+
+        <header class="cm-provider-header">
+            <div class="cm-provider-brand">
+                <div class="cm-provider-logo">
+                    <i class="fa-solid fa-user-nurse text-white text-lg"></i>
+                </div>
+                <div>
+                    <div class="cm-provider-title">
+                        CareMate <span style="color:#5eead4;">PROVIDER PORTAL</span>
+                    </div>
+                    <div class="cm-provider-subtitle">
+                        พื้นที่ทำงานเฉพาะสำหรับผู้ให้บริการ / ผู้ดูแลผู้ป่วย
+                    </div>
+                </div>
+            </div>
+
+            <div class="cm-provider-actions">
+                <span class="cm-provider-status">
+                    <i class="fa-solid fa-shield-halved"></i> PROVIDER AUTHENTICATED
+                </span>
+                <button type="button" class="cm-provider-close" onclick="cmProviderLogout()">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    ออกจากส่วนผู้ให้บริการ
+                </button>
+            </div>
+        </header>
+
+        <main class="cm-provider-main">
+            <div class="cm-provider-container">
+
+                <div class="cm-provider-stat-grid">
+                    <div class="cm-provider-stat">
+                        <div class="cm-provider-stat-label">เคสที่กำลังดูแล</div>
+                        <div class="cm-provider-stat-value" id="cm-provider-stat-case">-</div>
+                    </div>
+                    <div class="cm-provider-stat">
+                        <div class="cm-provider-stat-label">สถานะปัจจุบัน</div>
+                        <div class="cm-provider-stat-value" id="cm-provider-stat-step">รอเริ่มงาน</div>
+                    </div>
+                    <div class="cm-provider-stat">
+                        <div class="cm-provider-stat-label">บันทึกโน้ตแล้ว</div>
+                        <div class="cm-provider-stat-value" id="cm-provider-stat-notes">0</div>
+                    </div>
+                </div>
+
+                <div class="cm-provider-grid">
+
+                    <section class="cm-provider-card">
+                        <div class="cm-provider-card-header">
+                            <div>
+                                <div style="font-size:13px;font-weight:800;color:#0f172a;">
+                                    <i class="fa-solid fa-notes-medical" style="color:#0d9488;"></i>
+                                    บันทึกการปฏิบัติงานและโน้ตจากการพบแพทย์
+                                </div>
+                                <div style="font-size:9px;color:#64748b;margin-top:3px;">
+                                    บันทึกข้อมูลสำหรับส่งต่อให้ญาติและแสดงในหน้าติดตามของผู้ใช้บริการ
+                                </div>
+                            </div>
+                            <span style="font-size:9px;font-weight:800;color:#0d9488;background:#f0fdfa;border:1px solid #ccfbf1;padding:5px 8px;border-radius:9px;">
+                                Companion Tools
+                            </span>
+                        </div>
+
+                        <div class="cm-provider-card-body" style="display:grid;gap:18px;">
+
+                            <div>
+                                <label class="cm-provider-label">เลือกเคสที่กำลังปฏิบัติงาน</label>
+                                <select id="cm-provider-case-select" class="cm-provider-select" onchange="cmProviderLoadCase(this.value)">
+                                </select>
+                            </div>
+
+                            <div>
+                                <div style="font-size:11px;font-weight:800;color:#334155;margin-bottom:9px;">
+                                    <i class="fa-solid fa-location-crosshairs" style="color:#0d9488;"></i>
+                                    อัปเดตสถานะการปฏิบัติงาน
+                                </div>
+
+                                <div class="cm-provider-step-grid">
+                                    <button type="button" class="cm-provider-step" onclick="cmProviderCheckin(2,'ถึงบ้านผู้ป่วยแล้ว')">
+                                        <i class="fa-solid fa-house-user"></i>
+                                        1. ถึงบ้านผู้ป่วย
+                                    </button>
+                                    <button type="button" class="cm-provider-step" onclick="cmProviderCheckin(3,'ถึงโรงพยาบาลและยื่นบัตรนัดแล้ว')">
+                                        <i class="fa-solid fa-hospital"></i>
+                                        2. ถึงโรงพยาบาล
+                                    </button>
+                                    <button type="button" class="cm-provider-step" onclick="cmProviderCheckin(4,'พาผู้ป่วยเข้าพบแพทย์แล้ว')">
+                                        <i class="fa-solid fa-user-doctor"></i>
+                                        3. เข้าพบแพทย์
+                                    </button>
+                                    <button type="button" class="cm-provider-step" onclick="cmProviderCheckin(5,'ส่งผู้ป่วยกลับถึงบ้านเรียบร้อย')">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                        4. เสร็จสิ้นงาน
+                                    </button>
+                                </div>
+                            </div>
+
+                            <form id="cm-provider-note-form" onsubmit="cmProviderSaveNote(event)" style="display:grid;gap:14px;">
+                                <div>
+                                    <div style="font-size:11px;font-weight:800;color:#334155;margin-bottom:9px;">
+                                        <i class="fa-solid fa-heart-pulse" style="color:#0d9488;"></i>
+                                        สัญญาณชีพ
+                                    </div>
+
+                                    <div class="cm-provider-vitals">
+                                        <div>
+                                            <label class="cm-provider-label">ความดัน (mmHg)</label>
+                                            <input id="cm-provider-bp" type="text" class="cm-provider-input" placeholder="120/80">
+                                        </div>
+                                        <div>
+                                            <label class="cm-provider-label">น้ำตาล (mg/dL)</label>
+                                            <input id="cm-provider-sugar" type="number" class="cm-provider-input" placeholder="105">
+                                        </div>
+                                        <div>
+                                            <label class="cm-provider-label">ชีพจร (bpm)</label>
+                                            <input id="cm-provider-pulse" type="number" class="cm-provider-input" placeholder="72">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="cm-provider-label">สรุปคำสั่ง / คำแนะนำจากแพทย์ *</label>
+                                    <textarea id="cm-provider-doctor-note" class="cm-provider-textarea" required placeholder="เช่น แพทย์แนะนำให้รับประทานยาตามเดิม นัดติดตามอีก 2 สัปดาห์..."></textarea>
+                                </div>
+
+                                <div>
+                                    <label class="cm-provider-label">โน้ตเพิ่มเติมจากผู้ดูแล</label>
+                                    <textarea id="cm-provider-extra-note" class="cm-provider-textarea" style="min-height:80px;" placeholder="บันทึกสิ่งที่สังเกตระหว่างพาผู้ป่วย..."></textarea>
+                                </div>
+
+                                <div id="cm-provider-success" class="cm-provider-success">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    บันทึกเรียบร้อยแล้ว
+                                </div>
+
+                                <button type="submit" class="cm-provider-button cm-provider-button-primary">
+                                    <i class="fa-solid fa-floppy-disk"></i>
+                                    บันทึกโน้ตและผลพบแพทย์
+                                </button>
+                            </form>
+                        </div>
+                    </section>
+
+                    <aside class="cm-provider-card">
+                        <div class="cm-provider-card-header">
+                            <div style="font-size:12px;font-weight:800;">
+                                <i class="fa-solid fa-clock-rotate-left" style="color:#0d9488;"></i>
+                                ประวัติการบันทึก
+                            </div>
+                        </div>
+
+                        <div class="cm-provider-card-body">
+                            <div id="cm-provider-note-history" class="cm-provider-note-history">
+                                <div style="font-size:10px;color:#94a3b8;text-align:center;padding:25px 8px;">
+                                    ยังไม่มีการบันทึกสำหรับเคสนี้
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="padding:0 19px 19px;">
+                            <button type="button" class="cm-provider-button cm-provider-button-secondary" style="width:100%;" onclick="cmProviderSyncOriginalView()">
+                                <i class="fa-solid fa-rotate"></i>
+                                อัปเดตหน้าผู้ใช้บริการ
+                            </button>
+                        </div>
+                    </aside>
+
+                </div>
+            </div>
+        </main>
+
+        <div id="cm-provider-auth-overlay" class="cm-provider-auth-overlay">
+            <div class="cm-provider-auth-card">
+                <div class="cm-provider-auth-icon">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+
+                <div style="text-align:center;">
+                    <div style="font-size:18px;font-weight:800;color:#0f172a;">
+                        เข้าสู่ส่วนผู้ให้บริการ
+                    </div>
+                    <div style="font-size:10px;color:#64748b;margin-top:4px;line-height:1.6;">
+                        พื้นที่นี้แยกจากระบบ Admin สำหรับผู้ดูแลใช้บันทึกงานและโน้ตจากการพบแพทย์
+                    </div>
+                </div>
+
+                <form onsubmit="cmProviderAuthenticate(event)" style="margin-top:20px;display:grid;gap:12px;">
+                    <div id="cm-provider-auth-error" class="cm-provider-error">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        รหัสผู้ให้บริการไม่ถูกต้อง กรุณาลองใหม่
+                    </div>
+
+                    <div>
+                        <label class="cm-provider-label">รหัสเข้าระบบผู้ให้บริการ (PIN)</label>
+                        <input
+                            id="cm-provider-pin"
+                            type="password"
+                            inputmode="numeric"
+                            autocomplete="off"
+                            maxlength="5"
+                            required
+                            class="cm-provider-input"
+                            placeholder="กรอกรหัส 5 หลัก"
+                        >
+                    </div>
+
+                    <button type="submit" class="cm-provider-button cm-provider-button-primary">
+                        <i class="fa-solid fa-unlock-keyhole"></i>
+                        เข้าสู่ระบบผู้ให้บริการ
+                    </button>
+
+                    <button type="button" class="cm-provider-button cm-provider-button-secondary" onclick="cmProviderClosePortal()">
+                        กลับไปหน้าหลัก
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+(function () {
+    "use strict";
+
+    const CM_PROVIDER_PIN = "12345";
+    const CM_PROVIDER_STORAGE_KEY = "caremate_provider_notes_v1";
+    let cmProviderCurrentCaseId = null;
+
+    function cmProviderEscape(value) {
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    function cmProviderGetBookings() {
+        try {
+            if (typeof bookings !== "undefined" && Array.isArray(bookings)) {
+                return bookings;
+            }
+        } catch (e) {}
+        return [];
+    }
+
+    function cmProviderGetCurrentBooking() {
+        const list = cmProviderGetBookings();
+        if (!list.length) return null;
+
+        const wanted = cmProviderCurrentCaseId || (
+            typeof currentTrackingCaseId !== "undefined" ? currentTrackingCaseId : null
+        );
+
+        return list.find(b => b.id === wanted) || list[0];
+    }
+
+    function cmProviderReadNotes() {
+        try {
+            const raw = localStorage.getItem(CM_PROVIDER_STORAGE_KEY);
+            const parsed = raw ? JSON.parse(raw) : {};
+            return parsed && typeof parsed === "object" ? parsed : {};
+        } catch (e) {
+            return {};
+        }
+    }
+
+    function cmProviderWriteNotes(data) {
+        try {
+            localStorage.setItem(CM_PROVIDER_STORAGE_KEY, JSON.stringify(data));
+        } catch (e) {
+            console.warn("CareMate Provider Portal: ไม่สามารถบันทึก localStorage ได้", e);
+        }
+    }
+
+    function cmProviderSetVisible(visible) {
+        const portal = document.getElementById("cm-provider-portal");
+        if (!portal) return;
+
+        portal.classList.toggle("hidden", !visible);
+        portal.setAttribute("aria-hidden", visible ? "false" : "true");
+
+        if (visible) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+    }
+
+    function cmProviderPopulateCases() {
+        const select = document.getElementById("cm-provider-case-select");
+        if (!select) return;
+
+        const list = cmProviderGetBookings();
+
+        if (!list.length) {
+            select.innerHTML = '<option value="">ยังไม่มีข้อมูลเคส</option>';
+            cmProviderCurrentCaseId = null;
+            return;
+        }
+
+        const previous = cmProviderCurrentCaseId;
+
+        select.innerHTML = list.map((b, index) => {
+            const id = cmProviderEscape(b.id || `CASE-${index + 1}`);
+            const patient = cmProviderEscape(b.patientName || "ไม่ระบุชื่อผู้ป่วย");
+            const hospital = cmProviderEscape(b.hospital || "ไม่ระบุโรงพยาบาล");
+            return `<option value="${id}">${id} • ${patient} • ${hospital}</option>`;
+        }).join("");
+
+        const found = list.some(b => b.id === previous);
+        cmProviderCurrentCaseId = found ? previous : list[0].id;
+        select.value = cmProviderCurrentCaseId;
+    }
+
+    function cmProviderUpdateStats() {
+        const cur = cmProviderGetCurrentBooking();
+        const notes = cmProviderReadNotes();
+
+        const statCase = document.getElementById("cm-provider-stat-case");
+        const statStep = document.getElementById("cm-provider-stat-step");
+        const statNotes = document.getElementById("cm-provider-stat-notes");
+
+        if (!cur) {
+            if (statCase) statCase.textContent = "-";
+            if (statStep) statStep.textContent = "ยังไม่มีเคส";
+            if (statNotes) statNotes.textContent = "0";
+            return;
+        }
+
+        const stepNames = {
+            1: "รอยืนยัน",
+            2: "ถึงบ้านผู้ป่วย",
+            3: "ถึงโรงพยาบาล",
+            4: "เข้าพบแพทย์",
+            5: "เสร็จสิ้นงาน"
+        };
+
+        if (statCase) statCase.textContent = cur.id || "-";
+        if (statStep) statStep.textContent = stepNames[cur.step] || "รอเริ่มงาน";
+        if (statNotes) statNotes.textContent = String((notes[cur.id] || []).length);
+    }
+
+    function cmProviderLoadFormFromCase() {
+        const cur = cmProviderGetCurrentBooking();
+        if (!cur) return;
+
+        const bp = document.getElementById("cm-provider-bp");
+        const sugar = document.getElementById("cm-provider-sugar");
+        const pulse = document.getElementById("cm-provider-pulse");
+        const doctor = document.getElementById("cm-provider-doctor-note");
+        const extra = document.getElementById("cm-provider-extra-note");
+
+        if (bp) bp.value = String(cur.bp || "").replace(/\s*mmHg\s*$/i, "");
+        if (sugar) sugar.value = String(cur.sugar || "").replace(/\s*mg\/dL\s*$/i, "");
+        if (pulse) pulse.value = String(cur.pulse || "").replace(/\s*bpm\s*$/i, "");
+
+        if (doctor) {
+            doctor.value = cur.doctorNotes && !String(cur.doctorNotes).startsWith("[GPS Check-in]")
+                ? cur.doctorNotes
+                : "";
+        }
+
+        if (extra) extra.value = "";
+
+        cmProviderRenderHistory();
+        cmProviderUpdateStats();
+    }
+
+    function cmProviderRenderHistory() {
+        const container = document.getElementById("cm-provider-note-history");
+        if (!container) return;
+
+        const cur = cmProviderGetCurrentBooking();
+        if (!cur) {
+            container.innerHTML = '<div style="font-size:10px;color:#94a3b8;text-align:center;padding:25px 8px;">ยังไม่มีเคส</div>';
+            return;
+        }
+
+        const notes = cmProviderReadNotes();
+        const list = Array.isArray(notes[cur.id]) ? notes[cur.id] : [];
+
+        if (!list.length) {
+            container.innerHTML = '<div style="font-size:10px;color:#94a3b8;text-align:center;padding:25px 8px;">ยังไม่มีการบันทึกสำหรับเคสนี้</div>';
+            return;
+        }
+
+        container.innerHTML = list.slice().reverse().map(item => `
+            <div class="cm-provider-note-item">
+                <div class="cm-provider-note-time">
+                    <i class="fa-regular fa-clock"></i>
+                    ${cmProviderEscape(item.time || "-")}
+                    ${item.stepLabel ? ` • ${cmProviderEscape(item.stepLabel)}` : ""}
+                </div>
+                <div class="cm-provider-note-text">${cmProviderEscape(item.text || "")}</div>
+            </div>
+        `).join("");
+    }
+
+    window.cmProviderOpenPortal = function () {
+        const portal = document.getElementById("cm-provider-portal");
+        if (!portal) return;
+
+        cmProviderSetVisible(true);
+
+        const auth = document.getElementById("cm-provider-auth-overlay");
+        const pin = document.getElementById("cm-provider-pin");
+        const error = document.getElementById("cm-provider-auth-error");
+
+        if (auth) auth.style.display = "flex";
+        if (error) error.classList.remove("show");
+        if (pin) {
+            pin.value = "";
+            setTimeout(() => pin.focus(), 50);
+        }
+
+        cmProviderPopulateCases();
+        cmProviderUpdateStats();
+    };
+
+    window.cmProviderAuthenticate = function (event) {
+        event.preventDefault();
+
+        const pin = document.getElementById("cm-provider-pin");
+        const error = document.getElementById("cm-provider-auth-error");
+        const auth = document.getElementById("cm-provider-auth-overlay");
+
+        if (!pin) return;
+
+        if (pin.value === CM_PROVIDER_PIN) {
+            if (error) error.classList.remove("show");
+            if (auth) auth.style.display = "none";
+
+            cmProviderPopulateCases();
+            cmProviderLoadFormFromCase();
+            cmProviderSyncOriginalView();
+
+            try {
+                sessionStorage.setItem("caremate_provider_authenticated", "1");
+            } catch (e) {}
+
+            if (typeof showToast === "function") {
+                showToast("เข้าสู่ส่วนผู้ให้บริการเรียบร้อยแล้ว", "success");
+            }
+        } else {
+            if (error) error.classList.add("show");
+            pin.select();
+        }
+    };
+
+    window.cmProviderClosePortal = function () {
+        cmProviderSetVisible(false);
+    };
+
+    window.cmProviderLogout = function () {
+        try {
+            sessionStorage.removeItem("caremate_provider_authenticated");
+        } catch (e) {}
+
+        const auth = document.getElementById("cm-provider-auth-overlay");
+        const pin = document.getElementById("cm-provider-pin");
+        const error = document.getElementById("cm-provider-auth-error");
+
+        if (auth) auth.style.display = "flex";
+        if (pin) pin.value = "";
+        if (error) error.classList.remove("show");
+
+        cmProviderSetVisible(false);
+    };
+
+    window.cmProviderLoadCase = function (caseId) {
+        cmProviderCurrentCaseId = caseId || null;
+
+        try {
+            if (typeof currentTrackingCaseId !== "undefined") {
+                currentTrackingCaseId = cmProviderCurrentCaseId;
+            }
+        } catch (e) {}
+
+        cmProviderLoadFormFromCase();
+    };
+
+    window.cmProviderCheckin = function (stepNum, statusMessage) {
+        const cur = cmProviderGetCurrentBooking();
+        if (!cur) {
+            alert("ยังไม่มีข้อมูลเคสสำหรับบันทึก");
+            return;
+        }
+
+        cur.step = stepNum;
+        cur.doctorNotes = `[GPS Check-in]: ${statusMessage}`;
+
+        if (stepNum === 5) {
+            cur.status = "COMPLETED";
+        }
+
+        const stepNames = {
+            2: "ถึงบ้านผู้ป่วย",
+            3: "ถึงโรงพยาบาล",
+            4: "เข้าพบแพทย์",
+            5: "เสร็จสิ้นงาน"
+        };
+
+        const notes = cmProviderReadNotes();
+        if (!Array.isArray(notes[cur.id])) notes[cur.id] = [];
+
+        notes[cur.id].push({
+            time: new Date().toLocaleString("th-TH"),
+            stepLabel: stepNames[stepNum] || "อัปเดตสถานะ",
+            text: statusMessage
+        });
+
+        cmProviderWriteNotes(notes);
+
+        cmProviderRenderHistory();
+        cmProviderUpdateStats();
+
+        if (typeof renderUserLiveStepper === "function") {
+            try { renderUserLiveStepper(); } catch (e) {}
+        }
+
+        if (typeof renderAdminBookingsTable === "function") {
+            try { renderAdminBookingsTable(); } catch (e) {}
+        }
+
+        if (typeof sendLineNotifyMessage === "function") {
+            try {
+                sendLineNotifyMessage(`อัปเดตเคส ${cur.id}: ผู้ให้บริการ ${statusMessage}`);
+            } catch (e) {}
+        }
+
+        if (typeof showToast === "function") {
+            showToast(`อัปเดตสถานะ: ${statusMessage}`, "success");
+        } else {
+            alert(`อัปเดตสถานะ: ${statusMessage}`);
+        }
+    };
+
+    window.cmProviderSaveNote = function (event) {
+        event.preventDefault();
+
+        const cur = cmProviderGetCurrentBooking();
+        if (!cur) {
+            alert("ยังไม่มีข้อมูลเคสสำหรับบันทึก");
+            return;
+        }
+
+        const bpEl = document.getElementById("cm-provider-bp");
+        const sugarEl = document.getElementById("cm-provider-sugar");
+        const pulseEl = document.getElementById("cm-provider-pulse");
+        const doctorEl = document.getElementById("cm-provider-doctor-note");
+        const extraEl = document.getElementById("cm-provider-extra-note");
+
+        const bp = (bpEl?.value || "").trim();
+        const sugar = (sugarEl?.value || "").trim();
+        const pulse = (pulseEl?.value || "").trim();
+        const doctor = (doctorEl?.value || "").trim();
+        const extra = (extraEl?.value || "").trim();
+
+        if (!doctor) {
+            if (doctorEl) doctorEl.focus();
+            return;
+        }
+
+        if (bp) cur.bp = /mmHg/i.test(bp) ? bp : `${bp} mmHg`;
+        if (sugar) cur.sugar = /mg\/dL/i.test(sugar) ? sugar : `${sugar} mg/dL`;
+        if (pulse) cur.pulse = /bpm/i.test(pulse) ? pulse : `${pulse} bpm`;
+
+        cur.doctorNotes = doctor;
+
+        const combined = [
+            `สรุปจากแพทย์: ${doctor}`,
+            bp ? `ความดัน: ${cur.bp}` : "",
+            sugar ? `น้ำตาล: ${cur.sugar}` : "",
+            pulse ? `ชีพจร: ${cur.pulse}` : "",
+            extra ? `โน้ตผู้ดูแล: ${extra}` : ""
+        ].filter(Boolean).join("\n");
+
+        const notes = cmProviderReadNotes();
+        if (!Array.isArray(notes[cur.id])) notes[cur.id] = [];
+
+        notes[cur.id].push({
+            time: new Date().toLocaleString("th-TH"),
+            stepLabel: "บันทึกผลพบแพทย์",
+            text: combined
+        });
+
+        cmProviderWriteNotes(notes);
+
+        const success = document.getElementById("cm-provider-success");
+        if (success) {
+            success.classList.add("show");
+            setTimeout(() => success.classList.remove("show"), 2500);
+        }
+
+        cmProviderRenderHistory();
+        cmProviderUpdateStats();
+
+        if (typeof renderUserLiveStepper === "function") {
+            try { renderUserLiveStepper(); } catch (e) {}
+        }
+
+        if (typeof renderUserBookingsHistory === "function") {
+            try { renderUserBookingsHistory(); } catch (e) {}
+        }
+
+        if (typeof renderAdminBookingsTable === "function") {
+            try { renderAdminBookingsTable(); } catch (e) {}
+        }
+
+        if (typeof sendLineNotifyMessage === "function") {
+            try {
+                sendLineNotifyMessage(`ผลตรวจแพทย์เคส ${cur.id}: ${doctor}`);
+            } catch (e) {}
+        }
+
+        if (typeof showToast === "function") {
+            showToast("บันทึกสัญญาณชีพและโน้ตจากการพบแพทย์เรียบร้อยแล้ว", "success");
+        }
+    };
+
+    window.cmProviderSyncOriginalView = function () {
+        const cur = cmProviderGetCurrentBooking();
+        if (!cur) {
+            alert("ยังไม่มีข้อมูลเคสสำหรับแสดง");
+            return;
+        }
+
+        try {
+            if (typeof currentTrackingCaseId !== "undefined") {
+                currentTrackingCaseId = cur.id;
+            }
+        } catch (e) {}
+
+        if (typeof renderUserLiveStepper === "function") {
+            try { renderUserLiveStepper(); } catch (e) {}
+        }
+
+        if (typeof renderUserBookingsHistory === "function") {
+            try { renderUserBookingsHistory(); } catch (e) {}
+        }
+
+        if (typeof renderAdminBookingsTable === "function") {
+            try { renderAdminBookingsTable(); } catch (e) {}
+        }
+
+        if (typeof showToast === "function") {
+            showToast("อัปเดตข้อมูลในระบบเดิมแล้ว", "success");
+        }
+    };
+
+    function cmProviderInjectButton() {
+        const roleSwitcher = document.getElementById("role-btn-admin");
+        if (!roleSwitcher || document.getElementById("cm-provider-open-btn")) return;
+
+        const button = document.createElement("button");
+        button.id = "cm-provider-open-btn";
+        button.type = "button";
+        button.onclick = window.cmProviderOpenPortal;
+        button.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-teal-300 hover:text-white hover:bg-teal-700/40 transition-all flex items-center gap-1.5 border border-teal-500/20";
+        button.innerHTML = '<i class="fa-solid fa-user-nurse"></i><span>ผู้ให้บริการ / ผู้ดูแล</span>';
+
+        roleSwitcher.parentNode.insertBefore(button, roleSwitcher.nextSibling);
+    }
+
+    function cmProviderInit() {
+        cmProviderInjectButton();
+        cmProviderPopulateCases();
+        cmProviderUpdateStats();
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", cmProviderInit);
+    } else {
+        cmProviderInit();
+    }
+
+    window.addEventListener("load", function () {
+        setTimeout(cmProviderInit, 0);
+    });
+
+    console.info("CareMate Provider Portal Add-on loaded. Provider PIN is configured.");
+})();
+</script>
+
 </body>
 </html>
