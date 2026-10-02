@@ -3639,5 +3639,667 @@
 })();
 </script>
 
+
+<!-- ============================================================
+     CAREMATE ADD-ON: MULTI-DAY BOOKING
+     เพิ่มอย่างเดียว: ไม่แก้ไข/ลบโค้ดเดิม
+     ============================================================ -->
+<script>
+(function () {
+    "use strict";
+
+    const CM_MULTI_DAY_VERSION = "1.0.0";
+
+    function cmMultiDayEscape(value) {
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    function cmGetSelectedPackagePrice() {
+        const selected = document.querySelector('input[name="wiz-package"]:checked');
+        if (!selected) return 850;
+
+        const value = selected.value || "";
+        if (value.includes("เต็มวัน")) return 1500;
+        if (value.includes("เฝ้าไข้")) return 2000;
+        return 850;
+    }
+
+    function cmGetBookingDays() {
+        const el = document.getElementById("wiz-service-days");
+        const days = parseInt(el ? el.value : "1", 10);
+        return Number.isFinite(days) && days >= 1 ? Math.min(days, 365) : 1;
+    }
+
+    function cmFormatDate(dateString) {
+        if (!dateString) return "-";
+        const d = new Date(dateString + "T00:00:00");
+        if (Number.isNaN(d.getTime())) return "-";
+        return d.toLocaleDateString("th-TH", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"
+        });
+    }
+
+    function cmDateOnlyFromDateTime(value) {
+        if (!value) return "";
+        return String(value).split("T")[0];
+    }
+
+    function cmCalculateEndDate(startDate, days) {
+        if (!startDate) return "";
+        const d = new Date(startDate + "T00:00:00");
+        if (Number.isNaN(d.getTime())) return "";
+
+        d.setDate(d.getDate() + Math.max(0, days - 1));
+
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${y}-${m}-${day}`;
+    }
+
+    function cmCalculateDaysFromDates(startDate, endDate) {
+        if (!startDate || !endDate) return 1;
+
+        const start = new Date(startDate + "T00:00:00");
+        const end = new Date(endDate + "T00:00:00");
+
+        if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
+            return 1;
+        }
+
+        const diff = Math.round((end - start) / 86400000) + 1;
+        return Math.max(1, Math.min(365, diff));
+    }
+
+    function cmUpdateMultiDayUI() {
+        const days = cmGetBookingDays();
+        const startDate = cmDateOnlyFromDateTime(
+            document.getElementById("wiz-datetime")?.value
+        );
+        const endDate = cmCalculateEndDate(startDate, days);
+        const basePrice = cmGetSelectedPackagePrice();
+        const transport = document.getElementById("wiz-transport-option")?.checked ? 350 : 0;
+        const total = (basePrice * days) + transport;
+
+        const endInput = document.getElementById("wiz-service-end-date");
+        const summary = document.getElementById("wiz-multi-day-summary");
+        const dailyPrice = document.getElementById("wiz-daily-price-display");
+
+        if (endInput) {
+            endInput.value = endDate;
+            endInput.min = startDate || "";
+        }
+
+        if (dailyPrice) {
+            dailyPrice.textContent = `฿${basePrice.toLocaleString()}/วัน`;
+        }
+
+        if (summary) {
+            summary.innerHTML = `
+                <div class="flex items-center justify-between gap-3">
+                    <div>
+                        <div class="font-bold text-teal-900">
+                            <i class="fa-solid fa-calendar-days text-teal-600 me-1"></i>
+                            ${days} วัน
+                        </div>
+                        <div class="text-[10px] text-slate-500">
+                            ${startDate ? cmFormatDate(startDate) : "-"}
+                            ${endDate ? ` ถึง ${cmFormatDate(endDate)}` : ""}
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-[10px] text-slate-500">ค่าบริการ</div>
+                        <div class="font-extrabold text-teal-700">
+                            ฿${total.toLocaleString()}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        const oldTotal = document.getElementById("wiz-total-price");
+        if (oldTotal) {
+            oldTotal.textContent = `฿${total.toLocaleString()}`;
+        }
+    }
+
+    function cmSyncDaysFromEndDate() {
+        const startDate = cmDateOnlyFromDateTime(
+            document.getElementById("wiz-datetime")?.value
+        );
+        const endInput = document.getElementById("wiz-service-end-date");
+        const daysInput = document.getElementById("wiz-service-days");
+
+        if (!startDate || !endInput || !daysInput || !endInput.value) return;
+
+        if (endInput.value < startDate) {
+            endInput.value = startDate;
+        }
+
+        const days = cmCalculateDaysFromDates(startDate, endInput.value);
+        daysInput.value = days;
+        cmUpdateMultiDayUI();
+    }
+
+    function cmInsertMultiDayFields() {
+        if (document.getElementById("cm-multi-day-booking-box")) return;
+
+        const dateTime = document.getElementById("wiz-datetime");
+        if (!dateTime) return;
+
+        const parent = dateTime.closest("div");
+        if (!parent) return;
+
+        const box = document.createElement("div");
+        box.id = "cm-multi-day-booking-box";
+        box.className = "sm:col-span-2 mt-1 p-4 bg-teal-50/70 border border-teal-200 rounded-2xl space-y-3";
+
+        box.innerHTML = `
+            <div class="flex items-center gap-2 border-b border-teal-200 pb-2">
+                <div class="w-8 h-8 rounded-xl bg-white text-teal-600 border border-teal-200 flex items-center justify-center">
+                    <i class="fa-solid fa-calendar-days"></i>
+                </div>
+                <div>
+                    <div class="font-bold text-teal-900">เพิ่มการจองหลายวัน</div>
+                    <div class="text-[10px] text-teal-700">
+                        เลือกจำนวนวันที่ต้องการใช้บริการ ระบบจะคำนวณวันสิ้นสุดและราคาให้อัตโนมัติ
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">
+                        จำนวนวันที่ใช้บริการ *
+                    </label>
+                    <input
+                        type="number"
+                        id="wiz-service-days"
+                        min="1"
+                        max="365"
+                        value="1"
+                        required
+                        inputmode="numeric"
+                        class="w-full p-2.5 border border-teal-200 rounded-xl bg-white focus:ring-2 focus:ring-teal-500"
+                    >
+                    <div class="text-[10px] text-slate-500 mt-1">
+                        ระบุได้ตั้งแต่ 1–365 วัน
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">
+                        วันสิ้นสุดบริการ
+                    </label>
+                    <input
+                        type="date"
+                        id="wiz-service-end-date"
+                        class="w-full p-2.5 border border-teal-200 rounded-xl bg-white focus:ring-2 focus:ring-teal-500"
+                    >
+                    <div class="text-[10px] text-slate-500 mt-1">
+                        ระบบคำนวณจากวันเริ่มต้น + จำนวนวัน
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div class="bg-white border border-slate-200 rounded-xl p-3">
+                    <div class="text-[10px] text-slate-400">ราคาตามแพ็กเกจ / วัน</div>
+                    <div id="wiz-daily-price-display" class="font-bold text-slate-800 mt-0.5">
+                        ฿850/วัน
+                    </div>
+                </div>
+
+                <div
+                    id="wiz-multi-day-summary"
+                    class="bg-white border border-teal-200 rounded-xl p-3"
+                ></div>
+            </div>
+
+            <div class="text-[10px] text-teal-800 bg-white/70 border border-teal-100 rounded-xl p-2">
+                <i class="fa-solid fa-circle-info me-1"></i>
+                ค่ารถรับ-ส่งเดิม +฿350 จะคิด <strong>ครั้งเดียวต่อรายการจอง</strong>
+                ไม่ได้คูณตามจำนวนวัน
+            </div>
+        `;
+
+        parent.insertAdjacentElement("afterend", box);
+
+        const daysInput = document.getElementById("wiz-service-days");
+        const endInput = document.getElementById("wiz-service-end-date");
+
+        if (daysInput) {
+            daysInput.addEventListener("input", function () {
+                let value = parseInt(this.value || "1", 10);
+                if (!Number.isFinite(value)) value = 1;
+                value = Math.max(1, Math.min(365, value));
+                this.value = value;
+                cmUpdateMultiDayUI();
+            });
+
+            daysInput.addEventListener("change", function () {
+                let value = parseInt(this.value || "1", 10);
+                value = Math.max(1, Math.min(365, value));
+                this.value = value;
+                cmUpdateMultiDayUI();
+            });
+        }
+
+        if (endInput) {
+            endInput.addEventListener("change", cmSyncDaysFromEndDate);
+        }
+
+        if (dateTime) {
+            dateTime.addEventListener("change", cmUpdateMultiDayUI);
+            dateTime.addEventListener("input", cmUpdateMultiDayUI);
+        }
+
+        document.querySelectorAll('input[name="wiz-package"]').forEach(function (radio) {
+            radio.addEventListener("change", cmUpdateMultiDayUI);
+        });
+
+        const transport = document.getElementById("wiz-transport-option");
+        if (transport) {
+            transport.addEventListener("change", cmUpdateMultiDayUI);
+        }
+
+        cmUpdateMultiDayUI();
+    }
+
+    /*
+     * เพิ่ม/แทนที่พฤติกรรมเฉพาะฟังก์ชันราคา โดยไม่แก้ข้อความของฟังก์ชันเดิม
+     * ฟังก์ชันเดิมยังคงอยู่ในไฟล์ต้นฉบับด้านบน
+     */
+    window.updateBookingPrice = function () {
+        cmUpdateMultiDayUI();
+    };
+
+    /*
+     * ฟังก์ชัน submit ใหม่สำหรับ "การจองหลายวัน"
+     * ใช้โครงสร้าง booking เดิมทั้งหมด และเพิ่มข้อมูล duration เท่านั้น
+     */
+    window.submitUserBooking = function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById("wiz-patient-name")?.value?.trim() || "";
+        const phone = document.getElementById("wiz-patient-phone")?.value?.trim() || "";
+        const province = document.getElementById("wiz-province")?.value || "";
+        const hospital = document.getElementById("wiz-hospital")?.value || "";
+        const datetime = document.getElementById("wiz-datetime")?.value || "";
+        const pkgEl = document.querySelector('input[name="wiz-package"]:checked');
+        const pkg = pkgEl ? pkgEl.value : "ครึ่งวัน (4 ชม.)";
+        const transportOpt = document.getElementById("wiz-transport-option")?.checked || false;
+
+        const days = cmGetBookingDays();
+        const startDate = cmDateOnlyFromDateTime(datetime);
+        const endDate = cmCalculateEndDate(startDate, days);
+
+        if (!startDate) {
+            showToast("กรุณาเลือกวันและเวลานัดหมาย", "danger");
+            document.getElementById("wiz-datetime")?.focus();
+            return;
+        }
+
+        if (!province || !hospital || !name || !phone) {
+            showToast("กรุณากรอกข้อมูลการจองให้ครบถ้วน", "danger");
+            return;
+        }
+
+        const pdpa = document.getElementById("wiz-pdpa-consent");
+        if (pdpa && !pdpa.checked) {
+            showToast("กรุณายอมรับข้อตกลง PDPA ก่อนยืนยันการจอง", "danger");
+            return;
+        }
+
+        const basePricePerDay = cmGetSelectedPackagePrice();
+        const transportPrice = transportOpt ? 350 : 0;
+        const price = (basePricePerDay * days) + transportPrice;
+
+        const bookingNumber = (typeof bookings !== "undefined" && Array.isArray(bookings))
+            ? bookings.length + 91
+            : 91;
+
+        const newBooking = {
+            id: `BK-2026-0${bookingNumber}`,
+            patientName: name,
+            phone: phone,
+            province: province,
+            hospital: hospital,
+            datetime: datetime,
+
+            /* ข้อมูลใหม่สำหรับการจองหลายวัน */
+            serviceDays: days,
+            serviceStartDate: startDate,
+            serviceEndDate: endDate,
+            pricePerDay: basePricePerDay,
+            transportPrice: transportPrice,
+            totalServiceDays: days,
+            multiDayBooking: days > 1,
+
+            /* โครงสร้างเดิม */
+            companionName: "กำลังจัดสรรผู้ดูแล",
+            companionLicense: "-",
+            companionPhone: "-",
+            companionAvatar: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=150&auto=format&fit=crop&q=80",
+            package: pkg + (transportOpt ? " + รถรับส่ง" : ""),
+            price: price,
+            step: 1,
+            status: "PENDING",
+            doctorNotes: days > 1
+                ? `รายการจองใหม่ ${days} วัน รอยืนยันผู้ดูแล`
+                : "รายการจองใหม่ รอยืนยันผู้ดูแล",
+            bp: "120/80 mmHg",
+            sugar: "100 mg/dL",
+            pulse: "72 bpm",
+            reviewed: false,
+            proofPhotos: []
+        };
+
+        if (typeof bookings === "undefined" || !Array.isArray(bookings)) {
+            showToast("ไม่พบข้อมูลระบบการจองเดิม กรุณารีเฟรชหน้าเว็บ", "danger");
+            return;
+        }
+
+        bookings.unshift(newBooking);
+
+        if (typeof closeBookingWizard === "function") {
+            closeBookingWizard();
+        }
+
+        const payAmount = document.getElementById("pay-amount-display");
+        if (payAmount) {
+            payAmount.textContent = `฿${price.toLocaleString()}`;
+        }
+
+        const paymentModal = document.getElementById("payment-modal");
+        if (paymentModal) {
+            paymentModal.classList.remove("hidden");
+        }
+
+        if (typeof showToast === "function") {
+            showToast(
+                `สร้างรายการจอง ${days} วันแล้ว • รวม ฿${price.toLocaleString()}`,
+                "success"
+            );
+        }
+
+        /*
+         * ถ้าผู้ใช้ยังไม่กดยืนยันชำระเงิน จะยังมีรายการอยู่ใน bookings
+         * เหมือนพฤติกรรมระบบเดิม
+         */
+        if (typeof renderUserBookingsHistory === "function") {
+            setTimeout(function () {
+                try { renderUserBookingsHistory(); } catch (err) {}
+            }, 0);
+        }
+
+        if (typeof renderAdminBookingsTable === "function") {
+            setTimeout(function () {
+                try { renderAdminBookingsTable(); } catch (err) {}
+            }, 0);
+        }
+    };
+
+    /*
+     * เพิ่มข้อมูลจำนวนวันลงในประวัติการจอง โดยเรียก renderer เดิมก่อน
+     * แล้วจึงเติมข้อมูลใหม่ลงในการ์ดที่แสดงอยู่
+     */
+    function cmEnhanceBookingHistory() {
+        const container = document.getElementById("user-bookings-history-container");
+        if (!container || typeof bookings === "undefined") return;
+
+        const cards = Array.from(container.children);
+
+        cards.forEach(function (card, index) {
+            const booking = bookings[index];
+            if (!booking || card.querySelector(".cm-multi-day-history")) return;
+
+            const days = Number(booking.serviceDays || booking.totalServiceDays || 1);
+            const start = booking.serviceStartDate || cmDateOnlyFromDateTime(booking.datetime);
+            const end = booking.serviceEndDate || cmCalculateEndDate(start, days);
+
+            const info = document.createElement("div");
+            info.className = "cm-multi-day-history p-3 bg-teal-50/70 border border-teal-100 rounded-xl space-y-1";
+            info.innerHTML = `
+                <div class="flex items-center justify-between gap-2">
+                    <span class="font-bold text-teal-900">
+                        <i class="fa-solid fa-calendar-days text-teal-600 me-1"></i>
+                        ระยะเวลาบริการ
+                    </span>
+                    <span class="font-extrabold text-teal-700">${days} วัน</span>
+                </div>
+                <div class="text-[10px] text-slate-600">
+                    ${cmFormatDate(start)} ถึง ${cmFormatDate(end)}
+                </div>
+                <div class="text-[10px] text-slate-500">
+                    ราคา ${Number(booking.pricePerDay || 0).toLocaleString()} บาท/วัน
+                    • รวม ${Number(booking.price || 0).toLocaleString()} บาท
+                </div>
+            `;
+            card.appendChild(info);
+        });
+    }
+
+    /*
+     * เพิ่มข้อมูลจำนวนวันลงในตารางแอดมิน โดยไม่ลบข้อมูลเดิม
+     */
+    function cmEnhanceAdminBookingTable() {
+        const tbody = document.getElementById("admin-bookings-table-body");
+        if (!tbody || typeof bookings === "undefined") return;
+
+        Array.from(tbody.querySelectorAll("tr")).forEach(function (row, index) {
+            const booking = bookings[index];
+            if (!booking || row.querySelector(".cm-multi-day-admin")) return;
+
+            const priceCell = row.children[4];
+            if (!priceCell) return;
+
+            const days = Number(booking.serviceDays || booking.totalServiceDays || 1);
+            const start = booking.serviceStartDate || cmDateOnlyFromDateTime(booking.datetime);
+            const end = booking.serviceEndDate || cmCalculateEndDate(start, days);
+
+            const box = document.createElement("div");
+            box.className = "cm-multi-day-admin mt-1 text-[9px] font-normal text-slate-500";
+            box.innerHTML = `
+                <i class="fa-solid fa-calendar-days text-teal-600 me-1"></i>
+                ${days} วัน
+                ${start ? `• ${cmFormatDate(start)} - ${cmFormatDate(end)}` : ""}
+            `;
+            priceCell.appendChild(box);
+        });
+    }
+
+    /*
+     * เพิ่มรายละเอียดในช่อง Live Tracking เมื่อมีการจองหลายวัน
+     */
+    function cmEnhanceTracking() {
+        const currentId = typeof currentTrackingCaseId !== "undefined"
+            ? currentTrackingCaseId
+            : null;
+
+        if (!currentId || typeof bookings === "undefined") return;
+
+        const booking = bookings.find(function (b) {
+            return b.id === currentId;
+        });
+
+        if (!booking) return;
+
+        const hospitalInfo = document.getElementById("track-hospital-info");
+        if (!hospitalInfo) return;
+
+        let badge = document.getElementById("cm-track-duration-badge");
+
+        if (!badge) {
+            badge = document.createElement("span");
+            badge.id = "cm-track-duration-badge";
+            badge.className = "inline-flex items-center gap-1 ml-1 mt-1 bg-teal-50 text-teal-700 border border-teal-200 px-2 py-0.5 rounded-lg text-[9px] font-bold";
+            hospitalInfo.parentNode.insertBefore(badge, hospitalInfo.nextSibling);
+        }
+
+        const days = Number(booking.serviceDays || booking.totalServiceDays || 1);
+        const start = booking.serviceStartDate || cmDateOnlyFromDateTime(booking.datetime);
+        const end = booking.serviceEndDate || cmCalculateEndDate(start, days);
+
+        badge.innerHTML = `
+            <i class="fa-solid fa-calendar-days"></i>
+            ${days} วัน • ${cmFormatDate(start)} ถึง ${cmFormatDate(end)}
+        `;
+    }
+
+    /*
+     * CSV ใหม่: เพิ่มคอลัมน์ช่วงวันและจำนวนวัน โดยข้อมูลเดิมยังคงอยู่
+     */
+    window.exportBookingsToCSV = function () {
+        if (typeof bookings === "undefined" || !Array.isArray(bookings)) return;
+
+        let csv = [
+            "ID",
+            "Patient",
+            "Phone",
+            "Province",
+            "Hospital",
+            "Companion",
+            "Package",
+            "StartDateTime",
+            "ServiceStartDate",
+            "ServiceEndDate",
+            "ServiceDays",
+            "PricePerDay",
+            "TransportPrice",
+            "TotalPrice",
+            "Status"
+        ].join(",") + "\n";
+
+        bookings.forEach(function (b) {
+            const row = [
+                b.id,
+                b.patientName,
+                b.phone,
+                b.province,
+                b.hospital,
+                b.companionName,
+                b.package,
+                b.datetime,
+                b.serviceStartDate || cmDateOnlyFromDateTime(b.datetime),
+                b.serviceEndDate || cmCalculateEndDate(
+                    b.serviceStartDate || cmDateOnlyFromDateTime(b.datetime),
+                    Number(b.serviceDays || 1)
+                ),
+                Number(b.serviceDays || b.totalServiceDays || 1),
+                Number(b.pricePerDay || 0),
+                Number(b.transportPrice || 0),
+                Number(b.price || 0),
+                b.status
+            ].map(function (v) {
+                return `"${String(v ?? "").replace(/"/g, '""')}"`;
+            }).join(",");
+
+            csv += row + "\n";
+        });
+
+        const blob = new Blob(["\uFEFF" + csv], {
+            type: "text/csv;charset=utf-8;"
+        });
+
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `CareMate_Bookings_MultiDay_${Date.now()}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        if (typeof showToast === "function") {
+            showToast("ส่งออก CSV พร้อมข้อมูลจำนวนวันเรียบร้อยแล้ว", "success");
+        }
+    };
+
+    /*
+     * ห่อ renderer เดิมไว้ แล้วเติมข้อมูลใหม่ภายหลัง
+     * ไม่แก้ function เดิม
+     */
+    function cmWrapExistingRenderers() {
+        if (window.__CM_MULTI_DAY_RENDERERS_WRAPPED__) return;
+        window.__CM_MULTI_DAY_RENDERERS_WRAPPED__ = true;
+
+        if (typeof window.renderUserBookingsHistory === "function") {
+            const originalHistory = window.renderUserBookingsHistory;
+            window.renderUserBookingsHistory = function () {
+                originalHistory.apply(this, arguments);
+                setTimeout(cmEnhanceBookingHistory, 0);
+            };
+        }
+
+        if (typeof window.renderAdminBookingsTable === "function") {
+            const originalAdmin = window.renderAdminBookingsTable;
+            window.renderAdminBookingsTable = function () {
+                originalAdmin.apply(this, arguments);
+                setTimeout(cmEnhanceAdminBookingTable, 0);
+            };
+        }
+    }
+
+    function cmInitMultiDayBooking() {
+        if (window.__CM_MULTI_DAY_INITIALIZED__) return;
+        window.__CM_MULTI_DAY_INITIALIZED__ = true;
+
+        cmInsertMultiDayFields();
+        cmWrapExistingRenderers();
+
+        /*
+         * Renderer อาจถูกประกาศหลัง addon ในบางโครงสร้างของไฟล์
+         * จึงตรวจซ้ำเล็กน้อยโดยไม่แตะโค้ดเดิม
+         */
+        setTimeout(function () {
+            cmWrapExistingRenderers();
+            cmEnhanceBookingHistory();
+            cmEnhanceAdminBookingTable();
+            cmEnhanceTracking();
+            cmUpdateMultiDayUI();
+        }, 300);
+
+        setTimeout(function () {
+            cmWrapExistingRenderers();
+            cmEnhanceTracking();
+        }, 1000);
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", cmInitMultiDayBooking);
+    } else {
+        cmInitMultiDayBooking();
+    }
+
+    /*
+     * รองรับการเปิด Booking Wizard หลังจากโหลดหน้าเว็บ
+     */
+    const originalOpenBookingWizard = window.openBookingWizard;
+    window.openBookingWizard = function () {
+        if (typeof originalOpenBookingWizard === "function") {
+            originalOpenBookingWizard.apply(this, arguments);
+        } else {
+            const modal = document.getElementById("booking-wizard-modal");
+            if (modal) modal.classList.remove("hidden");
+        }
+
+        setTimeout(function () {
+            cmInsertMultiDayFields();
+            cmUpdateMultiDayUI();
+        }, 0);
+    };
+
+    console.info("CareMate Multi-Day Booking Add-on loaded:", CM_MULTI_DAY_VERSION);
+})();
+</script>
+
 </body>
 </html>
