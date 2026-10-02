@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CareMate - บริการเพื่อนพาหาหมอ & ระบบจัดการหลังบ้าน</title>
+    <title>CareMate - บริการเพื่อนพาหาหมอ </title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -109,15 +109,19 @@
 
             <!-- Navigation Tabs -->
             <div class="bg-white border-b border-slate-200 px-6 sticky top-0 z-20 shadow-sm">
-                <div class="max-w-6xl mx-auto flex items-center gap-6 text-xs font-medium">
-                    <button onclick="switchUserTab('active-tracking')" id="user-nav-active-tracking" class="py-3 border-b-2 border-teal-600 text-teal-700 font-bold flex items-center gap-2">
+                <div class="max-w-6xl mx-auto flex items-center gap-6 text-xs font-medium overflow-x-auto custom-scrollbar">
+                    <button onclick="switchUserTab('active-tracking')" id="user-nav-active-tracking" class="py-3 border-b-2 border-teal-600 text-teal-700 font-bold flex items-center gap-2 whitespace-nowrap">
                         <i class="fa-solid fa-location-dot"></i> ติดตามสถานะ (Live Tracking)
                     </button>
-                    <button onclick="switchUserTab('my-bookings')" id="user-nav-my-bookings" class="py-3 text-slate-500 hover:text-slate-800 flex items-center gap-2">
+                    <button onclick="switchUserTab('my-bookings')" id="user-nav-my-bookings" class="py-3 text-slate-500 hover:text-slate-800 flex items-center gap-2 whitespace-nowrap">
                         <i class="fa-solid fa-clock-rotate-left"></i> ประวัติการจอง & โน้ตแพทย์
                     </button>
-                    <button onclick="switchUserTab('companion-catalog')" id="user-nav-companion-catalog" class="py-3 text-slate-500 hover:text-slate-800 flex items-center gap-2">
+                    <button onclick="switchUserTab('companion-catalog')" id="user-nav-companion-catalog" class="py-3 text-slate-500 hover:text-slate-800 flex items-center gap-2 whitespace-nowrap">
                         <i class="fa-solid fa-user-nurse"></i> รายชื่อทีมผู้ดูแลตามจังหวัด
+                    </button>
+                    <!-- NEW TAB FOR USER: VERIFICATION BADGES & E-LEARNING SUMMARY -->
+                    <button onclick="switchUserTab('elearning-info')" id="user-nav-elearning-info" class="py-3 text-slate-500 hover:text-slate-800 flex items-center gap-2 whitespace-nowrap">
+                        <i class="fa-solid fa-graduation-cap text-teal-600"></i> มาตรฐาน e-Learning & Badges
                     </button>
                 </div>
             </div>
@@ -144,9 +148,13 @@
                             <div class="flex items-center gap-3 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
                                 <img id="track-companion-avatar" src="https://images.unsplash.com/photo-1594824813572-9800171df542?w=150&auto=format&fit=crop&q=80" class="w-10 h-10 rounded-full object-cover ring-2 ring-teal-500" alt="Nurse Profile">
                                 <div>
-                                    <div id="track-companion-name" class="font-bold text-xs text-slate-800">พว. พิมพา ใจดี</div>
+                                    <div class="flex items-center gap-1.5">
+                                        <div id="track-companion-name" class="font-bold text-xs text-slate-800">พว. พิมพา ใจดี</div>
+                                        <span id="track-companion-tier-badge" class="bg-amber-100 text-amber-800 text-[9px] px-1.5 py-0.2 rounded font-bold border border-amber-300">Gold</span>
+                                    </div>
                                     <div id="track-companion-license" class="text-[10px] text-teal-700 font-semibold"><i class="fa-solid fa-id-card"></i> ใบประกอบฯ: RN-660123</div>
                                     <div id="track-companion-phone" class="text-[10px] text-slate-500"><i class="fa-solid fa-phone"></i> 089-111-2222</div>
+                                    <div id="track-companion-badges-list" class="flex flex-wrap gap-1 mt-1"></div>
                                 </div>
                                 <div class="flex gap-1 ml-2">
                                     <button onclick="alert('กำลังเชื่อมต่อสายโทรศัพท์ซ่อนเบอร์...')" class="bg-white border hover:bg-slate-100 p-2 rounded-lg text-slate-700 text-xs">
@@ -246,6 +254,61 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="user-companions-catalog-container"></div>
                 </div>
 
+                <!-- NEW TAB 4: E-LEARNING & VERIFICATION BADGE INFO FOR USER -->
+                <div id="user-tab-elearning-info" class="user-tab-content hidden space-y-6">
+                    <div class="bg-gradient-to-r from-slate-900 via-teal-950 to-slate-900 text-white p-6 rounded-3xl shadow-xl space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-2xl bg-teal-500/20 border border-teal-400/30 flex items-center justify-center text-teal-300 text-2xl">
+                                <i class="fa-solid fa-award"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-bold text-white">ระบบมาตรฐานการอบรม & ตราสัญลักษณ์รับรอง (Verification Badges)</h2>
+                                <p class="text-xs text-slate-300">ทีมผู้ดูแลทุกคนต้องผ่านหลักสูตร e-Learning อบรมเข้มข้น และประเมินคะแนนความประพฤติอย่างต่อเนื่อง</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- TIER SYSTEM SUMMARY -->
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+                            <h3 class="font-bold text-xs uppercase tracking-wider text-slate-800 flex items-center gap-2 border-b pb-3">
+                                <i class="fa-solid fa-layer-group text-amber-500"></i> ระดับชั้นผู้ดูแล (Tiering & Performance Rewards)
+                            </h3>
+                            <div class="space-y-3 text-xs">
+                                <div class="p-3 bg-amber-50/60 rounded-xl border border-amber-200/60 flex justify-between items-center">
+                                    <div>
+                                        <div class="font-bold text-amber-900 flex items-center gap-1.5"><i class="fa-solid fa-crown text-amber-500"></i> Platinum Companion</div>
+                                        <div class="text-[11px] text-slate-600">คะแนนรีวิว 4.9+ | ตรงเวลา >98% | สิทธิ์รับเคสก่อนด่วน</div>
+                                    </div>
+                                    <span class="text-xs font-extrabold text-amber-700 bg-amber-100 px-2 py-1 rounded-lg">โบนัส +15%</span>
+                                </div>
+                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
+                                    <div>
+                                        <div class="font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-medal text-amber-400"></i> Gold Companion</div>
+                                        <div class="text-[11px] text-slate-600">คะแนนรีวิว 4.7+ | ตรงเวลา >95%</div>
+                                    </div>
+                                    <span class="text-xs font-bold text-slate-700 bg-slate-200 px-2 py-1 rounded-lg">โบนัส +10%</span>
+                                </div>
+                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
+                                    <div>
+                                        <div class="font-bold text-slate-800 flex items-center gap-1.5"><i class="fa-solid fa-shield text-slate-400"></i> Silver / Bronze Companion</div>
+                                        <div class="text-[11px] text-slate-600">ผู้ดูแลระดับมาตรฐานที่ผ่านการตรวจสอบประวัติอาชญากรรม 100%</div>
+                                    </div>
+                                    <span class="text-xs font-bold text-slate-600 bg-slate-200 px-2 py-1 rounded-lg">อัตราปกติ</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BADGES SUMMARY -->
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+                            <h3 class="font-bold text-xs uppercase tracking-wider text-slate-800 flex items-center gap-2 border-b pb-3">
+                                <i class="fa-solid fa-graduation-cap text-teal-600"></i> คอร์สอบรมเฉพาะทาง (Verification Badges)
+                            </h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs" id="elearning-badges-public-list"></div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -272,6 +335,11 @@
                     <button onclick="switchAdminTab('companions')" id="admin-tab-companions" class="admin-tab w-full flex items-center gap-3 px-3.5 py-3 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all text-left">
                         <i class="fa-solid fa-user-nurse text-base w-5 text-center"></i>
                         <span>จัดการผู้ดูแล (CRUD)</span>
+                    </button>
+                    <!-- NEW ADMIN TAB NAVIGATION: TIERING & E-LEARNING -->
+                    <button onclick="switchAdminTab('tiering-elearning')" id="admin-tab-tiering-elearning" class="admin-tab w-full flex items-center gap-3 px-3.5 py-3 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all text-left">
+                        <i class="fa-solid fa-medal text-base w-5 text-center text-amber-400"></i>
+                        <span>คะแนนความประพฤติ & e-Learning</span>
                     </button>
                     <button onclick="switchAdminTab('hospitals')" id="admin-tab-hospitals" class="admin-tab w-full flex items-center gap-3 px-3.5 py-3 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all text-left">
                         <i class="fa-solid fa-hospital text-base w-5 text-center"></i>
@@ -460,11 +528,11 @@
                             <thead>
                                 <tr class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-100">
                                     <th class="p-3.5">ชื่อ-นามสกุล</th>
+                                    <th class="p-3.5">ระดับ (Tier)</th>
                                     <th class="p-3.5">จังหวัดประจำ</th>
-                                    <th class="p-3.5">ตำแหน่ง & ทักษะ</th>
-                                    <th class="p-3.5">ภาษา</th>
+                                    <th class="p-3.5">ตำแหน่ง & Badges</th>
                                     <th class="p-3.5">ใบประกอบฯ</th>
-                                    <th class="p-3.5">ประสบการณ์</th>
+                                    <th class="p-3.5">ตรงต่อเวลา</th>
                                     <th class="p-3.5">เบอร์โทรศัพท์</th>
                                     <th class="p-3.5">สถานะงาน</th>
                                     <th class="p-3.5 text-center">จัดการ</th>
@@ -472,6 +540,74 @@
                             </thead>
                             <tbody id="admin-companions-table-body" class="divide-y divide-slate-100"></tbody>
                         </table>
+                    </div>
+                </section>
+
+                <!-- NEW ADMIN TAB: TIERING & E-LEARNING MANAGEMENT -->
+                <section id="admin-content-tiering-elearning" class="admin-content-tab hidden space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl font-bold">
+                                <i class="fa-solid fa-crown"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-500">ผู้ดูแลระดับ Platinum & Gold</div>
+                                <div class="text-xl font-bold text-slate-800" id="stat-top-tiers">12 คน</div>
+                                <div class="text-[10px] text-emerald-600">รับโบนัสค่าตอบแทนพิเศษประจำเดือน</div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-2xl bg-teal-100 text-teal-600 flex items-center justify-center text-xl font-bold">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-500">ยอดการสอบผ่าน e-Learning รวม</div>
+                                <div class="text-xl font-bold text-slate-800" id="stat-total-badges">48 Badges</div>
+                                <div class="text-[10px] text-teal-600">ผ่านหลักสูตรรับรองมาตรฐาน CareMate</div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center text-xl font-bold">
+                                <i class="fa-solid fa-clock font-bold"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-500">อัตราการตรงต่อเวลาเฉลี่ยรวม</div>
+                                <div class="text-xl font-bold text-slate-800">97.8%</div>
+                                <div class="text-[10px] text-sky-600">ประเมินจากระบบ GPS Check-in</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COURSES LIST & BADGE MANAGEMENT -->
+                    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 space-y-4">
+                        <div class="flex justify-between items-center border-b pb-3">
+                            <h3 class="font-bold text-xs uppercase text-slate-800"><i class="fa-solid fa-book-bookmark text-teal-600 me-2"></i>คอร์สอบรม e-Learning และการมอบ Badge ติดโปรไฟล์</h3>
+                            <button onclick="alert('เปิดระบบสร้างคอร์สอบรมใหม่')" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-xl text-xs font-semibold">
+                                + สร้างคอร์สใหม่
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="admin-courses-grid"></div>
+                    </div>
+
+                    <!-- TIER & REWARDS TABLE -->
+                    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 space-y-4">
+                        <h3 class="font-bold text-xs uppercase text-slate-800 border-b pb-3"><i class="fa-solid fa-ranking-star text-amber-500 me-2"></i>ตารางอันดับผู้ดูแล & สิทธิ์การได้รับโบนัส (Tier Rewards Table)</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-100">
+                                        <th class="p-3">ผู้ดูแล</th>
+                                        <th class="p-3">ระดับ Tier</th>
+                                        <th class="p-3">คะแนนรีวิว</th>
+                                        <th class="p-3">ตรงต่อเวลา</th>
+                                        <th class="p-3">Badges ที่ได้รับ</th>
+                                        <th class="p-3">โบนัสส่วนเพิ่ม</th>
+                                        <th class="p-3 text-center">สิทธิ์รับงานก่อน</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-tier-rewards-table-body" class="divide-y divide-slate-100"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </section>
 
@@ -528,7 +664,7 @@
                                         <th class="p-3">เคสที่ทำสำเร็จ</th>
                                         <th class="p-3">ค่าตอบแทนรวม</th>
                                         <th class="p-3">ค่าเบิกสวัสดิการ</th>
-                                        <th class="p-3">โบนัส</th>
+                                        <th class="p-3">โบนัส Tier</th>
                                         <th class="p-3">ยอดสุทธิต้องจ่าย</th>
                                         <th class="p-3 text-center">สถานะการโอน</th>
                                     </tr>
@@ -637,7 +773,7 @@
                 <!-- Package Selection -->
                 <div>
                     <label class="block font-semibold text-slate-700 mb-2">เลือกแพ็กเกจระยะเวลา *</label>
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <label class="border-2 border-teal-500 bg-teal-50/50 p-3 rounded-2xl cursor-pointer flex flex-col justify-between">
                             <div class="flex items-center justify-between">
                                 <input type="radio" name="wiz-package" value="ครึ่งวัน (4 ชม.)" checked onchange="updateBookingPrice()" class="text-teal-600">
@@ -653,6 +789,15 @@
                             </div>
                             <div class="mt-2 font-bold text-slate-800">แพ็กเกจเต็มวัน</div>
                             <div class="text-[10px] text-slate-500">ดูแลสูงสุด 8 ชั่วโมง</div>
+                        </label>
+                        <!-- บริการเฝ้าไข้ -->
+                        <label class="border-2 border-slate-200 p-3 rounded-2xl cursor-pointer flex flex-col justify-between hover:border-teal-300">
+                            <div class="flex items-center justify-between">
+                                <input type="radio" name="wiz-package" value="บริการเฝ้าไข้ (24 ชม.)" onchange="updateBookingPrice()" class="text-teal-600">
+                                <span class="font-bold text-teal-800">฿2,000</span>
+                            </div>
+                            <div class="mt-2 font-bold text-slate-800">บริการเฝ้าไข้</div>
+                            <div class="text-[10px] text-slate-500">ดูแลเฝ้าไข้ตลอด 24 ชม./วัน</div>
                         </label>
                     </div>
                 </div>
@@ -849,6 +994,14 @@
         let currentTrackingCaseId = "BK-2026-089";
         let currentRatingSelected = 5;
 
+        // DATA SOURCE FOR E-LEARNING & VERIFICATION BADGES (NEW SYSTEM 1)
+        const elearningCoursesData = [
+            { id: "CPR", name: "การปฐมพยาบาลเบื้องต้น & CPR ฉุกเฉิน", icon: "fa-heart-pulse", color: "text-rose-500", bg: "bg-rose-50 border-rose-200" },
+            { id: "ALZHEIMER", name: "การดูแลผู้ป่วยอัลไซเมอร์ & สมองเสื่อม", icon: "fa-brain", color: "text-purple-500", bg: "bg-purple-50 border-purple-200" },
+            { id: "PARKINSON", name: "เทคนิคการพยุงเคลื่อนย้ายผู้ป่วยพาร์กินสัน", icon: "fa-person-walk-with-cane", color: "text-amber-500", bg: "bg-amber-50 border-amber-200" },
+            { id: "STROKE", name: "กายภาพบำบัด & ฟื้นฟูผู้ป่วย Stroke", icon: "fa-crutch", color: "text-sky-500", bg: "bg-sky-50 border-sky-200" }
+        ];
+
         const provinceHospitalsData = [
             { province: "กรุงเทพมหานคร", isMajor: true, hospitals: ["โรงพยาบาลจุฬาลงกรณ์", "โรงพยาบาลศิริราช", "โรงพยาบาลรามาธิบดี", "โรงพยาบาลราชวิถี", "โรงพยาบาลพระมงกุฎเกล้า", "โรงพยาบาลบำรุงราษฎร์"] },
             { province: "เชียงใหม่", isMajor: true, hospitals: ["โรงพยาบาลมหาราชนครเชียงใหม่ (สวนดอก)", "โรงพยาบาลนครพิงค์", "โรงพยาบาลสวนปรุง", "โรงพยาบาลกรุงเทพเชียงใหม่"] },
@@ -875,6 +1028,20 @@
         const sampleSkillsList = ["ทั่วไป", "Alzheimer", "Parkinson", "Stroke"];
         const sampleLangsList = ["ไทย, อังกฤษ", "ไทย, คำเมือง", "ไทย", "ไทย, จีน"];
 
+        // NEW SYSTEM HELPER: Calculate Tier & Rewards based on Ratings & On-time percentage
+        function calculateCompanionTier(rating, onTimeRate) {
+            const r = parseFloat(rating);
+            const ot = parseFloat(onTimeRate);
+            if (r >= 4.8 && ot >= 98) {
+                return { tier: "Platinum", bonusPct: 15, class: "bg-amber-100 text-amber-900 border-amber-300", priority: true };
+            } else if (r >= 4.6 && ot >= 95) {
+                return { tier: "Gold", bonusPct: 10, class: "bg-yellow-100 text-yellow-800 border-yellow-300", priority: true };
+            } else if (r >= 4.3 && ot >= 90) {
+                return { tier: "Silver", bonusPct: 5, class: "bg-slate-200 text-slate-800 border-slate-300", priority: false };
+            }
+            return { tier: "Bronze", bonusPct: 0, class: "bg-amber-800/10 text-amber-900 border-amber-800/20", priority: false };
+        }
+
         function initCompanionsData() {
             provinceHospitalsData.forEach(p => {
                 for (let i = 0; i < 4; i++) {
@@ -882,7 +1049,17 @@
                     const ln = sampleLastNames[Math.floor(Math.random() * sampleLastNames.length)];
                     const role = sampleRoles[Math.floor(Math.random() * sampleRoles.length)];
                     const prefix = role.includes('RN') ? 'พว. ' : 'คุณ';
+                    const rating = (4.4 + Math.random() * 0.6).toFixed(1);
+                    const onTimeRate = (92 + Math.random() * 8).toFixed(0);
                     
+                    // Assign Badges
+                    const badges = ["CPR"];
+                    if (Math.random() > 0.4) badges.push("ALZHEIMER");
+                    if (Math.random() > 0.5) badges.push("PARKINSON");
+                    if (role.includes("PT") || Math.random() > 0.6) badges.push("STROKE");
+
+                    const tierInfo = calculateCompanionTier(rating, onTimeRate);
+
                     companions.push({
                         id: compIdCounter++,
                         name: `${prefix}${fn} ${ln}`,
@@ -892,7 +1069,12 @@
                         criminalCheck: true,
                         exp: 2 + Math.floor(Math.random() * 8),
                         phone: `081-${Math.floor(100+Math.random()*900)}-${Math.floor(1000+Math.random()*9000)}`,
-                        rating: (4.5 + Math.random() * 0.5).toFixed(1),
+                        rating: rating,
+                        onTimeRate: onTimeRate,
+                        tier: tierInfo.tier,
+                        bonusPct: tierInfo.bonusPct,
+                        priorityCaseDispatch: tierInfo.priority,
+                        badges: badges,
                         status: Math.random() > 0.3 ? "AVAILABLE" : "ON_DUTY",
                         avatar: sampleAvatars[i % sampleAvatars.length],
                         skill: sampleSkillsList[Math.floor(Math.random() * sampleSkillsList.length)],
@@ -950,8 +1132,10 @@
             renderUserLiveStepper();
             renderUserBookingsHistory();
             renderUserCompanionsCatalog();
+            renderElearningPublicInfo();
             renderAdminBookingsTable();
             renderAdminCompanionsTable();
+            renderAdminTieringElearningSection();
             renderAdminHospitals();
             renderAdminSOSAlerts();
             renderAdminExpensesTable();
@@ -1044,8 +1228,8 @@
         function switchUserTab(tabId) {
             document.querySelectorAll('.user-tab-content').forEach(el => el.classList.add('hidden'));
             document.getElementById(`user-tab-${tabId}`).classList.remove('hidden');
-            document.querySelectorAll('[id^="user-nav-"]').forEach(btn => btn.className = "py-3 text-slate-500 hover:text-slate-800 flex items-center gap-2");
-            document.getElementById(`user-nav-${tabId}`).className = "py-3 border-b-2 border-teal-600 text-teal-700 font-bold flex items-center gap-2";
+            document.querySelectorAll('[id^="user-nav-"]').forEach(btn => btn.className = "py-3 text-slate-500 hover:text-slate-800 flex items-center gap-2 whitespace-nowrap");
+            document.getElementById(`user-nav-${tabId}`).className = "py-3 border-b-2 border-teal-600 text-teal-700 font-bold flex items-center gap-2 whitespace-nowrap";
         }
 
         function switchAdminTab(tabId) {
@@ -1053,6 +1237,20 @@
             document.getElementById(`admin-content-${tabId}`).classList.remove('hidden');
             document.querySelectorAll('.admin-tab').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`admin-tab-${tabId}`).classList.add('active');
+        }
+
+        // RENDER PUBLIC E-LEARNING BADGES INFO
+        function renderElearningPublicInfo() {
+            const container = document.getElementById('elearning-badges-public-list');
+            container.innerHTML = elearningCoursesData.map(c => `
+                <div class="p-3 rounded-xl border ${c.bg} space-y-1">
+                    <div class="font-bold flex items-center gap-2 ${c.color}">
+                        <i class="fa-solid ${c.icon}"></i> ${c.id} Badge
+                    </div>
+                    <div class="font-bold text-slate-800 text-[11px]">${c.name}</div>
+                    <div class="text-[10px] text-slate-500">สอบผ่านการประเมินทฤษฎีและภาคปฏิบัติ 100%</div>
+                </div>
+            `).join('');
         }
 
         // IN-APP CHAT & COMPANION ACTIONS
@@ -1114,7 +1312,7 @@
             showToast(`[LINE OA Sent]: ${msg}`, "info");
         }
 
-        // SMART MATCHING ALGORITHM
+        // SMART MATCHING ALGORITHM (UPDATED WITH TIER PRIORITY)
         function runSmartMatching() {
             const skill = document.getElementById('match-skill-select').value;
             const caseId = document.getElementById('match-case-select').value;
@@ -1127,6 +1325,9 @@
                 matches = matches.filter(c => c.skill === skill);
             }
 
+            // Sort Platinum & Gold tiers first
+            matches.sort((a, b) => b.rating - a.rating);
+
             const resultsContainer = document.getElementById('smart-match-results');
             resultsContainer.classList.remove('hidden');
 
@@ -1135,14 +1336,17 @@
                 return;
             }
 
-            resultsContainer.innerHTML = `<div class="font-bold text-amber-300 mb-1"><i class="fa-solid fa-circle-check me-1"></i> พบผู้ดูแลที่เหมาะสมที่สุด ${matches.length} ท่าน:</div>` +
-                matches.slice(0, 2).map(m => `
+            resultsContainer.innerHTML = `<div class="font-bold text-amber-300 mb-1"><i class="fa-solid fa-circle-check me-1"></i> พบผู้ดูแลที่เหมาะสมที่สุด ${matches.length} ท่าน (จัดลำดับตาม Tier & Rating):</div>` +
+                matches.slice(0, 3).map(m => `
                     <div class="flex items-center justify-between bg-slate-900 p-2 rounded-lg border border-slate-700">
                         <div class="flex items-center gap-2">
                             <img src="${m.avatar}" class="w-8 h-8 rounded-full object-cover">
                             <div>
-                                <div class="font-bold text-white text-xs">${m.name} (${m.role})</div>
-                                <div class="text-[10px] text-slate-400">ภาษา: ${m.languages} | ทักษะ: ${m.skill}</div>
+                                <div class="font-bold text-white text-xs flex items-center gap-1.5">
+                                    ${m.name} 
+                                    <span class="px-1.5 py-0.2 rounded text-[9px] font-bold border ${m.tier === 'Platinum' ? 'bg-amber-400 text-slate-950 border-amber-300' : 'bg-slate-700 text-amber-300 border-slate-600'}">${m.tier}</span>
+                                </div>
+                                <div class="text-[10px] text-slate-400">เรตติ้ง: ⭐ ${m.rating} | ตรงเวลา: ${m.onTimeRate}% | Badges: ${m.badges.join(', ')}</div>
                             </div>
                         </div>
                         <button onclick="assignCompanionByName('${targetCase.id}', '${m.name}')" class="bg-teal-500 hover:bg-teal-400 text-slate-950 px-2.5 py-1 rounded-lg font-bold text-[10px]">
@@ -1198,11 +1402,18 @@
             const tbody = document.getElementById('admin-payroll-table-body');
             const compMap = {};
             bookings.filter(b => b.status === 'COMPLETED').forEach(b => {
+                const compObj = companions.find(c => c.name === b.companionName);
+                const bonusPct = compObj ? compObj.bonusPct : 0;
+
                 if (!compMap[b.companionName]) {
-                    compMap[b.companionName] = { completedCases: 0, totalEarned: 0, bonus: 500, expenses: 0 };
+                    compMap[b.companionName] = { completedCases: 0, totalEarned: 0, tierBonus: 0, expenses: 0 };
                 }
+                const basePay = (b.price * 0.7);
+                const bonus = (basePay * (bonusPct / 100));
+
                 compMap[b.companionName].completedCases += 1;
-                compMap[b.companionName].totalEarned += (b.price * 0.7);
+                compMap[b.companionName].totalEarned += basePay;
+                compMap[b.companionName].tierBonus += bonus;
             });
 
             expenseClaims.filter(e => e.status === 'APPROVED').forEach(e => {
@@ -1219,14 +1430,14 @@
 
             tbody.innerHTML = keys.map(name => {
                 const item = compMap[name];
-                const netPayout = item.totalEarned + item.expenses + item.bonus;
+                const netPayout = item.totalEarned + item.expenses + item.tierBonus;
                 return `
                     <tr class="hover:bg-slate-50">
                         <td class="p-3 font-bold text-slate-800">${name}</td>
                         <td class="p-3 font-semibold text-teal-700">${item.completedCases} เคส</td>
                         <td class="p-3 font-semibold text-slate-700">฿${item.totalEarned.toLocaleString()}</td>
                         <td class="p-3 text-amber-600 font-semibold">฿${item.expenses.toLocaleString()}</td>
-                        <td class="p-3 text-emerald-600 font-semibold">฿${item.bonus.toLocaleString()}</td>
+                        <td class="p-3 text-emerald-600 font-semibold">฿${item.tierBonus.toLocaleString()}</td>
                         <td class="p-3 font-bold text-slate-900 text-sm">฿${netPayout.toLocaleString()}</td>
                         <td class="p-3 text-center">
                             <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 font-bold text-[10px] rounded-full border border-emerald-200">พร้อมโอน</span>
@@ -1238,6 +1449,59 @@
 
         function processBatchPayout() {
             showToast("ดำเนินการโอนเงินให้ผู้ดูแลครบทุกท่านผ่านระบบ SCB/KBank API เรียบร้อย!", "success");
+        }
+
+        // RENDER ADMIN TIERING & E-LEARNING SECTION (NEW SYSTEM 2)
+        function renderAdminTieringElearningSection() {
+            // Render Course Cards
+            const courseGrid = document.getElementById('admin-courses-grid');
+            courseGrid.innerHTML = elearningCoursesData.map(c => `
+                <div class="p-4 rounded-2xl border ${c.bg} space-y-2 flex flex-col justify-between">
+                    <div class="space-y-1">
+                        <div class="w-8 h-8 rounded-xl bg-white flex items-center justify-center ${c.color} text-lg shadow-sm">
+                            <i class="fa-solid ${c.icon}"></i>
+                        </div>
+                        <div class="font-bold text-slate-800 text-xs">${c.name}</div>
+                        <div class="text-[10px] text-slate-500">หลักสูตรออนไลน์ 45 นาที + แบบทดสอบ</div>
+                    </div>
+                    <div class="pt-2 border-t flex justify-between items-center text-[10px]">
+                        <span class="font-bold text-teal-800 bg-white px-2 py-0.5 rounded border">Badge: ${c.id}</span>
+                        <button onclick="alert('จัดการเนื้อหาคอร์ส ${c.id}')" class="text-slate-600 hover:text-slate-900 font-bold">แก้ไข</button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Render Tier & Rewards Table
+            const rewardsBody = document.getElementById('admin-tier-rewards-table-body');
+            const topTiers = companions.filter(c => c.tier === 'Platinum' || c.tier === 'Gold');
+            document.getElementById('stat-top-tiers').textContent = `${topTiers.length} คน`;
+
+            let badgeCountSum = 0;
+            companions.forEach(c => badgeCountSum += c.badges.length);
+            document.getElementById('stat-total-badges').textContent = `${badgeCountSum} Badges`;
+
+            rewardsBody.innerHTML = companions.slice(0, 10).map(c => {
+                const tierInfo = calculateCompanionTier(c.rating, c.onTimeRate);
+                return `
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 font-bold text-slate-800">${c.name}</td>
+                        <td class="p-3">
+                            <span class="px-2 py-0.5 rounded font-bold text-[10px] border ${tierInfo.class}">${c.tier}</span>
+                        </td>
+                        <td class="p-3 font-bold text-amber-500"><i class="fa-solid fa-star me-1"></i>${c.rating}</td>
+                        <td class="p-3 font-semibold text-slate-700">${c.onTimeRate}%</td>
+                        <td class="p-3">
+                            <div class="flex flex-wrap gap-1">
+                                ${c.badges.map(b => `<span class="bg-teal-50 text-teal-800 text-[9px] px-1.5 py-0.2 rounded font-mono font-bold border border-teal-200">${b}</span>`).join('')}
+                            </div>
+                        </td>
+                        <td class="p-3 font-bold text-emerald-600">+${c.bonusPct}%</td>
+                        <td class="p-3 text-center">
+                            ${c.priorityCaseDispatch ? '<span class="text-amber-600 font-bold"><i class="fa-solid fa-circle-check"></i> ได้สิทธิ์ก่อน</span>' : '<span class="text-slate-400">ปกติ</span>'}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
 
         // RATING & REVIEWS
@@ -1296,7 +1560,15 @@
         function updateBookingPrice() {
             const pkgValue = document.querySelector('input[name="wiz-package"]:checked').value;
             const transportOpt = document.getElementById('wiz-transport-option').checked;
-            let total = pkgValue.includes('ครึ่งวัน') ? 850 : 1500;
+            let total = 850;
+            if (pkgValue.includes('ครึ่งวัน')) {
+                total = 850;
+            } else if (pkgValue.includes('เต็มวัน')) {
+                total = 1500;
+            } else if (pkgValue.includes('เฝ้าไข้')) {
+                total = 2000;
+            }
+            
             if (transportOpt) total += 350;
             document.getElementById('wiz-total-price').textContent = `฿${total.toLocaleString()}`;
         }
@@ -1311,7 +1583,15 @@
             const pkg = document.querySelector('input[name="wiz-package"]:checked').value;
             const transportOpt = document.getElementById('wiz-transport-option').checked;
             
-            let price = pkg.includes('ครึ่งวัน') ? 850 : 1500;
+            let price = 850;
+            if (pkg.includes('ครึ่งวัน')) {
+                price = 850;
+            } else if (pkg.includes('เต็มวัน')) {
+                price = 1500;
+            } else if (pkg.includes('เฝ้าไข้')) {
+                price = 2000;
+            }
+
             if (transportOpt) price += 350;
 
             const newBooking = {
@@ -1375,10 +1655,23 @@
 
         function renderUserLiveStepper() {
             const currentCase = bookings.find(b => b.id === currentTrackingCaseId) || bookings[0];
+            const companionObj = companions.find(c => c.name === currentCase.companionName);
+
             document.getElementById('track-case-id').textContent = `เคสปัจจุบัน: ${currentCase.id}`;
             document.getElementById('track-patient-name').textContent = `ผู้ป่วย: ${currentCase.patientName}`;
             document.getElementById('track-hospital-info').innerHTML = `<i class="fa-solid fa-hospital text-teal-600"></i> ${currentCase.hospital} • ${currentCase.province}`;
             document.getElementById('track-companion-name').textContent = currentCase.companionName;
+            
+            // Render Tier & Badges on Live Tracking Card
+            if (companionObj) {
+                const badgeEl = document.getElementById('track-companion-tier-badge');
+                badgeEl.textContent = companionObj.tier;
+                badgeEl.className = `text-[9px] px-1.5 py-0.2 rounded font-bold border ${calculateCompanionTier(companionObj.rating, companionObj.onTimeRate).class}`;
+
+                const badgesContainer = document.getElementById('track-companion-badges-list');
+                badgesContainer.innerHTML = companionObj.badges.map(b => `<span class="bg-teal-50 text-teal-800 text-[8px] px-1 py-0.2 rounded font-mono border border-teal-200"><i class="fa-solid fa-certificate text-teal-600 me-0.5"></i>${b}</span>`).join('');
+            }
+
             document.getElementById('track-companion-license').innerHTML = `<i class="fa-solid fa-id-card"></i> ใบประกอบฯ: ${currentCase.companionLicense || 'ผ่านการรับรอง'}`;
             document.getElementById('track-companion-phone').innerHTML = `<i class="fa-solid fa-phone"></i> ${currentCase.companionPhone}`;
             document.getElementById('track-companion-avatar').src = currentCase.companionAvatar;
@@ -1482,34 +1775,46 @@
                 return;
             }
 
-            container.innerHTML = filtered.map(c => `
-                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm space-y-3 text-xs flex flex-col justify-between">
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3">
-                            <img src="${c.avatar}" class="w-12 h-12 rounded-full object-cover ring-2 ring-teal-500/20">
-                            <div>
-                                <div class="font-bold text-slate-800 text-sm">${c.name}</div>
-                                <div class="text-[11px] text-teal-700 font-semibold">${c.role}</div>
-                                <div class="text-[10px] text-slate-400"><i class="fa-solid fa-location-dot me-1"></i> ${c.province}</div>
+            container.innerHTML = filtered.map(c => {
+                const tierInfo = calculateCompanionTier(c.rating, c.onTimeRate);
+                return `
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm space-y-3 text-xs flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3">
+                                <img src="${c.avatar}" class="w-12 h-12 rounded-full object-cover ring-2 ring-teal-500/20">
+                                <div>
+                                    <div class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                                        ${c.name}
+                                        <span class="px-1.5 py-0.2 rounded text-[9px] font-bold border ${tierInfo.class}">${c.tier}</span>
+                                    </div>
+                                    <div class="text-[11px] text-teal-700 font-semibold">${c.role}</div>
+                                    <div class="text-[10px] text-slate-400"><i class="fa-solid fa-location-dot me-1"></i> ${c.province}</div>
+                                </div>
+                            </div>
+
+                            <!-- Badges Section -->
+                            <div class="flex flex-wrap gap-1">
+                                ${c.badges.map(b => `<span class="bg-teal-50 text-teal-800 text-[9px] px-1.5 py-0.5 rounded font-mono border border-teal-200 font-bold"><i class="fa-solid fa-award text-teal-600 me-1"></i>${b}</span>`).join('')}
+                            </div>
+
+                            <div class="space-y-1 text-[11px] text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                                <div><span class="text-slate-400">ใบประกอบฯ:</span> <span class="font-mono font-semibold">${c.license}</span></div>
+                                <div><span class="text-slate-400">ตรงต่อเวลา:</span> <span class="font-semibold text-emerald-600">${c.onTimeRate}%</span></div>
+                                <div><span class="text-slate-400">ทักษะ:</span> <span class="font-semibold text-teal-800">${c.skill}</span></div>
+                                <div><span class="text-slate-400">ภาษา:</span> <span class="font-semibold">${c.languages}</span></div>
                             </div>
                         </div>
-                        <div class="space-y-1 text-[11px] text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
-                            <div><span class="text-slate-400">ใบประกอบฯ:</span> <span class="font-mono font-semibold">${c.license}</span></div>
-                            <div><span class="text-slate-400">ประสบการณ์:</span> <span class="font-semibold">${c.exp} ปี</span></div>
-                            <div><span class="text-slate-400">ทักษะ:</span> <span class="font-semibold text-teal-800">${c.skill}</span></div>
-                            <div><span class="text-slate-400">ภาษา:</span> <span class="font-semibold">${c.languages}</span></div>
+                        <div class="flex justify-between items-center pt-2 border-t">
+                            <div class="text-amber-500 font-bold flex items-center gap-1">
+                                <i class="fa-solid fa-star"></i> ${c.rating}
+                            </div>
+                            <button onclick="openBookingWizard()" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-xl font-bold text-[11px] shadow-sm">
+                                เลือกคนนี้
+                            </button>
                         </div>
                     </div>
-                    <div class="flex justify-between items-center pt-2 border-t">
-                        <div class="text-amber-500 font-bold flex items-center gap-1">
-                            <i class="fa-solid fa-star"></i> ${c.rating}
-                        </div>
-                        <button onclick="openBookingWizard()" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-xl font-bold text-[11px] shadow-sm">
-                            เลือกคนนี้
-                        </button>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         function renderAdminBookingsTable() {
@@ -1546,37 +1851,44 @@
             if (provFilter !== 'ALL') {
                 list = list.filter(c => c.province === provFilter);
             }
-            tbody.innerHTML = list.map(c => `
-                <tr class="hover:bg-slate-50">
-                    <td class="p-3.5 font-bold text-slate-800">${c.name}</td>
-                    <td class="p-3.5 text-slate-600">${c.province}</td>
-                    <td class="p-3.5">
-                        <div class="font-semibold text-teal-700">${c.role}</div>
-                        <div class="text-[10px] text-slate-400">ทักษะ: ${c.skill}</div>
-                    </td>
-                    <td class="p-3.5 text-slate-600">${c.languages}</td>
-                    <td class="p-3.5 font-mono text-slate-600">${c.license}</td>
-                    <td class="p-3.5 text-slate-600">${c.exp} ปี</td>
-                    <td class="p-3.5 font-mono text-slate-600">${c.phone}</td>
-                    <td class="p-3.5">
-                        <span class="px-2 py-0.5 rounded font-bold text-[10px] ${c.status === 'AVAILABLE' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}">${c.status}</span>
-                    </td>
-                    <td class="p-3.5 text-center">
-                        <button onclick="alert('แก้ไขข้อมูล ${c.name}')" class="text-slate-500 hover:text-slate-800"><i class="fa-solid fa-pen"></i></button>
-                    </td>
-                </tr>
-            `).join('');
+            tbody.innerHTML = list.map(c => {
+                const tierInfo = calculateCompanionTier(c.rating, c.onTimeRate);
+                return `
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3.5 font-bold text-slate-800">${c.name}</td>
+                        <td class="p-3.5">
+                            <span class="px-2 py-0.5 rounded font-bold text-[10px] border ${tierInfo.class}">${c.tier}</span>
+                        </td>
+                        <td class="p-3.5 text-slate-600">${c.province}</td>
+                        <td class="p-3.5">
+                            <div class="font-semibold text-teal-700">${c.role}</div>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                ${c.badges.map(b => `<span class="bg-teal-50 text-teal-800 text-[8px] px-1 py-0.2 rounded font-mono font-bold border border-teal-200">${b}</span>`).join('')}
+                            </div>
+                        </td>
+                        <td class="p-3.5 font-mono text-slate-600">${c.license}</td>
+                        <td class="p-3.5 font-semibold text-emerald-600">${c.onTimeRate}%</td>
+                        <td class="p-3.5 font-mono text-slate-600">${c.phone}</td>
+                        <td class="p-3.5">
+                            <span class="px-2 py-0.5 rounded font-bold text-[10px] ${c.status === 'AVAILABLE' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}">${c.status}</span>
+                        </td>
+                        <td class="p-3.5 text-center">
+                            <button onclick="alert('แก้ไขข้อมูล ${c.name}')" class="text-slate-500 hover:text-slate-800"><i class="fa-solid fa-pen"></i></button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
 
         function renderAdminHospitals() {
             const container = document.getElementById('admin-hospitals-list');
             container.innerHTML = provinceHospitalsData.map(p => `
-                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    <div class="font-bold text-slate-800 text-xs mb-1 flex justify-between items-center">
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1">
+                    <div class="font-bold text-slate-800 text-xs flex justify-between items-center">
                         <span>${p.province}</span>
-                        ${p.isMajor ? '<span class="bg-teal-100 text-teal-800 text-[9px] px-1.5 py-0.5 rounded font-bold">ศูนย์ใหญ่</span>' : ''}
+                        ${p.isMajor ? '<span class="bg-teal-100 text-teal-800 text-[9px] px-1.5 py-0.2 rounded">รพ.ศูนย์หลัก</span>' : ''}
                     </div>
-                    <ul class="list-disc list-inside text-[11px] text-slate-600 space-y-0.5">
+                    <ul class="text-[11px] text-slate-600 list-disc list-inside space-y-0.5">
                         ${p.hospitals.map(h => `<li>${h}</li>`).join('')}
                     </ul>
                 </div>
@@ -1584,13 +1896,16 @@
         }
 
         function filterHospitalsList() {
-            const query = document.getElementById('hospital-search-input').value.toLowerCase();
+            const q = document.getElementById('hospital-search-input').value.toLowerCase();
+            const filtered = provinceHospitalsData.filter(p => p.province.toLowerCase().includes(q) || p.hospitals.some(h => h.toLowerCase().includes(q)));
             const container = document.getElementById('admin-hospitals-list');
-            const filtered = provinceHospitalsData.filter(p => p.province.toLowerCase().includes(query) || p.hospitals.some(h => h.toLowerCase().includes(query)));
             container.innerHTML = filtered.map(p => `
-                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    <div class="font-bold text-slate-800 text-xs mb-1">${p.province}</div>
-                    <ul class="list-disc list-inside text-[11px] text-slate-600 space-y-0.5">
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1">
+                    <div class="font-bold text-slate-800 text-xs flex justify-between items-center">
+                        <span>${p.province}</span>
+                        ${p.isMajor ? '<span class="bg-teal-100 text-teal-800 text-[9px] px-1.5 py-0.2 rounded">รพ.ศูนย์หลัก</span>' : ''}
+                    </div>
+                    <ul class="text-[11px] text-slate-600 list-disc list-inside space-y-0.5">
                         ${p.hospitals.map(h => `<li>${h}</li>`).join('')}
                     </ul>
                 </div>
@@ -1602,11 +1917,13 @@
             container.innerHTML = sosAlerts.map(s => `
                 <div class="bg-white p-3 rounded-xl border border-rose-200 flex justify-between items-center text-xs">
                     <div>
-                        <div class="font-bold text-rose-900">${s.patient} (${s.hospital})</div>
-                        <div class="text-[11px] text-slate-500">เวลา: ${s.time} | โทร: ${s.phone}</div>
+                        <span class="font-mono font-bold text-rose-600 me-2">[${s.id}]</span>
+                        <span class="font-bold text-slate-800 me-2">${s.patient}</span>
+                        <span class="text-slate-500 me-2">• ${s.hospital}</span>
+                        <span class="text-slate-400">(${s.time})</span>
                     </div>
-                    <button onclick="alert('กำลังโทรออกหา ${s.phone}')" class="bg-rose-600 text-white px-3 py-1.5 rounded-lg font-bold">
-                        <i class="fa-solid fa-phone me-1"></i> ติดต่อด่วน
+                    <button onclick="alert('กำลังประสานงานศูนย์ 1669 สำหรับเคส ${s.patient}')" class="bg-rose-600 hover:bg-rose-700 text-white px-3 py-1 rounded-lg font-bold">
+                        เข้าช่วยเหลือทันที
                     </button>
                 </div>
             `).join('');
@@ -1614,6 +1931,7 @@
 
         function triggerEmergencySOS() {
             document.getElementById('panic-dial-modal').classList.remove('hidden');
+            showToast("ส่งสัญญาณเตือน SOS และพิกัดของคุณเข้าศูนย์ควบคุมแล้ว!", "danger");
         }
 
         function closePanicDialModal() {
@@ -1641,44 +1959,51 @@
             const name = document.getElementById('comp-input-name').value;
             const prov = document.getElementById('comp-input-province').value;
             const role = document.getElementById('comp-input-role').value;
+            const langs = document.getElementById('comp-input-langs').value;
+            const skill = document.getElementById('comp-input-skill').value;
             const license = document.getElementById('comp-input-license').value;
             const exp = document.getElementById('comp-input-exp').value;
             const phone = document.getElementById('comp-input-phone').value;
-            const skill = document.getElementById('comp-input-skill').value;
-            const langs = document.getElementById('comp-input-langs').value;
 
-            companions.unshift({
+            const newComp = {
                 id: compIdCounter++,
                 name: name,
                 province: prov,
                 role: role,
                 license: license,
                 criminalCheck: true,
-                exp: exp,
+                exp: parseInt(exp),
                 phone: phone,
                 rating: "5.0",
+                onTimeRate: "100",
+                tier: "Platinum",
+                bonusPct: 15,
+                priorityCaseDispatch: true,
+                badges: ["CPR"],
                 status: "AVAILABLE",
-                avatar: sampleAvatars[0],
+                avatar: sampleAvatars[Math.floor(Math.random() * sampleAvatars.length)],
                 skill: skill,
                 languages: langs
-            });
+            };
 
+            companions.unshift(newComp);
             closeCompanionModal();
             renderAdminCompanionsTable();
+            renderAdminTieringElearningSection();
             renderUserCompanionsCatalog();
-            showToast("เพิ่มผู้ดูแลใหม่สำเร็จ!", "success");
+            showToast(`ลงทะเบียนผู้ดูแล ${name} สำเร็จ!`, "success");
         }
 
         function initAdminCharts() {
-            const ctxRev = document.getElementById('adminRevenueChart');
+            const ctxRev = document.getElementById('adminRevenueChart')?.getContext('2d');
             if (ctxRev) {
                 new Chart(ctxRev, {
                     type: 'line',
                     data: {
                         labels: ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'],
                         datasets: [{
-                            label: 'รายได้ (บาท)',
-                            data: [12000, 19000, 15000, 22000, 30000, 28000, 35000],
+                            label: 'รายได้สุทธิ (บาท)',
+                            data: [12500, 15000, 18200, 16000, 21000, 28000, 32000],
                             borderColor: '#0d9488',
                             backgroundColor: 'rgba(13, 148, 136, 0.1)',
                             fill: true,
@@ -1689,15 +2014,15 @@
                 });
             }
 
-            const ctxHosp = document.getElementById('adminHospitalChart');
+            const ctxHosp = document.getElementById('adminHospitalChart')?.getContext('2d');
             if (ctxHosp) {
                 new Chart(ctxHosp, {
                     type: 'doughnut',
                     data: {
-                        labels: ['กรุงเทพฯ', 'เหนือ', 'อีสาน', 'ใต้', 'กลาง/ตะวันออก'],
+                        labels: ['กรุงเทพฯ/ปริมณฑล', 'ภาคเหนือ', 'ภาคอีสาน', 'ภาคใต้', 'ภาคกลาง'],
                         datasets: [{
-                            data: [40, 20, 15, 15, 10],
-                            backgroundColor: ['#0d9488', '#0284c7', '#f59e0b', '#e11d48', '#64748b']
+                            data: [40, 25, 15, 12, 8],
+                            backgroundColor: ['#0d9488', '#0284c7', '#f59e0b', '#e11d48', '#8b5cf6']
                         }]
                     },
                     options: { responsive: true, maintainAspectRatio: false }
@@ -1705,21 +2030,515 @@
             }
         }
 
-        function showToast(msg, type = 'info') {
+        function showToast(msg, type = "info") {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            let bg = 'bg-slate-900 text-white';
-            if (type === 'success') bg = 'bg-teal-700 text-white';
-            if (type === 'error') bg = 'bg-rose-700 text-white';
-
-            toast.className = `${bg} px-4 py-2.5 rounded-2xl shadow-xl text-xs font-semibold flex items-center gap-2 animate-bounce-once pointer-events-auto`;
-            toast.innerHTML = `<i class="fa-solid fa-circle-info"></i> <span>${msg}</span>`;
+            let bg = "bg-slate-900 text-white";
+            if (type === "success") bg = "bg-emerald-600 text-white";
+            if (type === "danger") bg = "bg-rose-600 text-white";
+            
+            toast.className = `${bg} px-4 py-2.5 rounded-xl shadow-xl text-xs font-semibold transition-all transform translate-y-2 opacity-0 flex items-center gap-2`;
+            toast.innerHTML = `<i class="fa-solid fa-circle-info"></i> ${msg}`;
             container.appendChild(toast);
 
             setTimeout(() => {
-                toast.remove();
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0');
+                setTimeout(() => toast.remove(), 300);
             }, 3000);
         }
     </script>
+
+<!-- =========================================================
+     ADD-ON ONLY: VERIFICATION BADGES TRAINING VIDEOS
+     หมายเหตุ: ส่วนนี้เป็นโค้ดที่เพิ่มใหม่เท่านั้น ไม่แก้/ลบโค้ดเดิม
+     ========================================================= -->
+<style>
+    .verification-video-shell {
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: 1rem;
+        border: 1px solid #e2e8f0;
+        background: #f8fafc;
+    }
+    .verification-video-grid {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: 1rem;
+    }
+    @media (min-width: 768px) {
+        .verification-video-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+    .verification-video-card {
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+        border-radius: 1rem;
+        background: #fff;
+        box-shadow: 0 1px 3px rgba(15,23,42,.06);
+    }
+    .verification-video-card iframe {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border: 0;
+        background: #0f172a;
+    }
+    .verification-video-card .video-info {
+        padding: .85rem;
+    }
+    .verification-video-card .video-title {
+        font-size: .75rem;
+        font-weight: 700;
+        color: #0f172a;
+        line-height: 1.6;
+    }
+    .verification-video-card .video-source {
+        margin-top: .25rem;
+        font-size: .65rem;
+        color: #64748b;
+        line-height: 1.5;
+    }
+    .verification-video-open {
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+        margin-top: .6rem;
+        padding: .45rem .7rem;
+        border-radius: .7rem;
+        background: #0f766e;
+        color: #fff;
+        text-decoration: none;
+        font-size: .65rem;
+        font-weight: 700;
+    }
+    .verification-video-open:hover { background: #115e59; }
+    .verification-video-note {
+        margin-top: .75rem;
+        padding: .65rem .8rem;
+        border-radius: .75rem;
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        color: #92400e;
+        font-size: .65rem;
+        line-height: 1.6;
+    }
+    .verification-video-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        background: rgba(15,23,42,.78);
+        backdrop-filter: blur(4px);
+    }
+    .verification-video-modal.show { display: flex; }
+    .verification-video-modal-panel {
+        width: min(920px, 100%);
+        max-height: 92vh;
+        overflow-y: auto;
+        background: #fff;
+        border-radius: 1.25rem;
+        box-shadow: 0 25px 60px rgba(0,0,0,.25);
+    }
+    .verification-video-modal iframe {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border: 0;
+        background: #0f172a;
+    }
+</style>
+
+<div id="verificationVideoModal" class="verification-video-modal" aria-hidden="true">
+    <div class="verification-video-modal-panel">
+        <div class="flex items-center justify-between gap-3 p-4 border-b">
+            <div>
+                <div id="verificationVideoModalBadge" class="text-[10px] font-bold text-teal-700"></div>
+                <div id="verificationVideoModalTitle" class="font-bold text-sm text-slate-800 mt-1"></div>
+            </div>
+            <button type="button" onclick="closeVerificationVideoModal()"
+                    class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div id="verificationVideoModalBody"></div>
+    </div>
+</div>
+
+<script>
+(function () {
+    /*
+     * Video mapping is intentionally separate from the original
+     * elearningCoursesData so the original data is not modified.
+     */
+    const verificationVideoData = {
+        CPR: {
+            badge: "CPR Badge",
+            title: "การปฐมพยาบาลเบื้องต้น & CPR ฉุกเฉิน",
+            videoType: "youtube",
+            videoId: "RNWi4tF9uOA",
+            videoTitle: "CPR Training from the American Heart Association",
+            source: "YouTube • CBS 8 San Diego",
+            url: "https://www.youtube.com/watch?v=RNWi4tF9uOA",
+            note: "ใช้เป็นสื่อประกอบการเรียนรู้เรื่อง CPR และการตอบสนองภาวะฉุกเฉิน ไม่ใช่ใบรับรองการอบรมจริง"
+        },
+        ALZHEIMER: {
+            badge: "ALZHEIMER Badge",
+            title: "การดูแลผู้ป่วยอัลไซเมอร์ & สมองเสื่อม",
+            videoType: "youtube",
+            videoId: "gWCLMXFku00",
+            videoTitle: "COMMUNICATION TECHNIQUES FOR DEMENTIA CAREGIVERS",
+            source: "YouTube • Dementia Careblazers",
+            url: "https://www.youtube.com/watch?v=gWCLMXFku00",
+            note: "เนื้อหามุ่งเรื่องเทคนิคการสื่อสารกับผู้มีภาวะสมองเสื่อม เหมาะสำหรับใช้ประกอบหลักสูตร Caregiver"
+        },
+        PARKINSON: {
+            badge: "PARKINSON Badge",
+            title: "เทคนิคการพยุงเคลื่อนย้ายผู้ป่วยพาร์กินสัน",
+            videoType: "external",
+            videoTitle: "CareMAP: Managing Advanced Parkinson's — Movement and Falls",
+            source: "Parkinson's Foundation • CareMAP",
+            url: "https://www.parkinson.org/library/videos/caremap",
+            note: "แหล่งวิดีโอจาก Parkinson's Foundation ครอบคลุมการเคลื่อนไหว การล้ม และการช่วยเหลือระหว่างการเคลื่อนย้ายผู้ป่วย"
+        },
+        STROKE: {
+            badge: "STROKE Badge",
+            title: "กายภาพบำบัด & ฟื้นฟูผู้ป่วย Stroke",
+            videoType: "youtube",
+            videoId: "X1f8XoGiglA",
+            videoTitle: "Hand over hand: A caregiver task oriented approach to stroke rehabilitation",
+            source: "YouTube • Marymount University / Physiotherapy training",
+            url: "https://www.youtube.com/watch?v=X1f8XoGiglA",
+            note: "ใช้ประกอบการเรียนรู้แนวคิดการฟื้นฟูผู้ป่วย Stroke และบทบาทของผู้ดูแล"
+        }
+    };
+
+    function safeVideoUrl(url) {
+        return String(url || "").replace(/"/g, "&quot;");
+    }
+
+    function createVerificationVideoHTML(course) {
+        const v = verificationVideoData[course.id];
+        if (!v) return "";
+
+        if (v.videoType === "youtube") {
+            return `
+                <div class="verification-video-shell">
+                    <div class="text-[10px] font-bold text-slate-700 flex items-center gap-2 mb-2">
+                        <i class="fa-brands fa-youtube text-rose-600"></i>
+                        วิดีโอประกอบคอร์ส
+                    </div>
+                    <div class="verification-video-card">
+                        <iframe
+                            src="https://www.youtube-nocookie.com/embed/${v.videoId}?rel=0"
+                            title="${v.videoTitle}"
+                            loading="lazy"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                        <div class="video-info">
+                            <div class="video-title">${v.videoTitle}</div>
+                            <div class="video-source">${v.source}</div>
+                            <a class="verification-video-open"
+                               href="${safeVideoUrl(v.url)}"
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                เปิดดูบน YouTube
+                            </a>
+                            <div class="verification-video-note">${v.note}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        return `
+            <div class="verification-video-shell">
+                <div class="text-[10px] font-bold text-slate-700 flex items-center gap-2 mb-2">
+                    <i class="fa-solid fa-circle-play text-teal-600"></i>
+                    วิดีโอ/สื่ออบรมจากแหล่งอ้างอิง
+                </div>
+                <div class="verification-video-card">
+                    <div class="p-5 bg-gradient-to-br from-teal-50 to-sky-50">
+                        <div class="w-12 h-12 rounded-2xl bg-white text-teal-600 flex items-center justify-center text-xl shadow-sm mb-3">
+                            <i class="fa-solid fa-person-walking-with-cane"></i>
+                        </div>
+                        <div class="video-title">${v.videoTitle}</div>
+                        <div class="video-source">${v.source}</div>
+                        <a class="verification-video-open"
+                           href="${safeVideoUrl(v.url)}"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <i class="fa-solid fa-play"></i>
+                            เปิดวิดีโอการอบรม
+                        </a>
+                        <div class="verification-video-note">${v.note}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderVerificationVideoCards(containerId, courses, compact) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        const html = courses.map(c => {
+            const v = verificationVideoData[c.id];
+            if (!v) return "";
+
+            const openAction = v.videoType === "youtube"
+                ? `onclick="openVerificationVideoModal('${c.id}')"`
+                : `onclick="window.open('${v.url}', '_blank', 'noopener,noreferrer')"`; 
+
+            return `
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="p-4 ${c.bg}">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="font-bold text-xs ${c.color}">
+                                <i class="fa-solid ${c.icon} me-1"></i>${c.id} Badge
+                            </div>
+                            <span class="text-[9px] font-bold bg-white/80 px-2 py-1 rounded-lg border border-slate-200">
+                                วิดีโอประกอบ
+                            </span>
+                        </div>
+                        <div class="font-bold text-slate-800 text-[11px] mt-2">${c.name}</div>
+                    </div>
+
+                    ${v.videoType === "youtube" ? `
+                        <div class="bg-slate-900">
+                            <iframe
+                                src="https://www.youtube-nocookie.com/embed/${v.videoId}?rel=0"
+                                title="${v.videoTitle}"
+                                loading="lazy"
+                                class="w-full aspect-video border-0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    ` : `
+                        <div class="p-5 bg-gradient-to-br from-teal-50 to-sky-50 min-h-[190px] flex flex-col justify-center">
+                            <div class="w-11 h-11 rounded-xl bg-white text-teal-600 flex items-center justify-center text-lg shadow-sm mb-3">
+                                <i class="fa-solid fa-play"></i>
+                            </div>
+                            <div class="text-[11px] font-bold text-slate-800">${v.videoTitle}</div>
+                            <div class="text-[9px] text-slate-500 mt-1">${v.source}</div>
+                        </div>
+                    `}
+
+                    <div class="p-3 space-y-2">
+                        <div class="text-[9px] text-slate-500 leading-relaxed">${v.note}</div>
+                        <div class="flex gap-2">
+                            <button type="button" ${openAction}
+                                class="flex-1 bg-teal-600 hover:bg-teal-700 text-white px-3 py-2 rounded-xl text-[10px] font-bold">
+                                <i class="fa-solid fa-play me-1"></i>
+                                ${v.videoType === "youtube" ? "ดูวิดีโอ" : "เปิดแหล่งวิดีโอ"}
+                            </button>
+                            <a href="${safeVideoUrl(v.url)}" target="_blank" rel="noopener noreferrer"
+                               class="px-3 py-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-[10px] font-bold"
+                               title="เปิดลิงก์ต้นทาง">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join("");
+
+        container.innerHTML = html;
+    }
+
+    /*
+     * Override only at runtime. The original functions in the file remain
+     * untouched; these new definitions add the video layer.
+     */
+    window.renderElearningPublicInfo = function () {
+        const container = document.getElementById('elearning-badges-public-list');
+        if (!container || typeof elearningCoursesData === 'undefined') return;
+
+        container.innerHTML = `
+            <div class="col-span-1 sm:col-span-2">
+                <div class="verification-video-grid">
+                    ${elearningCoursesData.map(c => `
+                        <div class="bg-white rounded-2xl border ${c.bg} shadow-sm overflow-hidden">
+                            <div class="p-4">
+                                <div class="font-bold flex items-center gap-2 ${c.color}">
+                                    <i class="fa-solid ${c.icon}"></i> ${c.id} Badge
+                                </div>
+                                <div class="font-bold text-slate-800 text-[11px] mt-1">${c.name}</div>
+                                <div class="text-[10px] text-slate-500 mt-1">
+                                    สื่อวิดีโอประกอบการเรียนรู้เฉพาะทาง
+                                </div>
+                            </div>
+                            ${createVerificationVideoHTML(c)}
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    };
+
+    window.renderAdminTieringElearningSection = function () {
+        const courseGrid = document.getElementById('admin-courses-grid');
+        if (!courseGrid || typeof elearningCoursesData === 'undefined') return;
+
+        courseGrid.innerHTML = elearningCoursesData.map(c => {
+            const v = verificationVideoData[c.id];
+            return `
+                <div class="p-4 rounded-2xl border ${c.bg} space-y-3 flex flex-col justify-between">
+                    <div class="space-y-1">
+                        <div class="w-8 h-8 rounded-xl bg-white flex items-center justify-center ${c.color} text-lg shadow-sm">
+                            <i class="fa-solid ${c.icon}"></i>
+                        </div>
+                        <div class="font-bold text-slate-800 text-xs">${c.name}</div>
+                        <div class="text-[10px] text-slate-500">หลักสูตรออนไลน์ 45 นาที + แบบทดสอบ + วิดีโอประกอบ</div>
+                    </div>
+
+                    <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+                        ${v.videoType === "youtube" ? `
+                            <iframe
+                                src="https://www.youtube-nocookie.com/embed/${v.videoId}?rel=0"
+                                title="${v.videoTitle}"
+                                loading="lazy"
+                                class="w-full aspect-video border-0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+                        ` : `
+                            <div class="p-4 bg-gradient-to-br from-teal-50 to-sky-50">
+                                <div class="text-[10px] font-bold text-slate-700">
+                                    <i class="fa-solid fa-circle-play text-teal-600 me-1"></i>
+                                    ${v.videoTitle}
+                                </div>
+                            </div>
+                        `}
+                        <div class="p-3">
+                            <div class="text-[9px] text-slate-500">${v.source}</div>
+                            <div class="text-[9px] text-slate-500 mt-1 leading-relaxed">${v.note}</div>
+                            <div class="flex gap-2 mt-2">
+                                ${v.videoType === "youtube" ? `
+                                    <button type="button" onclick="openVerificationVideoModal('${c.id}')"
+                                        class="flex-1 text-white bg-teal-600 hover:bg-teal-700 px-2 py-1.5 rounded-lg text-[9px] font-bold">
+                                        <i class="fa-solid fa-play me-1"></i>ดูวิดีโอ
+                                    </button>
+                                ` : `
+                                    <a href="${safeVideoUrl(v.url)}" target="_blank" rel="noopener noreferrer"
+                                        class="flex-1 text-center text-white bg-teal-600 hover:bg-teal-700 px-2 py-1.5 rounded-lg text-[9px] font-bold">
+                                        <i class="fa-solid fa-play me-1"></i>เปิดวิดีโอ
+                                    </a>
+                                `}
+                                <span class="font-bold text-teal-800 bg-white px-2 py-1 rounded border text-[9px] self-center">
+                                    Badge: ${c.id}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        const rewardsBody = document.getElementById('admin-tier-rewards-table-body');
+        if (rewardsBody && typeof companions !== 'undefined') {
+            const topTiers = companions.filter(c => c.tier === 'Platinum' || c.tier === 'Gold');
+            const statTop = document.getElementById('stat-top-tiers');
+            if (statTop) statTop.textContent = `${topTiers.length} คน`;
+
+            let badgeCountSum = 0;
+            companions.forEach(c => badgeCountSum += c.badges.length);
+            const statBadge = document.getElementById('stat-total-badges');
+            if (statBadge) statBadge.textContent = `${badgeCountSum} Badges`;
+
+            rewardsBody.innerHTML = companions.slice(0, 10).map(c => {
+                const tierInfo = calculateCompanionTier(c.rating, c.onTimeRate);
+                return `
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-3 font-bold text-slate-800">${c.name}</td>
+                        <td class="p-3"><span class="px-2 py-0.5 rounded font-bold text-[10px] border ${tierInfo.class}">${c.tier}</span></td>
+                        <td class="p-3 font-bold text-amber-500"><i class="fa-solid fa-star me-1"></i>${c.rating}</td>
+                        <td class="p-3 font-semibold text-slate-700">${c.onTimeRate}%</td>
+                        <td class="p-3"><div class="flex flex-wrap gap-1">${c.badges.map(b => `<span class="bg-teal-50 text-teal-800 text-[9px] px-1.5 py-0.2 rounded font-mono font-bold border border-teal-200">${b}</span>`).join('')}</div></td>
+                        <td class="p-3 font-bold text-emerald-600">+${c.bonusPct}%</td>
+                        <td class="p-3 text-center">${c.priorityCaseDispatch ? '<i class="fa-solid fa-circle-check text-emerald-500"></i>' : '<i class="fa-solid fa-minus text-slate-300"></i>'}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+    };
+
+    window.openVerificationVideoModal = function (courseId) {
+        const v = verificationVideoData[courseId];
+        if (!v) return;
+
+        const modal = document.getElementById('verificationVideoModal');
+        const body = document.getElementById('verificationVideoModalBody');
+        const badge = document.getElementById('verificationVideoModalBadge');
+        const title = document.getElementById('verificationVideoModalTitle');
+
+        badge.textContent = v.badge;
+        title.textContent = v.title;
+
+        if (v.videoType === "youtube") {
+            body.innerHTML = `
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/${v.videoId}?rel=0&autoplay=1"
+                    title="${v.videoTitle}"
+                    allow="autoplay; encrypted-media; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+                <div class="p-4">
+                    <div class="font-bold text-xs text-slate-800">${v.videoTitle}</div>
+                    <div class="text-[10px] text-slate-500 mt-1">${v.source}</div>
+                    <a href="${safeVideoUrl(v.url)}" target="_blank" rel="noopener noreferrer"
+                       class="verification-video-open">
+                        <i class="fa-brands fa-youtube"></i> เปิดบน YouTube
+                    </a>
+                </div>
+            `;
+        } else {
+            body.innerHTML = `
+                <div class="p-6">
+                    <div class="font-bold text-sm text-slate-800">${v.videoTitle}</div>
+                    <div class="text-xs text-slate-500 mt-2">${v.source}</div>
+                    <a href="${safeVideoUrl(v.url)}" target="_blank" rel="noopener noreferrer"
+                       class="verification-video-open">
+                        <i class="fa-solid fa-play"></i> เปิดวิดีโอ
+                    </a>
+                </div>
+            `;
+        }
+
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden', 'false');
+    };
+
+    window.closeVerificationVideoModal = function () {
+        const modal = document.getElementById('verificationVideoModal');
+        const body = document.getElementById('verificationVideoModalBody');
+        if (body) body.innerHTML = '';
+        if (modal) {
+            modal.classList.remove('show');
+            modal.setAttribute('aria-hidden', 'true');
+        }
+    };
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') window.closeVerificationVideoModal();
+    });
+
+    document.addEventListener('click', function (event) {
+        const modal = document.getElementById('verificationVideoModal');
+        if (event.target === modal) window.closeVerificationVideoModal();
+    });
+})();
+</script>
+
 </body>
 </html>
